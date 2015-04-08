@@ -1,21 +1,20 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.GridLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Test extends JFrame {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-	private JPanel contentPane;
+public class MainFrame extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8252911925423161561L;
 	int pX, pY;
-
 	/**
 	 * Launch the application.
 	 */
@@ -23,7 +22,7 @@ public class Test extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Test frame = new Test();
+					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,14 +34,11 @@ public class Test extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Test() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public MainFrame() {
 		setBounds(100, 100, 392, 500);
 		setUndecorated(true);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
+		setContentPane(new BackgroundPanel());
+		
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				pX = me.getX();
@@ -55,20 +51,19 @@ public class Test extends JFrame {
 						+ me.getY() - pY);
 			}
 		});
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.MAGENTA);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setSize(2000, 10);
-		contentPane.add(panel_2);
-
-		JPanel panel = new JPanel();
-		contentPane.add(panel);
-		panel.setBackground(Color.RED);
-		panel.setLayout(null);
-
+		
+//		JPanel panel_1 = new JPanel();
+//		panel_1.setBackground(Color.MAGENTA);
+//		this.getContentPane().add(panel_1);
+//		panel_1.setLayout(null);
+//
+//		JPanel panel_2 = new JPanel();
+//		this.getContentPane().add(panel_2);
+//
+//		JPanel panel = new JPanel();
+//		this.getContentPane().add(panel);
+//		panel.setBackground(Color.RED);
+//		panel.setLayout(null);
 	}
+
 }
