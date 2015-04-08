@@ -14,20 +14,10 @@ public class BackgroundPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public BackgroundPanel() {
-		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBorder(new EmptyBorder(10, 10, 10, 10));
 		setLayout(new GridLayout(0, 1, 0, 0));
-		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent me) {
-				pX = me.getX();
-				pY = me.getY();
-			}
-		});
-		addMouseMotionListener(new MouseAdapter() {
-			public void mouseDragged(MouseEvent me) {
-				setLocation(getLocation().x + me.getX() - pX, getLocation().y
-						+ me.getY() - pY);
-			}
-		});
+		new ClockView(this);
+		new ClockView(this);
 	}
 
 }

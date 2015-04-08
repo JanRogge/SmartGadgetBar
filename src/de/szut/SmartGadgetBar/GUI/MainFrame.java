@@ -51,19 +51,6 @@ public class MainFrame extends JFrame {
 						+ me.getY() - pY);
 			}
 		});
-		
-//		JPanel panel_1 = new JPanel();
-//		panel_1.setBackground(Color.MAGENTA);
-//		this.getContentPane().add(panel_1);
-//		panel_1.setLayout(null);
-//
-//		JPanel panel_2 = new JPanel();
-//		this.getContentPane().add(panel_2);
-//
-//		JPanel panel = new JPanel();
-//		this.getContentPane().add(panel);
-//		panel.setBackground(Color.RED);
-//		panel.setLayout(null);
 	}
 
 }

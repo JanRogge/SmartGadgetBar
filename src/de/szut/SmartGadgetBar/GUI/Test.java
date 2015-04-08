@@ -10,11 +10,15 @@ import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Test extends JFrame {
 
 	private JPanel contentPane;
 	int pX, pY;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -51,7 +55,7 @@ public class Test extends JFrame {
 		});
 		addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent me) {
-				setLocation(getLocation().x + me.getX() - pX, getLocation().y
+				setLocation(getLocation().x2 + me.getX() - pX, getLocation().y
 						+ me.getY() - pY);
 			}
 		});
@@ -64,6 +68,7 @@ public class Test extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setSize(2000, 10);
 		contentPane.add(panel_2);
+		
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel);
