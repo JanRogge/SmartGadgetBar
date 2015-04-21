@@ -18,8 +18,7 @@ public class MainFrame extends JFrame {
 		setAlwaysOnTop(props.getAOT());
 		setUndecorated(true);
 		setType(javax.swing.JFrame.Type.UTILITY);
-		setContentPane(new BackgroundPanel(this));
-		//setBounds(getContentPane().getBounds());
+		setContentPane(new BackgroundPanel(this, props));
 		setBounds(props.getWindowDimension());
 	}
 	public void close(){

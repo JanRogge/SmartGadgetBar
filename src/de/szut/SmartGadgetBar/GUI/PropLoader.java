@@ -16,6 +16,7 @@ public class PropLoader {
 	private boolean top;
 	private File file;
 	private FileInputStream fileInputStream;
+	private String[] availabelWidgets;
 
 	public PropLoader() {
 		properties = new Properties();
@@ -36,13 +37,13 @@ public class PropLoader {
 			}else{
 				top = false;
 			}
-
+			availabelWidgets = properties.getProperty("availableWidgets").split(",");
 		} catch (IOException e) {
 			windowDimension = new Rectangle();
-			windowDimension.setBounds(100, 100, 868, 582);
+			windowDimension.setBounds(100, 100, 300, 600);
 		} catch (NullPointerException e) {
 			windowDimension = new Rectangle();
-			windowDimension.setBounds(100, 100, 868, 582);
+			windowDimension.setBounds(100, 100, 300, 600);
 		}
 	}
 
@@ -51,6 +52,9 @@ public class PropLoader {
 	}
 	public boolean getAOT(){
 		return top;
+	}
+	public String[] getWidgets(){
+		return availabelWidgets;
 	}
 
 	public void setWindowDimension(Rectangle dimension) {
