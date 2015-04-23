@@ -59,12 +59,7 @@ import org.bouncycastle.util.encoders.Base64;
  */
 public class PGP {
 
-	private PGPPrivateKey prikey;
-	private PGPPublicKey pubkey;
-	private File toEncrypt;
-	private String prikeyfile;
-	private String pubkeyfile;
-	private String encryptionkeyfile;
+	
 	
 	public PGP(){
 		
@@ -73,77 +68,10 @@ public class PGP {
 	}
 	
 
-	public String getPrikeyfile() {
-		return prikeyfile;
-	}
 	
 	
-	/**
-	 * @param prikeyfile
-	 * Setzt die Datei für den privaten Schluessel
-	 */
-	public void setPrikeyfile(String prikeyfile) {
-		this.prikeyfile = prikeyfile;
-	}
 	
 	
-	public String getPubkeyfile() {
-		return pubkeyfile;
-	}
-	
-	
-	/**
-	 * Setzt die Datei für den eigenen Oeffentlichen Schluessel,
-	 * mit dem Andere Dateien verschluesseln koennen
-	 * @param pubkeyfile
-	 */
-	public void setPubkeyfile(String pubkeyfile) {
-		this.pubkeyfile = pubkeyfile;
-	}
-	
-	/**
-	 * Setzt die Datei mit dem oeffentlichen Schluessel,
-	 * der fuer die Verschluesselung benutzt wird
-	 * @param enkf
-	 */
-	public void setEncryptionKeyFile(String enkf){
-		this.encryptionkeyfile = enkf;
-	}
-	
-	public void setPrivateKey(PGPPrivateKey k){
-		prikey = k;
-	}
-	
-	public PGPPrivateKey getPrivateKey(){
-		return prikey;
-	}
-	
-	public void setPublicKey(PGPPublicKey k){
-		pubkey = k;
-	}
-	
-	public PGPPublicKey getPublicKey(){
-		return pubkey;
-	}
-	
-	
-	public void readPublicKeyFromFile() throws FileNotFoundException, IOException{
-	
-		PGPPublicKeyRing pkRing = new PGPPublicKeyRing(PGPUtil.getDecoderStream(new FileInputStream(pubkeyfile)), new BcKeyFingerprintCalculator());
-		Iterator pkIt = pkRing.getPublicKeys();
-		while (pkIt.hasNext()) {
-			PGPPublicKey key = (PGPPublicKey) pkIt.next();
-			System.out.println("Encryption key = " + key.isEncryptionKey() + ", Master key = " + 
-					key.isMasterKey());
-			if (key.isEncryptionKey()){
-				pubkey = key;
-				
-			}
-		}
-        
-		
-        
-	}
 	
 	/**
 	 * Generiert ein Schlüsselpaar und speichert 
@@ -158,7 +86,6 @@ public class PGP {
 		try {
 			kgen.generateKeyPair();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -173,13 +100,33 @@ public class PGP {
 			enc.setPublicKeyFile(keyFile);
 			enc.encrypt(f.getAbsolutePath());
 		} catch (NoSuchProviderException | IOException | PGPException e) {
-			// TODO Auto-generated catch block
+			// 
 			e.printStackTrace();
 		}
 	}
+	
+	public void decryptFile(String encryptFileName, String prikeyFile) throws FileNotFoundException, Exception{
+		FileInputStream inp = new FileInputStream(new File(encryptFileName));
+		String msg = PGPDecrypter.decrypt(inp, new FileInputStream(new File(prikeyFile)), "ent.txt", "DiesIstEinePassPhrase".toCharArray());
+	
+		FileOutputStream fos= new FileOutputStream(new File("ents.txt"));
+		fos.write(msg.getBytes());
+	
+	}
 
 	public static void main(String[] ar){
+		PGP pgp = new PGP();
+		pgp.generateKeyPair();
+		pgp.encryptFile("test.txt", "public.asc");
+		try {
+			pgp.decryptFile("test.txt.pgp", "private.skr");
+		} catch (Exception e) {
+			// 
+			e.printStackTrace();
+		}
+		System.out.println("fertig");
 	}
+	
 
 
 }

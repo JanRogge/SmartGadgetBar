@@ -103,8 +103,6 @@ public class PGPEncrypter {
 		Iterator pkIt = pkRing.getPublicKeys();
 		while (pkIt.hasNext()) {
 			PGPPublicKey key = (PGPPublicKey) pkIt.next();
-			System.out.println("Encryption key = " + key.isEncryptionKey() + ", Master key = " + 
-					key.isMasterKey());
 			if (key.isEncryptionKey())
 				return key;
         	}
@@ -113,16 +111,6 @@ public class PGPEncrypter {
 
 	}
 	
-	public static void main(String[] ar)  throws IOException, NoSuchAlgorithmException, NoSuchProviderException, PGPException{
-		
-		Security.addProvider(new BouncyCastleProvider());
-		KeyPairGenerator  keyPairGen = KeyPairGenerator.getInstance("RSA", "BC");
-        keyPairGen.initialize(1024);
-        KeyPair keyPair = keyPairGen.generateKeyPair();
-        PublicKey k = keyPair.getPublic();
-        System.out.println(((Base64.toBase64String(new PGPEncrypter().readKeyfromFile(new FileInputStream(new File("tempKey.asc"))).getPublicKeyPacket().getEncodedContents()))));
-		
-      
-	}
+	
 	
 }
