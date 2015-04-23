@@ -21,6 +21,7 @@ public class BackgroundPanel extends JPanel {
     private int pX, pY;
     private JTextField textField;
     private JMenu addWidgets;
+    public static final int GAP = 5;
 
 	/**
 	 * Create the panel.
@@ -58,7 +59,11 @@ public class BackgroundPanel extends JPanel {
 						+ me.getY() - pY);
 			}
 		});
+		//add(new TestPanel(this, 0));
+		//add(new TestPanel(this, 1));
+		//add(new TestPanel(this, 2));
 		testWidgets();
+		//testOutputs();
 	}
 	public void testWidgets(){
 		JPanel panel = new JPanel();
@@ -77,7 +82,7 @@ public class BackgroundPanel extends JPanel {
 		
 		JPanel panel1 = new JPanel();
 		panel1.setBackground(Color.RED);
-		panel1.setBounds(10, 80, 280, 70);
+		panel1.setBounds(10, 80, 280, 90);
 		add(panel1);
 		panel1.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -86,6 +91,12 @@ public class BackgroundPanel extends JPanel {
 		closeMenuItem1.addActionListener(e-> {
 			//mainf.close();
 		});
+		JMenuItem closeWidget = new JMenuItem("Delete");
+		closeWidget.addActionListener(e-> {
+			remove(panel1);
+			rebuild();
+		});
+		menuPopup1.add(closeWidget);
         menuPopup1.add(closeMenuItem1);
         panel1.setComponentPopupMenu(menuPopup1);
 	}
@@ -94,11 +105,18 @@ public class BackgroundPanel extends JPanel {
 			JMenuItem widget= new JMenuItem(Widgets[i]);
 			addWidgets.add(widget);
 			widget.addActionListener(e -> {
-				add(new TestPanel());
-				repaint();
-				revalidate();
+				add(new TestPanel(this, 2));
+				rebuild();
 			});	
 		}
 		
+	}
+	public void rebuild(){
+		repaint();
+		revalidate();
+	}
+	public void testOutputs(){
+//		System.out.println(this.getComponent(1).getSize().getHeight());
+//		System.out.println(this.getComponent(0).getSize().getHeight());
 	}
 }
