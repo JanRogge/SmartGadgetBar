@@ -1,5 +1,5 @@
 package de.szut.SmartGadgetBar.Model;
 
-public class WidgetInterface {
+public interface WidgetInterface {
 	
 }
