@@ -13,7 +13,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
-public class OptionPanel extends JDialog {
+public class OptionPanelMain extends JDialog {
 
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class OptionPanel extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public OptionPanel(MainFrame mainf) {
+	public OptionPanelMain(MainFrame mainf) {
 		top = mainf.isAlwaysOnTop();
 		setResizable(false);
 		setTitle("Main Options");
