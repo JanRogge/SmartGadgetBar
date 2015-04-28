@@ -114,7 +114,7 @@ public class BackgroundPanel extends JPanel {
 				if(false){
 					widgetPanel.setBounds(10, BackgroundPanel.GAP , 280, 70);
 				} else{
-					widgetPanel.setBounds(10, (int) (getComponent(2-1).getBounds().getY() + BackgroundPanel.GAP + getComponent(2-1).getSize().getHeight()), 280, 70);
+					widgetPanel.setBounds(10, (int) (getComponent(2-1).getBounds().getY() + BackgroundPanel.GAP + getComponent(2-1).getSize().getHeight()), (int) widgetPanel.getSize().getWidth(), (int) widgetPanel.getSize().getHeight());
 				}	
 				System.out.println(widgetPanel);
 				add(widgetPanel);

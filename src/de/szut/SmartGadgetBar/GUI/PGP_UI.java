@@ -10,6 +10,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+
+import java.awt.Color;
+import java.awt.Rectangle;
+
 public class PGP_UI extends AbstractWidgetPanel {
 	/**
 	 * 
@@ -21,6 +28,8 @@ public class PGP_UI extends AbstractWidgetPanel {
 
 	public PGP_UI(PGP pgp) {
 		super(pgp);
+		this.widget = pgp;
+		setBounds(new Rectangle(0, 0, 280, 80));
 		initializePanel();
 		
 	}
@@ -29,6 +38,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 	void initializePanel() {
 		// TODO Auto-generated method stub
 		setLayout(null);
+		setBackground(Color.BLUE);
 
 		JButton btnEncrypt = new JButton("Encrypt");
 		btnEncrypt.setBounds(10, 45, 89, 23);
@@ -87,5 +97,4 @@ public class PGP_UI extends AbstractWidgetPanel {
 		setComponentPopupMenu(popup);
 		setVisible(true);
 	}
-
 }
