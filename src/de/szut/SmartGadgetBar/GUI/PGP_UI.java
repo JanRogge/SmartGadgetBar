@@ -1,7 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import java.awt.GridLayout;
-
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -13,7 +12,27 @@ public class PGP_UI extends JPanel{
 		} else{
 			setBounds(10, (int) (panel.getComponent(number-1).getBounds().getY() + BackgroundPanel.GAP + panel.getComponent(number-1).getSize().getHeight()), 280, 70);
 		}		
-		setLayout(new GridLayout(0, 1, 0, 0));
+		setLayout(null);
+		
+		JButton btnEncrypt = new JButton("Encrypt");
+		btnEncrypt.setBounds(10, 45, 89, 23);
+		btnEncrypt.addActionListener(e -> {
+			//pgp.
+		});
+		add(btnEncrypt);
+		
+		JButton btnFile = new JButton("Open File");
+		btnFile.setBounds(10, 11, 89, 23);
+		add(btnFile);
+		
+		JButton btnDecrypt = new JButton("Decrypt");
+		btnDecrypt.setBounds(181, 45, 89, 23);
+		add(btnDecrypt);
+		
+		JButton btnPublicKey = new JButton("Public Key");
+		btnPublicKey.setBounds(181, 11, 89, 23);
+		add(btnPublicKey);
+		
 		JPopupMenu popup = new JPopupMenu();
 		add(popup);
 		JMenuItem subMenu = new JMenuItem("Options");
@@ -28,6 +47,8 @@ public class PGP_UI extends JPanel{
 		popup.add(closeWidget);
 		popup.add(subMenu);
 		setComponentPopupMenu(popup);	
+		
+		
 	}
 	
 }
