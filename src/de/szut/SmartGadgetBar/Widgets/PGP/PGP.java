@@ -1,4 +1,4 @@
-package de.szut.SmartGadgetBar.PGP;
+package de.szut.SmartGadgetBar.Widgets.PGP;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,10 +12,12 @@ import javax.swing.JPanel;
 
 
 
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPException;
 
 import de.szut.SmartGadgetBar.GUI.PGP_UI;
+import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
@@ -33,12 +35,13 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 public class PGP implements WidgetInterface{
 
 	private PGP_UI ui;
-	
+	private Properties props;
 	
 	public PGP(){
 		Security.addProvider(new BouncyCastleProvider());
 		generateKeyPair();
 		ui = new PGP_UI(this);
+		//props = new PropertyLoader().loadProperties("PGP.ini");
 	}
 	
 
@@ -52,16 +55,20 @@ public class PGP implements WidgetInterface{
 	 * dieses in zwei Dateien
 	 */
 	public void generateKeyPair() {
-		KeyGenerator kgen = new KeyGenerator();
-		kgen.setPrivateKeyFile("keys/private.skr");
-		kgen.setPublicKeyFile("keys/public.asc");
-		kgen.setPass("DiesIstEinePassPhrase".toCharArray());
-		kgen.setEmail("example@mail.com");
-		try {
-			kgen.generateKeyPair();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!new File("keys/private.skr").exists() || !new File("keys/public.asc").exists()){
+			KeyGenerator kgen = new KeyGenerator();
+			kgen.setPrivateKeyFile("keys/private.skr");
+			kgen.setPublicKeyFile("keys/public.asc");
+			kgen.setPass("DiesIstEinePassPhrase".toCharArray());
+			kgen.setEmail("example@mail.com");
+			try {
+				kgen.generateKeyPair();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
+		
 	}
 	
 	public void encryptFile(String fileName, String keyFile){

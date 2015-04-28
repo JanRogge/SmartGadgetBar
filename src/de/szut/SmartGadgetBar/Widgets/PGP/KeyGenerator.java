@@ -1,4 +1,4 @@
-package de.szut.SmartGadgetBar.PGP;
+package de.szut.SmartGadgetBar.Widgets.PGP;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

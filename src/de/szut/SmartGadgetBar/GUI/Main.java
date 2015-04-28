@@ -7,13 +7,11 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PropLoader prop = new PropLoader();
-					MainFrame frame = new MainFrame(prop);
+					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				//HEYHO test
 			}
 		});
 	}

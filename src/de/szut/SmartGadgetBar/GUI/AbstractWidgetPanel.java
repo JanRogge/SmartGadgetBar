@@ -4,9 +4,8 @@ import javax.swing.JPanel;
 
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
-public abstract class AbstractWidgetPanel {
-	private WidgetInterface widget;
-	private JPanel panel;
+public abstract class AbstractWidgetPanel extends JPanel {
+	protected WidgetInterface widget;
 	
 	
 	
@@ -21,6 +20,6 @@ public abstract class AbstractWidgetPanel {
 		new OptionPanelWidget(widget);
 	}
 	
-	 abstract void initializePanel();
+	abstract void initializePanel();
 	
 }

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * Der
- * @author Simeon Kublenz
+ * @author Simeon Kublenz, Fabian Brinkmann
  */
 public class PropertyLoader {
 	

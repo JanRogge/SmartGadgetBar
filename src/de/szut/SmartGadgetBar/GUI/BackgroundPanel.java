@@ -11,10 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetLoader;
-import de.szut.SmartGadgetBar.PGP.PGP;
+import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
 import java.awt.Color;
+import java.util.Properties;
 
 public class BackgroundPanel extends JPanel {
 	
@@ -31,18 +33,20 @@ public class BackgroundPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public BackgroundPanel(MainFrame mainf, PropLoader props) {
+	public BackgroundPanel(MainFrame mainf) {
 		widgetLoader = new WidgetLoader();
 		JPopupMenu menuPopup = new JPopupMenu();
 		JMenuItem closeMenuItem = new JMenuItem("Close");
 		JMenuItem mainOptions= new JMenuItem("Options");
 		addWidgets= new JMenu("Add Widgets");
-		addtoMenu(props.getWidgets());
-		closeMenuItem.addActionListener(e-> {
-			mainf.close();
+		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini").getProperty("availableWidgets").split(",");
+		System.out.println(availabelWidgets.length);
+		addtoMenu(availabelWidgets);
+		closeMenuItem.addActionListener(e -> {
+		mainf.close();
 		});
-		mainOptions.addActionListener(e-> {
-			OptionPanelMain frame = new OptionPanelMain(mainf);
+		mainOptions.addActionListener(e -> {
+			new OptionPanelMain(mainf);
 		});
 		menuPopup.add(addWidgets);
 		menuPopup.add(mainOptions);
@@ -50,8 +54,7 @@ public class BackgroundPanel extends JPanel {
        
         setComponentPopupMenu(menuPopup);
 		setLayout(null);
-        
-        setBounds(10, 10, 300, 155);
+		setBounds(5,5, 300, 200);
 		
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
@@ -65,11 +68,7 @@ public class BackgroundPanel extends JPanel {
 						+ me.getY() - pY);
 			}
 		});
-		//add(new TestPanel(this, 0));
-		//add(new TestPanel(this, 1));
-		//add(new TestPanel(this, 2));
 		testWidgets();
-		//testOutputs();
 	}
 	public void testWidgets(){
 		JPanel panel = new JPanel();
@@ -100,7 +99,6 @@ public class BackgroundPanel extends JPanel {
 		JMenuItem closeWidget = new JMenuItem("Delete");
 		closeWidget.addActionListener(e-> {
 			remove(panel1);
-			rebuild();
 		});
 		menuPopup1.add(closeWidget);
         menuPopup1.add(closeMenuItem1);
@@ -112,13 +110,13 @@ public class BackgroundPanel extends JPanel {
 			addWidgets.add(widget);
 			int x = i;
 			widget.addActionListener(e -> {
-				//add(new PGP_UI(this, 2, new PGP()));
-				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/PGP/PGP" + ".class").getPanel();
+				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + Widgets[x] +"/" + Widgets[x] + ".class").getPanel();
 				if(false){
 					widgetPanel.setBounds(10, BackgroundPanel.GAP , 280, 70);
 				} else{
 					widgetPanel.setBounds(10, (int) (getComponent(2-1).getBounds().getY() + BackgroundPanel.GAP + getComponent(2-1).getSize().getHeight()), 280, 70);
-				}		
+				}	
+				System.out.println(widgetPanel);
 				add(widgetPanel);
 				rebuild();
 			});	
@@ -134,8 +132,4 @@ public class BackgroundPanel extends JPanel {
 		repaint();
 		revalidate();
 	}	
-	public void testOutputs(){
-//		System.out.println(this.getComponent(1).getSize().getHeight());
-//		System.out.println(this.getComponent(0).getSize().getHeight());
-	}
 }

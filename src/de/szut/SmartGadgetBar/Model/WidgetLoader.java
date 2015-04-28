@@ -20,7 +20,7 @@ public class WidgetLoader  {
 	private URLClassLoader classLoader;
 	private Object widgetObjekt;
 	private Class<?> widgetClass;
-	private static final String packageName = "de.szut.SmartGadgetBar.PGP";
+	private static final String packageName = "de.szut.SmartGadgetBar.Widgets";
 	
 	public WidgetInterface[] loadWidgets(String[] widgetNames) {
 		File[] files = directory.listFiles();
@@ -55,7 +55,7 @@ public class WidgetLoader  {
     	className = file.getName();
     	int index = className.indexOf(".");
 		try {
-			widgetClass = classLoader.loadClass(packageName + "." + className.substring(0, index));
+			widgetClass = classLoader.loadClass(packageName + "."+ className.substring(0, index) + "." + className.substring(0, index));
 		} catch (ClassNotFoundException e1) {
 			return null;
 		}
