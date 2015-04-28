@@ -7,6 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Der
+ * @author Simeon Kublenz
+ */
 public class PropertyLoader {
 	
 	/**
