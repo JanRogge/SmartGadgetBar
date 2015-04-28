@@ -62,9 +62,8 @@ public class PGP {
 	
 	
 	public PGP(){
-		
 		Security.addProvider(new BouncyCastleProvider());
-	
+		generateKeyPair();
 	}
 	
 
@@ -79,8 +78,8 @@ public class PGP {
 	 */
 	public void generateKeyPair() {
 		KeyGenerator kgen = new KeyGenerator();
-		kgen.setPrivateKeyFile("private.skr");
-		kgen.setPublicKeyFile("public.asc");
+		kgen.setPrivateKeyFile("keys/private.skr");
+		kgen.setPublicKeyFile("keys/public.asc");
 		kgen.setPass("DiesIstEinePassPhrase".toCharArray());
 		kgen.setEmail("example@mail.com");
 		try {
@@ -105,28 +104,15 @@ public class PGP {
 		}
 	}
 	
-	public void decryptFile(String encryptFileName, String prikeyFile) throws FileNotFoundException, Exception{
+	public void decryptFile(String encryptFileName, String prikeyFile){
+		try{
 		FileInputStream inp = new FileInputStream(new File(encryptFileName));
 		String msg = PGPDecrypter.decrypt(inp, new FileInputStream(new File(prikeyFile)), "ent.txt", "DiesIstEinePassPhrase".toCharArray());
-	
-		FileOutputStream fos= new FileOutputStream(new File("ents.txt"));
-		fos.write(msg.getBytes());
-	
-	}
-
-	public static void main(String[] ar){
-		PGP pgp = new PGP();
-		pgp.generateKeyPair();
-		pgp.encryptFile("test.txt", "public.asc");
-		try {
-			pgp.decryptFile("test.txt.pgp", "private.skr");
-		} catch (Exception e) {
-			// 
+		}catch (Exception e){
 			e.printStackTrace();
 		}
-		System.out.println("fertig");
-	}
-	
 
+	
+	}
 
 }

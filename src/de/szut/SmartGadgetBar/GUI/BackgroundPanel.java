@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import de.szut.SmartGadgetBar.PGP.PGP;
+
 import java.awt.Color;
 
 public class BackgroundPanel extends JPanel {
@@ -105,7 +107,7 @@ public class BackgroundPanel extends JPanel {
 			JMenuItem widget= new JMenuItem(Widgets[i]);
 			addWidgets.add(widget);
 			widget.addActionListener(e -> {
-				add(new TestPanel(this, 2));
+				add(new PGP_UI(this, 2, new PGP()));
 				rebuild();
 			});	
 		}
