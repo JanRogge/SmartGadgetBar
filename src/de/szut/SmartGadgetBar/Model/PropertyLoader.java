@@ -1,7 +1,5 @@
 package de.szut.SmartGadgetBar.Model;
 
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,21 +9,6 @@ import java.util.Properties;
 
 public class PropertyLoader {
 	
-	private Properties properties;
-	private File file;
-	
-	/**
-	 * Konstruktor des PropertyReaders
-	 */
-	public PropertyLoader() {
-		properties = new Properties();
-		try {
-			file = new File (new File(".").getCanonicalPath() + "/Properties.txt");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	/**
 	 * Lädt die Properties
 	 * @return geladene Properties
@@ -34,7 +17,7 @@ public class PropertyLoader {
 
 		Properties p = new Properties();
 		try {
-			p.load(new FileInputStream(new File(fileName)));
+			p.load(new FileInputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +37,7 @@ public class PropertyLoader {
 	 */
 	public void saveProperties(Properties p, String fileName){
 		try {
-			p.store(new FileOutputStream(new File(fileName)), "");
+			p.store(new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)), "");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
