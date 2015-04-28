@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
- * Lädt aus einem übergebenen Dateipfad die KI
- * @author Alexander
+ * Lädt aus einem übergebenen Dateipfad das Widget
+ * @author Simeon
  */
 public class WidgetLoader  {
 	

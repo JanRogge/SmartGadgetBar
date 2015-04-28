@@ -30,22 +30,21 @@ public class PropertyLoader {
 	 * Lädt die Properties
 	 * @return geladene Properties
 	 */
-	public String[][] loadProperties(String[][] propertiesNames) {
-		String[][] propertiesValues = new String[propertiesNames.length][];
-			try {
-				properties.load(new FileInputStream(file));
-				for (int x = 0; x < propertiesValues.length; x++) {
-					propertiesValues[x] = new String[propertiesValues.length];
-					for (int y = 0; y < propertiesValues.length; y++) {
-						propertiesValues[x][y] = properties.getProperty(propertiesNames[x][y]);
-					}
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		return propertiesValues;
+	public Properties loadProperties(String fileName){
+
+		Properties p = new Properties();
+		try {
+			p.load(new FileInputStream(new File(fileName)));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return p;
 	}
+	
 	
 	
 	/**
@@ -53,20 +52,17 @@ public class PropertyLoader {
 	 * @param rectangle position un größe des Frames
 	 * @param treeWidth breite des treePanels
 	 */
-	public void savePreperties(String[][] propertiesNames, String[][] propertiesValues) {
-		for (int x = 0; x < propertiesNames.length; x++) {
-			for (int y = 0; y < propertiesNames[x].length; y++) {
-				properties.setProperty(propertiesNames[x][y], propertiesValues[x][y]);
-			}
-		}
+	public void saveProperties(Properties p, String fileName){
 		try {
-			FileOutputStream fileOut = new FileOutputStream(file);
-			properties.store(fileOut, "SQLite Browser Properties");
-			fileOut.close();
-		}
-		catch (Exception e) {
+			p.store(new FileOutputStream(new File(fileName)), "");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	
 }
