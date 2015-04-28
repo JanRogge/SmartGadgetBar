@@ -14,12 +14,7 @@ import de.szut.SmartGadgetBar.PGP.PGP;
 public class PGP_UI extends JPanel{
 	private JFileChooser fileChooser;
 	private JFileChooser keyChooser;
-	public PGP_UI(BackgroundPanel panel, int number, PGP pgp){
-		if(number == 0){
-			setBounds(10, BackgroundPanel.GAP , 280, 70);
-		} else{
-			setBounds(10, (int) (panel.getComponent(number-1).getBounds().getY() + BackgroundPanel.GAP + panel.getComponent(number-1).getSize().getHeight()), 280, 70);
-		}		
+	public PGP_UI(PGP pgp){
 		setLayout(null);
 		
 		JButton btnEncrypt = new JButton("Encrypt");
@@ -70,8 +65,7 @@ public class PGP_UI extends JPanel{
 		});
 		JMenuItem closeWidget = new JMenuItem("Delete");
 		closeWidget.addActionListener(e-> {
-			panel.remove(this);
-			panel.rebuild();
+			this.getParent().remove(this);
 		});
 		popup.add(closeWidget);
 		popup.add(subMenu);

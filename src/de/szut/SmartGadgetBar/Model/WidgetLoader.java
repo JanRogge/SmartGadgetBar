@@ -20,7 +20,7 @@ public class WidgetLoader  {
 	private URLClassLoader classLoader;
 	private Object widgetObjekt;
 	private Class<?> widgetClass;
-	private static final String packageName = "AI";
+	private static final String packageName = "de.szut.SmartGadgetBar.PGP";
 	
 	public WidgetInterface[] loadWidgets(String[] widgetNames) {
 		File[] files = directory.listFiles();
@@ -46,6 +46,7 @@ public class WidgetLoader  {
 	
     private WidgetInterface loadWidget(File file) {
 		try {
+			System.out.println(file.getAbsolutePath());
 			classUrl = file.getParentFile().getParentFile().toURI().toURL();
 		} catch (MalformedURLException e1) {
 			return null;

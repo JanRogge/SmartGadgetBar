@@ -1,5 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,7 +42,7 @@ public class BackgroundPanel extends JPanel {
 			mainf.close();
 		});
 		mainOptions.addActionListener(e-> {
-			OptionPanel frame = new OptionPanel(mainf);
+			OptionPanelMain frame = new OptionPanelMain(mainf);
 		});
 		menuPopup.add(addWidgets);
 		menuPopup.add(mainOptions);
@@ -112,11 +113,22 @@ public class BackgroundPanel extends JPanel {
 			int x = i;
 			widget.addActionListener(e -> {
 				//add(new PGP_UI(this, 2, new PGP()));
-				add(widgetLoader.loadWidget(Widgets[x]).getPanel());
+				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/PGP/PGP" + ".class").getPanel();
+				if(false){
+					widgetPanel.setBounds(10, BackgroundPanel.GAP , 280, 70);
+				} else{
+					widgetPanel.setBounds(10, (int) (getComponent(2-1).getBounds().getY() + BackgroundPanel.GAP + getComponent(2-1).getSize().getHeight()), 280, 70);
+				}		
+				add(widgetPanel);
 				rebuild();
 			});	
 		}
 		
+	}
+	@Override
+	public void remove(Component comp){
+		super.remove(comp);
+		this.rebuild();
 	}
 	public void rebuild(){
 		repaint();

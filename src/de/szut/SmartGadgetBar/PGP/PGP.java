@@ -1,49 +1,22 @@
 package de.szut.SmartGadgetBar.PGP;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
 import java.security.Security;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.Properties;
 
-import org.bouncycastle.bcpg.BCPGKey;
-import org.bouncycastle.bcpg.CompressionAlgorithmTags;
-import org.bouncycastle.bcpg.PublicKeyPacket;
-import org.bouncycastle.bcpg.sig.KeyFlags;
-import org.bouncycastle.jcajce.provider.asymmetric.dh.KeyPairGeneratorSpi;
+import javax.swing.JPanel;
+
+
+
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openpgp.PGPCompressedDataGenerator;
-import org.bouncycastle.openpgp.PGPEncryptedData;
 import org.bouncycastle.openpgp.PGPException;
-import org.bouncycastle.openpgp.PGPKeyPair;
-import org.bouncycastle.openpgp.PGPKeyRingGenerator;
-import org.bouncycastle.openpgp.PGPObjectFactory;
-import org.bouncycastle.openpgp.PGPPrivateKey;
-import org.bouncycastle.openpgp.PGPPublicKey;
-import org.bouncycastle.openpgp.PGPPublicKeyRing;
-import org.bouncycastle.openpgp.PGPPublicKeyRingCollection;
-import org.bouncycastle.openpgp.PGPSecretKeyRing;
-import org.bouncycastle.openpgp.PGPSignature;
-import org.bouncycastle.openpgp.PGPSignatureSubpacketGenerator;
-import org.bouncycastle.openpgp.PGPUtil;
-import org.bouncycastle.openpgp.operator.bc.BcKeyFingerprintCalculator;
-import org.bouncycastle.util.encoders.Base64;
+
+import de.szut.SmartGadgetBar.GUI.PGP_UI;
+import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
  * @author Fabian
@@ -57,13 +30,15 @@ import org.bouncycastle.util.encoders.Base64;
  * @author Fabian
  *
  */
-public class PGP {
+public class PGP implements WidgetInterface{
 
+	private PGP_UI ui;
 	
 	
 	public PGP(){
 		Security.addProvider(new BouncyCastleProvider());
 		generateKeyPair();
+		ui = new PGP_UI(this);
 	}
 	
 
@@ -107,12 +82,60 @@ public class PGP {
 	public void decryptFile(String encryptFileName, String prikeyFile){
 		try{
 		FileInputStream inp = new FileInputStream(new File(encryptFileName));
-		String msg = PGPDecrypter.decrypt(inp, new FileInputStream(new File(prikeyFile)), "ent.txt", "DiesIstEinePassPhrase".toCharArray());
+		PGPDecrypter.decrypt(inp, new FileInputStream(new File(prikeyFile)), encryptFileName.substring(0, encryptFileName.length()-4), "DiesIstEinePassPhrase".toCharArray());
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 
 	
+	}
+
+
+
+
+
+
+
+	@Override
+	public JPanel getPanel() {
+		// TODO Auto-generated method stub
+		return ui;
+	}
+
+
+
+
+
+
+
+	@Override
+	public void setProperties(Properties properties) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+
+
+	@Override
+	public Properties getProperties() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+
+
+	@Override
+	public String getWidgetName() {
+		// TODO Auto-generated method stub
+		return "PGP";
 	}
 
 }

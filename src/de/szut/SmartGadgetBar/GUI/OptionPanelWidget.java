@@ -2,6 +2,8 @@ package de.szut.SmartGadgetBar.GUI;
 
 import java.util.Properties;
 
+import de.szut.SmartGadgetBar.Model.WidgetInterface;
+
 public class OptionPanelWidget {
 
 	public OptionPanelWidget(WidgetInterface widin){

@@ -1,6 +1,8 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import java.util.Properties;
+import javax.swing.JPanel;
+
+import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public abstract class AbstractWidgetPanel {
 	private WidgetInterface widget;
@@ -11,7 +13,7 @@ public abstract class AbstractWidgetPanel {
 	public AbstractWidgetPanel(WidgetInterface parent){
 		this.widget = parent;
 	}
-	public String getWidget() {
+	public WidgetInterface getWidget() {
 		return widget;
 	}
 	
