@@ -39,6 +39,10 @@ public class WidgetLoader  {
 		return widgets.toArray(new WidgetInterface[widgets.size()]);
 	}
 	
+	public WidgetInterface loadWidget(String fileName){
+		return loadWidget(new File(fileName));
+	}
+	
 	
     private WidgetInterface loadWidget(File file) {
 		try {

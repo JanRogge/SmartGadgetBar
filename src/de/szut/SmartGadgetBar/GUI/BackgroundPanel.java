@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import de.szut.SmartGadgetBar.Model.WidgetLoader;
 import de.szut.SmartGadgetBar.PGP.PGP;
 
 import java.awt.Color;
@@ -23,12 +24,14 @@ public class BackgroundPanel extends JPanel {
     private int pX, pY;
     private JTextField textField;
     private JMenu addWidgets;
+    private WidgetLoader widgetLoader;
     public static final int GAP = 5;
 
 	/**
 	 * Create the panel.
 	 */
 	public BackgroundPanel(MainFrame mainf, PropLoader props) {
+		widgetLoader = new WidgetLoader();
 		JPopupMenu menuPopup = new JPopupMenu();
 		JMenuItem closeMenuItem = new JMenuItem("Close");
 		JMenuItem mainOptions= new JMenuItem("Options");
@@ -106,8 +109,10 @@ public class BackgroundPanel extends JPanel {
 		for(int i = 0; i < Widgets.length; i++){
 			JMenuItem widget= new JMenuItem(Widgets[i]);
 			addWidgets.add(widget);
+			int x = i;
 			widget.addActionListener(e -> {
-				add(new PGP_UI(this, 2, new PGP()));
+				//add(new PGP_UI(this, 2, new PGP()));
+				add(widgetLoader.loadWidget(Widgets[x]).getPanel());
 				rebuild();
 			});	
 		}
@@ -116,7 +121,7 @@ public class BackgroundPanel extends JPanel {
 	public void rebuild(){
 		repaint();
 		revalidate();
-	}
+	}	
 	public void testOutputs(){
 //		System.out.println(this.getComponent(1).getSize().getHeight());
 //		System.out.println(this.getComponent(0).getSize().getHeight());
