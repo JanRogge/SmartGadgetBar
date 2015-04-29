@@ -1,6 +1,7 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.File;
 import java.time.temporal.JulianFields;
 
@@ -22,12 +23,13 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		super(parent);
 		widget = parent;
 		initializePanel();
+		System.out.println("ZIPPERINION");
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	void initializePanel() {
-
+		setSize(280,80);
 		setLayout(null);
 		setBackground(Color.BLUE);
 

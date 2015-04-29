@@ -20,6 +20,7 @@ public class ZIP  implements WidgetInterface {
 
 		deflet = new Deflater();
 		ui = new ZIP_UI(this);
+		System.out.println("ZIPPERINO");
 	}
 	public void comprimate(File[] files, String outName){
 		String[] temp = new String[files.length];

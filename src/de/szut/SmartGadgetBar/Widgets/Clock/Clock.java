@@ -12,7 +12,7 @@ public class Clock {
 		Calendar c = new GregorianCalendar();
 		Date date1 = new Date();
 		SimpleDateFormat df = new SimpleDateFormat();
-		df.setTimeZone(TimeZone.getTimeZone("PST"));
+		df.setTimeZone(TimeZone.getTimeZone("GMT+2"));
 		System.out.println(df.format(date1));
     }
 }
