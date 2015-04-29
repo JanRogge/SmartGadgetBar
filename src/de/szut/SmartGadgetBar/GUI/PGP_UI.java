@@ -55,8 +55,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 			fileChooser.setDialogTitle("Please choose a file");
 			// fileChooser.setCurrentDirectory(new File("db"));
 			int option = fileChooser.showOpenDialog(null);
-			if (option == JFileChooser.APPROVE_OPTION) {
-			}
+			
 		});
 		add(btnFile);
 
