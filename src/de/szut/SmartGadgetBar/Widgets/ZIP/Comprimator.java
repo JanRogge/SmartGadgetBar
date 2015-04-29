@@ -1,4 +1,4 @@
-package de.szut.SmartGadgetBar.ZIP;
+package de.szut.SmartGadgetBar.Widgets.ZIP;
 
 import java.io.*;
 import java.util.zip.*;
