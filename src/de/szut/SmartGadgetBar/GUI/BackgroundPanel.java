@@ -40,7 +40,6 @@ public class BackgroundPanel extends JPanel {
 		JMenuItem mainOptions= new JMenuItem("Options");
 		addWidgets= new JMenu("Add Widgets");
 		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini").getProperty("availableWidgets").split(",");
-		System.out.println(availabelWidgets.length);
 		addtoMenu(availabelWidgets);
 		closeMenuItem.addActionListener(e -> {
 		mainf.close();
@@ -81,7 +80,10 @@ public class BackgroundPanel extends JPanel {
 		textField.setColumns(10);
 		JPopupMenu popup = new JPopupMenu();
 		textField.add(popup);
-		JMenuItem subMenu = new JMenuItem("Options");
+		JMenuItem subMenu = new JMenuItem("Delete");
+		subMenu.addActionListener(e-> {
+			remove(panel);
+		});
 		popup.add(subMenu);
 		textField.setComponentPopupMenu(popup);
 		
@@ -111,12 +113,6 @@ public class BackgroundPanel extends JPanel {
 			int x = i;
 			widget.addActionListener(e -> {
 				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + Widgets[x] +"/" + Widgets[x] + ".class").getPanel();
-				if(false){
-					widgetPanel.setBounds(10, BackgroundPanel.GAP , 280, 70);
-				} else{
-					widgetPanel.setBounds(10, (int) (getComponent(2-1).getBounds().getY() + BackgroundPanel.GAP + getComponent(2-1).getSize().getHeight()), (int) widgetPanel.getSize().getWidth(), (int) widgetPanel.getSize().getHeight());
-				}	
-				System.out.println(widgetPanel);
 				add(widgetPanel);
 				rebuild();
 			});	
@@ -129,7 +125,13 @@ public class BackgroundPanel extends JPanel {
 		this.rebuild();
 	}
 	public void rebuild(){
+		
+		int curpos = BackgroundPanel.GAP;
+		for(Component c:getComponents()){
+			c.setLocation(10, curpos);
+			curpos+=c.getHeight()+BackgroundPanel.GAP;
+		}
 		repaint();
 		revalidate();
-	}	
+	}
 }

@@ -12,6 +12,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
+
+import de.szut.SmartGadgetBar.Model.PropertyLoader;
 
 public class OptionPanelMain extends JDialog {
 
@@ -31,7 +34,7 @@ public class OptionPanelMain extends JDialog {
 		setTitle("Main Options");
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 150);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,15 +57,33 @@ public class OptionPanelMain extends JDialog {
 		apply.addActionListener(e->{
 			mainf.setSize((int) spinner_1.getValue(),(int) spinner.getValue());
 		});
-		apply.setBounds(335, 227, 89, 23);
+		apply.setBounds(345, 87, 89, 23);
 		contentPane.add(apply);
 		
 		JCheckBox boxalwaysontop = new JCheckBox("Always on Top");
 		if(mainf.isAlwaysOnTop()){
 			boxalwaysontop.setSelected(true);
 		}
-		boxalwaysontop.setBounds(5, 32, 97, 23);
+		boxalwaysontop.setBounds(5, 32, 128, 23);
 		contentPane.add(boxalwaysontop);
+		
+		JLabel lblAvailableWidgets = new JLabel("Available Widgets:");
+		lblAvailableWidgets.setBounds(5, 61, 154, 14);
+		contentPane.add(lblAvailableWidgets);
+		
+		JLabel lblWidgets = new JLabel();
+		lblWidgets.setVerticalAlignment(SwingConstants.TOP);
+		lblWidgets.setHorizontalAlignment(SwingConstants.LEFT);
+		lblWidgets.setBounds(5, 75, 330, 35);
+		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini").getProperty("availableWidgets").split(",");
+		for (int i = 0; i < availabelWidgets.length;i++){
+			if(i==0){
+				lblWidgets.setText(availabelWidgets[i]);
+			} else{
+				lblWidgets.setText(lblWidgets.getText() + ", " + availabelWidgets[i]);
+			}
+		}
+		contentPane.add(lblWidgets);
 		boxalwaysontop.addActionListener(e->{
 			if (boxalwaysontop.isSelected()) {
 				top = true;

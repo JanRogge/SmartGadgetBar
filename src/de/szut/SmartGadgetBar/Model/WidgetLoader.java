@@ -46,7 +46,6 @@ public class WidgetLoader  {
 	
     private WidgetInterface loadWidget(File file) {
 		try {
-			System.out.println(file.getAbsolutePath());
 			classUrl = file.getParentFile().getParentFile().toURI().toURL();
 		} catch (MalformedURLException e1) {
 			return null;
