@@ -31,84 +31,91 @@ import org.bouncycastle.openpgp.operator.bc.BcPGPDigestCalculatorProvider;
 import org.bouncycastle.openpgp.operator.bc.BcPGPKeyPair;
 
 public class KeyGenerator {
-	
+
 	private String publicKeyFile;
 	private String privateKeyFile;
 	private char[] pass;
 	private String email;
-	
-    public void generateKeyPair() throws Exception {
-    	FileWriter w = new FileWriter(new File(publicKeyFile));
-    	w = new FileWriter(new File(privateKeyFile));
-        PGPKeyRingGenerator krgen = generateKeyRingGenerator(email, pass);
 
-        // Generate public key ring, dump to file.
-        PGPPublicKeyRing pkr = krgen.generatePublicKeyRing();
-        ArmoredOutputStream pubout = new ArmoredOutputStream(new BufferedOutputStream(new FileOutputStream(publicKeyFile)));
-        pkr.encode(pubout);
-        pubout.close();
+	public void generateKeyPair() throws Exception {
+		FileWriter w = new FileWriter(new File(publicKeyFile));
+		w = new FileWriter(new File(privateKeyFile));
+		PGPKeyRingGenerator krgen = generateKeyRingGenerator(email, pass);
 
-        // Generate private key, dump to file.
-        PGPSecretKeyRing skr = krgen.generateSecretKeyRing();
-        BufferedOutputStream secout = new BufferedOutputStream(new FileOutputStream(privateKeyFile));
-        skr.encode(secout);
-        secout.close();
-    }
+		// Generate public key ring, dump to file.
+		PGPPublicKeyRing pkr = krgen.generatePublicKeyRing();
+		ArmoredOutputStream pubout = new ArmoredOutputStream(
+				new BufferedOutputStream(new FileOutputStream(publicKeyFile)));
+		pkr.encode(pubout);
+		pubout.close();
 
-    private PGPKeyRingGenerator generateKeyRingGenerator(String id, char[] pass) throws Exception{
-        return generateKeyRingGenerator(id, pass, 0xc0); 
-    }
+		// Generate private key, dump to file.
+		PGPSecretKeyRing skr = krgen.generateSecretKeyRing();
+		BufferedOutputStream secout = new BufferedOutputStream(
+				new FileOutputStream(privateKeyFile));
+		skr.encode(secout);
+		secout.close();
+	}
 
-    
+	private PGPKeyRingGenerator generateKeyRingGenerator(String id, char[] pass)
+			throws Exception {
+		return generateKeyRingGenerator(id, pass, 0xc0);
+	}
 
-    private PGPKeyRingGenerator generateKeyRingGenerator(String id, char[] pass, int s2kcount) throws Exception {
-        // This object generates individual key-pairs.
-        RSAKeyPairGenerator  kpg = new RSAKeyPairGenerator();
+	private PGPKeyRingGenerator generateKeyRingGenerator(String id,
+			char[] pass, int s2kcount) throws Exception {
+		// This object generates individual key-pairs.
+		RSAKeyPairGenerator kpg = new RSAKeyPairGenerator();
 
-        kpg.init(new RSAKeyGenerationParameters(BigInteger.valueOf(0x10001), new SecureRandom(), 2048, 12));
+		kpg.init(new RSAKeyGenerationParameters(BigInteger.valueOf(0x10001),
+				new SecureRandom(), 2048, 12));
 
-        PGPKeyPair rsakp_sign = new BcPGPKeyPair(PGPPublicKey.RSA_SIGN, kpg.generateKeyPair(), new Date());
-        PGPKeyPair rsakp_enc = new BcPGPKeyPair(PGPPublicKey.RSA_ENCRYPT, kpg.generateKeyPair(), new Date());
+		PGPKeyPair rsakp_sign = new BcPGPKeyPair(PGPPublicKey.RSA_SIGN,
+				kpg.generateKeyPair(), new Date());
+		PGPKeyPair rsakp_enc = new BcPGPKeyPair(PGPPublicKey.RSA_ENCRYPT,
+				kpg.generateKeyPair(), new Date());
 
-        PGPSignatureSubpacketGenerator signhashgen = new PGPSignatureSubpacketGenerator();
+		PGPSignatureSubpacketGenerator signhashgen = new PGPSignatureSubpacketGenerator();
 
-        signhashgen.setKeyFlags(false, KeyFlags.SIGN_DATA|KeyFlags.CERTIFY_OTHER);
-        signhashgen.setPreferredSymmetricAlgorithms
-            (false, new int[] {
-                SymmetricKeyAlgorithmTags.AES_256,
-                SymmetricKeyAlgorithmTags.AES_192,
-                SymmetricKeyAlgorithmTags.AES_128
-            });
-        signhashgen.setPreferredHashAlgorithms
-            (false, new int[] {
-                HashAlgorithmTags.SHA256,
-                HashAlgorithmTags.SHA1,
-                HashAlgorithmTags.SHA384,
-                HashAlgorithmTags.SHA512,
-                HashAlgorithmTags.SHA224,
-            });
-        signhashgen.setFeature(false, Features.FEATURE_MODIFICATION_DETECTION);
+		signhashgen.setKeyFlags(false, KeyFlags.SIGN_DATA
+				| KeyFlags.CERTIFY_OTHER);
+		signhashgen.setPreferredSymmetricAlgorithms(false, new int[] {
+				SymmetricKeyAlgorithmTags.AES_256,
+				SymmetricKeyAlgorithmTags.AES_192,
+				SymmetricKeyAlgorithmTags.AES_128 });
+		signhashgen.setPreferredHashAlgorithms(false, new int[] {
+				HashAlgorithmTags.SHA256, HashAlgorithmTags.SHA1,
+				HashAlgorithmTags.SHA384, HashAlgorithmTags.SHA512,
+				HashAlgorithmTags.SHA224, });
+		signhashgen.setFeature(false, Features.FEATURE_MODIFICATION_DETECTION);
 
-        PGPSignatureSubpacketGenerator enchashgen = new PGPSignatureSubpacketGenerator();
-        enchashgen.setKeyFlags(false, KeyFlags.ENCRYPT_COMMS|KeyFlags.ENCRYPT_STORAGE);
+		PGPSignatureSubpacketGenerator enchashgen = new PGPSignatureSubpacketGenerator();
+		enchashgen.setKeyFlags(false, KeyFlags.ENCRYPT_COMMS
+				| KeyFlags.ENCRYPT_STORAGE);
 
-        // Objects used to encrypt the secret key.
-        PGPDigestCalculator sha1Calc = new BcPGPDigestCalculatorProvider().get(HashAlgorithmTags.SHA1);
-        PGPDigestCalculator sha256Calc = new BcPGPDigestCalculatorProvider().get(HashAlgorithmTags.SHA256);
+		// Objects used to encrypt the secret key.
+		PGPDigestCalculator sha1Calc = new BcPGPDigestCalculatorProvider()
+				.get(HashAlgorithmTags.SHA1);
+		PGPDigestCalculator sha256Calc = new BcPGPDigestCalculatorProvider()
+				.get(HashAlgorithmTags.SHA256);
 
-        // bcpg 1.48 exposes this API that includes s2kcount. Earlier versions use a default of 0x60.
-        PBESecretKeyEncryptor pske = (new BcPBESecretKeyEncryptorBuilder(PGPEncryptedData.AES_256, sha256Calc, s2kcount)).build(pass);
+		// bcpg 1.48 exposes this API that includes s2kcount. Earlier versions
+		// use a default of 0x60.
+		PBESecretKeyEncryptor pske = (new BcPBESecretKeyEncryptorBuilder(
+				PGPEncryptedData.AES_256, sha256Calc, s2kcount)).build(pass);
 
-        // Finally, create the keyring itself. The constructor takes parameters that allow it to generate the self signature.
-        PGPKeyRingGenerator keyRingGen =
-            new PGPKeyRingGenerator(PGPSignature.POSITIVE_CERTIFICATION, rsakp_sign,
-         id, sha1Calc, signhashgen.generate(), null,
-             new BcPGPContentSignerBuilder(rsakp_sign.getPublicKey().getAlgorithm(), HashAlgorithmTags.SHA1), pske);
+		// Finally, create the keyring itself. The constructor takes parameters
+		// that allow it to generate the self signature.
+		PGPKeyRingGenerator keyRingGen = new PGPKeyRingGenerator(
+				PGPSignature.POSITIVE_CERTIFICATION, rsakp_sign, id, sha1Calc,
+				signhashgen.generate(), null, new BcPGPContentSignerBuilder(
+						rsakp_sign.getPublicKey().getAlgorithm(),
+						HashAlgorithmTags.SHA1), pske);
 
-        // Add our encryption subkey, together with its signature.
-        keyRingGen.addSubKey(rsakp_enc, enchashgen.generate(), null);
-        return keyRingGen;
-    }
+		// Add our encryption subkey, together with its signature.
+		keyRingGen.addSubKey(rsakp_enc, enchashgen.generate(), null);
+		return keyRingGen;
+	}
 
 	public String getPublicKeyFile() {
 		return publicKeyFile;

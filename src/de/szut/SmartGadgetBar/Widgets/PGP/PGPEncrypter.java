@@ -53,42 +53,43 @@ public class PGPEncrypter {
 
 	private PGPPublicKey pukey;
 	private String pukeyfile;
-	
-	public void encrypt(String fileName) throws IOException, NoSuchProviderException, PGPException{
-	
-				
-				
+
+	public void encrypt(String fileName) throws IOException,
+			NoSuchProviderException, PGPException {
+
 		Security.addProvider(new BouncyCastleProvider());
-		
-		OutputStream out = new ArmoredOutputStream(new FileOutputStream(new File(fileName+".pgp")));
-		
-		
+
+		OutputStream out = new ArmoredOutputStream(new FileOutputStream(
+				new File(fileName + ".pgp")));
+
 		ByteArrayOutputStream bOut = new ByteArrayOutputStream();
-		PGPCompressedDataGenerator comData = new PGPCompressedDataGenerator(PGPCompressedData.ZIP);
-		
-		PGPUtil.writeFileToLiteralData(
-				comData.open(bOut),
-				PGPLiteralData.BINARY,
-				new File(fileName) );
-		
+		PGPCompressedDataGenerator comData = new PGPCompressedDataGenerator(
+				PGPCompressedData.ZIP);
+
+		PGPUtil.writeFileToLiteralData(comData.open(bOut),
+				PGPLiteralData.BINARY, new File(fileName));
+
 		comData.close();
-		
-		BcPGPDataEncryptorBuilder dataEncryptor = new BcPGPDataEncryptorBuilder(PGPEncryptedData.TRIPLE_DES);
+
+		BcPGPDataEncryptorBuilder dataEncryptor = new BcPGPDataEncryptorBuilder(
+				PGPEncryptedData.TRIPLE_DES);
 		dataEncryptor.setWithIntegrityPacket(true);
 		dataEncryptor.setSecureRandom(new SecureRandom());
-		
-		PGPEncryptedDataGenerator encryptedDataGenerator = new PGPEncryptedDataGenerator(dataEncryptor);
-		encryptedDataGenerator.addMethod(new BcPublicKeyKeyEncryptionMethodGenerator(pukey));
-				 
+
+		PGPEncryptedDataGenerator encryptedDataGenerator = new PGPEncryptedDataGenerator(
+				dataEncryptor);
+		encryptedDataGenerator
+				.addMethod(new BcPublicKeyKeyEncryptionMethodGenerator(pukey));
+
 		byte[] bytes = bOut.toByteArray();
 		OutputStream cOut = encryptedDataGenerator.open(out, bytes.length);
 		cOut.write(bytes);
 		cOut.close();
 		out.close();
 	}
-		
-	public void setPublicKeyFile(String keyFile){
-		
+
+	public void setPublicKeyFile(String keyFile) {
+
 		pukeyfile = keyFile;
 		try {
 			pukey = readKeyfromFile(new FileInputStream(new File(pukeyfile)));
@@ -97,20 +98,20 @@ public class PGPEncrypter {
 			e.printStackTrace();
 		}
 	}
-	
-	private PGPPublicKey readKeyfromFile(InputStream in) throws IOException, PGPException{
-		PGPPublicKeyRing pkRing = new PGPPublicKeyRing(PGPUtil.getDecoderStream(in), new BcKeyFingerprintCalculator());
+
+	private PGPPublicKey readKeyfromFile(InputStream in) throws IOException,
+			PGPException {
+		PGPPublicKeyRing pkRing = new PGPPublicKeyRing(
+				PGPUtil.getDecoderStream(in), new BcKeyFingerprintCalculator());
 		Iterator pkIt = pkRing.getPublicKeys();
 		while (pkIt.hasNext()) {
 			PGPPublicKey key = (PGPPublicKey) pkIt.next();
 			if (key.isEncryptionKey())
 				return key;
-        	}
-        
-        return null;
+		}
+
+		return null;
 
 	}
-	
-	
-	
+
 }
