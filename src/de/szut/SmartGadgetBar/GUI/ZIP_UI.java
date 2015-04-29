@@ -1,19 +1,18 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.io.File;
-import java.time.temporal.JulianFields;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.szut.SmartGadgetBar.Model.WidgetInterface;
 import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
 
+
+ 
 public class ZIP_UI extends AbstractWidgetPanel{
 
 	private ZIP widget;
@@ -27,8 +26,10 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	@Override
 	void initializePanel() {
+		
 		setSize(280,80);
 		setLayout(null);
 		setBackground(Color.BLUE);
@@ -36,20 +37,47 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		JButton btnZip = new JButton("Zip");
 		btnZip.setBounds(10, 45, 89, 23);
 		btnZip.addActionListener(e -> {
-			widget.comprimate(fileChoosertoZip.getSelectedFiles(),
-					fileChoosertoFile.getSelectedFile().getAbsolutePath());
+			ArrayList<File> files = new ArrayList<File>();
+			File[] choosen = fileChoosertoZip.getSelectedFiles();
+			//choosen = new File(choosen[0].getParent()).listFiles();
+			for(File f:choosen){
+				if(f.isFile()){
+					
+					files.add(f);
+				}else{
+					for(File g: f.listFiles()){
+						files.add(g);
+					}
+				}
+					
+					
+				
+			}
+			File[] p = new File[files.size()];
+			for(int i=0; i<files.size();i++){
+				p[i] = files.get(i);
+			}
+			
+			
+			
+			widget.comprimate(p, "out.zip");
+			
+			
+			
 		});
 		add(btnZip);
 
-		JButton btnFile = new JButton("Select File");
-		btnFile.setBounds(10, 11, 89, 23);
-		btnFile.addActionListener(e -> {
+		JButton btnInFile = new JButton("Select File");
+		btnInFile.setBounds(10, 11, 89, 23);
+		btnInFile.addActionListener(e -> {
 			fileChoosertoZip = new JFileChooser();
+			fileChoosertoZip.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			fileChoosertoZip.setMultiSelectionEnabled(true);
 			fileChoosertoZip.setDialogTitle("Please choose a file");
 			int option = fileChoosertoZip.showOpenDialog(null);
 			
 		});
-		add(btnFile);
+		add(btnInFile);
 
 		JButton btnDecrypt = new JButton("UnZip");
 		btnDecrypt.setBounds(181, 45, 89, 23);

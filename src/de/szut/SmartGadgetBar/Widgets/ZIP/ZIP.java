@@ -62,5 +62,7 @@ public class ZIP  implements WidgetInterface {
 		// TODO Auto-generated method stub
 		return widgetName;
 	}
+	
+	//public File[] getSubFiles()
 
 }
