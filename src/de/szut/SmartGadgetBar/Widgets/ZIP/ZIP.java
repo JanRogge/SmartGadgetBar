@@ -29,12 +29,15 @@ public class ZIP  implements WidgetInterface {
 		for(int i =0; i< temp.length; i++){
 			temp[i] = files[i].getAbsolutePath();
 		}
-		Comprimator.comprimate(temp, outName);
+		new Comprimator().comprimate(temp, outName);
+		//Comprimator.comprimate(temp, outName);
 		
 	}
 	
 	public void comprimate(String[] files, String outName) {
-		 Comprimator.comprimate(files, outName);
+		new Comprimator().comprimate(files, outName);
+
+		 //Comprimator.comprimate(files, outName);
 	}
 
 	public void decomprimate(String zipFile) {

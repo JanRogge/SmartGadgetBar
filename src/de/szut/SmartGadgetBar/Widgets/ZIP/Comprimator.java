@@ -1,98 +1,60 @@
 package de.szut.SmartGadgetBar.Widgets.ZIP;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.zip.*;
 
 public class Comprimator {
-	static final int BUFFER = 2048;
-
-	public static void comprimate(String[] files, String outName) {
-
-		List<File> fileList = new ArrayList<File>();
-
-		for (String s : files) {
-
-			getAllFiles(new File(s), fileList);
-		}
-
-		writeZipFile(new File(outName), fileList);
-
-		System.out.println("---Done");
-	}
-
-	private static void getAllFiles(File dir, List<File> fileList) {
+	
+	public void comprimate(String[] fileNames, String outName){
+		ZipOutputStream out = null;
 		try {
-			if (dir.isDirectory()) {
-
-				File[] files = dir.listFiles();
-				for (File file : files) {
-					fileList.add(file);
-					if (file.isDirectory()) {
-						System.out.println("directory:"
-								+ file.getCanonicalPath());
-						getAllFiles(file, fileList);
-					} else {
-						System.out.println("     file:"
-								+ file.getCanonicalPath());
-					}
-				}
-			}
-			else{
-				fileList.add(dir);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void writeZipFile(File directoryToZip, List<File> fileList) {
-
-		try {
-			FileOutputStream fos = new FileOutputStream(
-					directoryToZip.getName() + ".zip");
-			ZipOutputStream zos = new ZipOutputStream(fos);
-
-			for (File file : fileList) {
-				if (!file.isDirectory()) { // we only zip files, not directories
-					addToZip(directoryToZip, file, zos);
-				}
-			}
-
-			zos.close();
-			fos.close();
+			out = new ZipOutputStream(new FileOutputStream(new File(outName)));
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		File[] files = new File[fileNames.length];
+		for(int i=0; i<fileNames.length; i++){
+			files[i] = new File(fileNames[i]);
+		}
+		String src = files[0].getParentFile().getAbsolutePath();
+		comprimate(files, outName, out, src);
+		try {
+			out.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("done");
 	}
-
-	private static void addToZip(File directoryToZip, File file,
-			ZipOutputStream zos) throws FileNotFoundException, IOException {
-
-		FileInputStream fis = new FileInputStream(file);
-
-		// we want the zipEntry's path to be a relative path that is relative
-		// to the directory being zipped, so chop off the rest of the path
-		System.out.println(directoryToZip.getCanonicalPath());
-		System.out.println(file.getCanonicalPath());
-		String zipFilePath = file.getCanonicalPath().substring(
-				file.getCanonicalPath().length()-directoryToZip.getCanonicalPath().length()-1,
-				file.getCanonicalPath().length());
-		System.out.println("Writing '" + zipFilePath + "' to zip file");
-		ZipEntry zipEntry = new ZipEntry(File.pathSeparator+zipFilePath);
-		zos.putNextEntry(zipEntry);
-
-		byte[] bytes = new byte[1024];
-		int length;
-		while ((length = fis.read(bytes)) >= 0) {
-			zos.write(bytes, 0, length);
+	
+	private  void comprimate(File[] files, String outName, ZipOutputStream zout, String src){
+		try{
+			for(int i=0; i< files.length;i++){
+				File child = files[i];
+				if(child.isFile()){
+					addToZip(child, zout, src);
+				}else{
+					addDirToZip(child, zout, src);
+					comprimate(child.listFiles(), outName, zout, src);
+				}
+			}
+		
+		}catch(Exception e){
+			
 		}
-
-		zos.closeEntry();
-		fis.close();
 	}
+	
+	private void addToZip(File f, ZipOutputStream out, String src) throws IOException{
+		System.out.println(f.getAbsolutePath());
+		System.out.println(src);
+		System.out.println(f.getAbsolutePath().substring(src.length()+1, f.getAbsolutePath().length()));
+		out.putNextEntry(new ZipEntry(f.getAbsolutePath().substring(src.length()+1, f.getAbsolutePath().length())));
+	}
+	private void addDirToZip(File dir, ZipOutputStream out, String src) throws IOException{
+		System.out.println(dir.getAbsolutePath().substring(src.length()+1, dir.getAbsolutePath().length()));
+		out.putNextEntry(new ZipEntry(dir.getAbsolutePath().substring(src.length()+1, dir.getAbsolutePath().length())+"/"));
+	}
+	 
 
 }
