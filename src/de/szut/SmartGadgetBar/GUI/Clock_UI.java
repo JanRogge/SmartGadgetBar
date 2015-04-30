@@ -1,26 +1,22 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import javax.swing.JMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingConstants;
-
-
-import de.szut.SmartGadgetBar.Widgets.Clock.Clock;
-
-import de.szut.SmartGadgetBar.Widgets.Clock.TimeThread;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import java.awt.GridLayout;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import de.szut.SmartGadgetBar.Widgets.Clock.Clock;
+import de.szut.SmartGadgetBar.Widgets.Clock.TimeThread;
 
 public class Clock_UI extends AbstractWidgetPanel {
 	private Clock widget;
