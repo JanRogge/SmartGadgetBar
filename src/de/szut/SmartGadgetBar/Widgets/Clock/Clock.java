@@ -10,11 +10,11 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 public class Clock  implements WidgetInterface{
 	private Clock_UI ui;
 	private TimeThread time;
-	private boolean otherTimeZones;
+	private boolean otherTimeZones = true;
 	public Clock(){
 		System.out.println("Clock");
 		ui = new Clock_UI(this);
-		time = new TimeThread(ui.getMainTime());
+		time = new TimeThread(ui.getMainTime(), ui);
 		time.start();
 	}
 	public void stopThread(){
@@ -29,7 +29,6 @@ public class Clock  implements WidgetInterface{
 //    }
 	public boolean otherTimeZonesSelectet(){
 		if(otherTimeZones){
-			time.otherTimeZones(ui.getTimeLabel(), ui.getZoneName(), "GMT+3");
 			return true;
 		}
 		return false;
