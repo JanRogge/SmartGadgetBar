@@ -19,9 +19,7 @@ public class ZIP  implements WidgetInterface {
 	
 	public ZIP() {
 
-		deflet = new Deflater();
 		ui = new ZIP_UI(this);
-		System.out.println("ZIPPERINO");
 	}
 	public void comprimate(File[] files, String outName){
 		
@@ -30,14 +28,12 @@ public class ZIP  implements WidgetInterface {
 			temp[i] = files[i].getAbsolutePath();
 		}
 		new Comprimator().comprimate(temp, outName);
-		//Comprimator.comprimate(temp, outName);
 		
 	}
 	
 	public void comprimate(String[] files, String outName) {
 		new Comprimator().comprimate(files, outName);
 
-		 //Comprimator.comprimate(files, outName);
 	}
 
 	public void decomprimate(String zipFile) {

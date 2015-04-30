@@ -22,7 +22,6 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		super(parent);
 		widget = parent;
 		initializePanel();
-		System.out.println("ZIPPERINION");
 		// TODO Auto-generated constructor stub
 	}
 
