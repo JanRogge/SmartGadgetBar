@@ -1,6 +1,7 @@
 package de.szut.SmartGadgetBar.Widgets.ZIP;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.zip.*;
 
@@ -23,6 +24,7 @@ public class ZIP  implements WidgetInterface {
 		System.out.println("ZIPPERINO");
 	}
 	public void comprimate(File[] files, String outName){
+		
 		String[] temp = new String[files.length];
 		for(int i =0; i< temp.length; i++){
 			temp[i] = files[i].getAbsolutePath();
@@ -63,6 +65,6 @@ public class ZIP  implements WidgetInterface {
 		return widgetName;
 	}
 	
-	//public File[] getSubFiles()
+	
 
 }

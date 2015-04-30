@@ -37,30 +37,9 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		JButton btnZip = new JButton("Zip");
 		btnZip.setBounds(10, 45, 89, 23);
 		btnZip.addActionListener(e -> {
-			ArrayList<File> files = new ArrayList<File>();
 			File[] choosen = fileChoosertoZip.getSelectedFiles();
-			//choosen = new File(choosen[0].getParent()).listFiles();
-			for(File f:choosen){
-				if(f.isFile()){
-					
-					files.add(f);
-				}else{
-					for(File g: f.listFiles()){
-						files.add(g);
-					}
-				}
-					
-					
-				
-			}
-			File[] p = new File[files.size()];
-			for(int i=0; i<files.size();i++){
-				p[i] = files.get(i);
-			}
 			
-			
-			
-			widget.comprimate(p, "out.zip");
+			widget.comprimate(choosen, "out.zip");
 			
 			
 			
