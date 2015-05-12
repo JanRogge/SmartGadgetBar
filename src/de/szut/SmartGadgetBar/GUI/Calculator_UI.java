@@ -61,7 +61,7 @@ public class Calculator_UI extends AbstractWidgetPanel{
 		});
 		
 		erge = new JLabel("=");
-		erge.setBounds(30,40,50,50);
+		erge.setBounds(30,40,5000,50);
 		add(field);
 		add(erge);
 		
