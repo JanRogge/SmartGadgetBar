@@ -1,23 +1,73 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Properties;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public class OptionPanelWidget {
 
+	private JFrame frame;
+	private Properties props;
+	private WidgetInterface widget;
+	private JButton svbtn;
+	private ArrayList<OptionKeyPairPanel> options;
+	private JScrollPane scroll;
+	private JPanel topPanel;
+	
 	public OptionPanelWidget(WidgetInterface widin){
-		Properties prop = widin.getProperties();
+		frame = new JFrame();
+		svbtn = new JButton("Save");
+		topPanel = new JPanel();
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 		
-		/*
-		 * Code der die Properties anzeigt.
-		 * Mit "ok" werden die Properties geändert 
-		 * und im Objekt prop gespeichert.
-		 * 
-		 */
+		widget = widin;
+		props = widget.getProperties();
 		
+		svbtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveProperties();
+			}
+		});
 		
-		widin.setProperties(prop);
+		frame.setTitle(widget.getWidgetName());
+		
+		options = new ArrayList<OptionKeyPairPanel>();
+		OptionKeyPairPanel op;
+		
+		for(Object k: props.keySet()){
+			System.out.println(k);
+			op = new OptionKeyPairPanel(k, props.get(k));
+			options.add(op);
+			topPanel.add(op);
+		}
+		topPanel.add(svbtn);
+		frame.setContentPane(topPanel);
+		
+		frame.setVisible(true);
 	}
+	 
+	private void saveProperties(){
+		for(OptionKeyPairPanel okpp: options){
+			props.setProperty(okpp.getKey(), okpp.getValue());
+		}
+		widget.setProperties(props);
+	}
+	
+	
+	
+
 	
 }

@@ -31,6 +31,7 @@ public class Calculator implements WidgetInterface{
 	@Override
 	public void setProperties(Properties properties) {
 		this.props = properties;
+		saveProperties();
 	}
 
 	@Override
@@ -55,8 +56,7 @@ public class Calculator implements WidgetInterface{
 		return null;
 		
 	}
-	public static void main(String[] args) {
-		Calculator calc = new Calculator();
-		System.out.println(calc.calculate("3+3*3+3"));
-	}
+
+
+	
 }

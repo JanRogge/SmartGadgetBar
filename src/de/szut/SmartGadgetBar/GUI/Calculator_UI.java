@@ -65,19 +65,7 @@ public class Calculator_UI extends AbstractWidgetPanel{
 		add(field);
 		add(erge);
 		
-		JPopupMenu popup = new JPopupMenu();
-		add(popup);
-		JMenuItem subMenu = new JMenuItem("Options");
-		subMenu.addActionListener(e -> {
-			System.out.println("Insert Options here");
-		});
-		JMenuItem closeWidget = new JMenuItem("Delete");
-		closeWidget.addActionListener(e -> {
-			this.getParent().remove(this);
-		});
-		popup.add(closeWidget);
-		popup.add(subMenu);
-		setComponentPopupMenu(popup);
+		
 		setVisible(true);
 	}
 	

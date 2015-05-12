@@ -31,12 +31,13 @@ public class PGP implements WidgetInterface {
 
 	private PGP_UI ui;
 	private Properties props;
+	public final String widgetName = "PGP";
 
 	public PGP() {
 		Security.addProvider(new BouncyCastleProvider());
 		generateKeyPair();
 		ui = new PGP_UI(this);
-		// props = new PropertyLoader().loadProperties("PGP.ini");
+		loadProperties();
 	}
 
 	/**
@@ -95,14 +96,13 @@ public class PGP implements WidgetInterface {
 
 	@Override
 	public void setProperties(Properties properties) {
-		// TODO Auto-generated method stub
-
+		this.props = properties;
+		saveProperties();
 	}
 
 	@Override
 	public Properties getProperties() {
-		// TODO Auto-generated method stub
-		return null;
+		return props;
 	}
 
 	@Override

@@ -11,11 +11,14 @@ public class Clock  implements WidgetInterface{
 	private Clock_UI ui;
 	private TimeThread time;
 	private boolean otherTimeZones = true;
+	private Properties props;
+	
 	public Clock(){
 		System.out.println("Clock");
 		ui = new Clock_UI(this);
 		time = new TimeThread(ui.getMainTime(), ui);
 		time.start();
+		loadProperties();
 	}
 	public void stopThread(){
 		time.setRunning(false);
@@ -41,14 +44,14 @@ public class Clock  implements WidgetInterface{
 
 	@Override
 	public void setProperties(Properties properties) {
-		// TODO Auto-generated method stub
-		
+		props = properties;
+		saveProperties();
 	}
 
 	@Override
 	public Properties getProperties() {
 		// TODO Auto-generated method stub
-		return null;
+		return props;
 	}
 
 	@Override

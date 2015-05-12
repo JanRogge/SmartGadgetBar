@@ -67,45 +67,8 @@ public class BackgroundPanel extends JPanel {
 						+ me.getY() - pY);
 			}
 		});
-		testWidgets();
 	}
-	public void testWidgets(){
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 5, 280, 70);
-		add(panel);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
-		JPopupMenu popup = new JPopupMenu();
-		textField.add(popup);
-		JMenuItem subMenu = new JMenuItem("Delete");
-		subMenu.addActionListener(e-> {
-			remove(panel);
-		});
-		popup.add(subMenu);
-		textField.setComponentPopupMenu(popup);
-		
-		JPanel panel1 = new JPanel();
-		panel1.setBackground(Color.RED);
-		panel1.setBounds(10, 80, 280, 90);
-		add(panel1);
-		panel1.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JPopupMenu menuPopup1 = new JPopupMenu();
-		JMenuItem closeMenuItem1 = new JMenuItem("Test");
-		closeMenuItem1.addActionListener(e-> {
-			//mainf.close();
-		});
-		JMenuItem closeWidget = new JMenuItem("Delete");
-		closeWidget.addActionListener(e-> {
-			remove(panel1);
-		});
-		menuPopup1.add(closeWidget);
-        menuPopup1.add(closeMenuItem1);
-        panel1.setComponentPopupMenu(menuPopup1);
-	}
+	
 	public void addtoMenu(String[] Widgets){
 		for(int i = 0; i < Widgets.length; i++){
 			JMenuItem widget= new JMenuItem(Widgets[i]);

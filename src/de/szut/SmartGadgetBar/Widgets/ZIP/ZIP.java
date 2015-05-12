@@ -8,6 +8,7 @@ import java.util.zip.*;
 import javax.swing.JPanel;
 
 import de.szut.SmartGadgetBar.GUI.ZIP_UI;
+import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public class ZIP  implements WidgetInterface {
@@ -20,6 +21,7 @@ public class ZIP  implements WidgetInterface {
 	public ZIP() {
 
 		ui = new ZIP_UI(this);
+		loadProperties();
 	}
 	public void comprimate(File[] files, String outName){
 		
@@ -50,6 +52,7 @@ public class ZIP  implements WidgetInterface {
 	public void setProperties(Properties properties) {
 		// TODO Auto-generated method stub
 		props = properties;
+		saveProperties();
 	}
 
 	@Override
@@ -63,7 +66,6 @@ public class ZIP  implements WidgetInterface {
 		// TODO Auto-generated method stub
 		return widgetName;
 	}
-	
 	
 
 }

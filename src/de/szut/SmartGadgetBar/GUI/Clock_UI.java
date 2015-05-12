@@ -65,20 +65,7 @@ public class Clock_UI extends AbstractWidgetPanel {
 			//add(lblTime);
 		}
 
-		JPopupMenu popup = new JPopupMenu();
-		add(popup);
-		JMenuItem subMenu = new JMenuItem("Options");
-		subMenu.addActionListener(e -> {
-			System.out.println("Insert Options here");
-		});
-		JMenuItem closeWidget = new JMenuItem("Delete");
-		closeWidget.addActionListener(e -> {
-			this.getParent().remove(this);
-			widget.stopThread();
-		});
-		popup.add(closeWidget);
-		popup.add(subMenu);
-		setComponentPopupMenu(popup);
+		
 		
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.CENTER);
