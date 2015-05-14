@@ -7,11 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.io.File;
 
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -105,5 +104,10 @@ public class Clock_UI extends AbstractWidgetPanel {
 //		add(textField);
 //		textField.setColumns(10);
 //		setVisible(true);
+	}
+	@Override
+	public void pushFiles(File[] files) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -3,11 +3,9 @@ package de.szut.SmartGadgetBar.GUI;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.szut.SmartGadgetBar.Widgets.Calculator.Calculator;
@@ -67,6 +65,12 @@ public class Calculator_UI extends AbstractWidgetPanel{
 		
 		
 		setVisible(true);
+	}
+
+	@Override
+	public void pushFiles(File[] files) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

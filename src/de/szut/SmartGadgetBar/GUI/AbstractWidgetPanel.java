@@ -1,5 +1,7 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.io.File;
+
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -7,9 +9,8 @@ import javax.swing.JPopupMenu;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public abstract class AbstractWidgetPanel extends JPanel {
+	
 	protected WidgetInterface widget;
-	
-	
 	
 	public AbstractWidgetPanel(WidgetInterface parent){
 		this.widget = parent;
@@ -29,6 +30,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 		setComponentPopupMenu(popup);
 		setVisible(true);
 	}
+	
 	public WidgetInterface getWidget() {
 		return widget;
 	}
@@ -39,4 +41,5 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	
 	abstract void initializePanel();
 	
+	public abstract void pushFiles(File[] files);
 }

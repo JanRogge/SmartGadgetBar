@@ -2,12 +2,9 @@ package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
 
@@ -66,6 +63,13 @@ public class ZIP_UI extends AbstractWidgetPanel{
 
 		
 
+	}
+
+
+	@Override
+	public void pushFiles(File[] files) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

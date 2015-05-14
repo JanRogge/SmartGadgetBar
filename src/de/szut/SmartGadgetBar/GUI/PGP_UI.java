@@ -4,15 +4,9 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
-
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -83,5 +77,11 @@ public class PGP_UI extends AbstractWidgetPanel {
 
 		
 		setVisible(true);
+	}
+
+	@Override
+	public void pushFiles(File[] files) {
+		// TODO Auto-generated method stub
+		
 	}
 }
