@@ -81,5 +81,8 @@ public class ZIP_UI extends AbstractWidgetPanel{
 				widget.decomprimate(file.getAbsolutePath());
 			}
 		}
+		else {
+			widget.comprimate(files, outName);;
+		}
 	}
 }
