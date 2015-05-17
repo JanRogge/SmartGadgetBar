@@ -6,10 +6,12 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.dnd.DropTarget;
 
 public class PGP_UI extends AbstractWidgetPanel {
 	/**
@@ -30,7 +32,6 @@ public class PGP_UI extends AbstractWidgetPanel {
 
 	@Override
 	void initializePanel() {
-		// TODO Auto-generated method stub
 		setLayout(null);
 		setBackground(Color.BLUE);
 
@@ -60,7 +61,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 					"keys/private.skr");
 		});
 		add(btnDecrypt);
-
+		
 		JButton btnPublicKey = new JButton("Public Key");
 		btnPublicKey.setBounds(181, 11, 89, 23);
 		btnPublicKey.addActionListener(e -> {
@@ -74,7 +75,8 @@ public class PGP_UI extends AbstractWidgetPanel {
 			}
 		});
 		add(btnPublicKey);
-
+		
+		new DropTarget(this, new FileDropper(this));
 		
 		setVisible(true);
 	}
@@ -82,6 +84,5 @@ public class PGP_UI extends AbstractWidgetPanel {
 	@Override
 	public void pushFiles(File[] files) {
 		// TODO Auto-generated method stub
-		
 	}
 }

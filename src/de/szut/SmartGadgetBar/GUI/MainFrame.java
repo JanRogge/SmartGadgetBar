@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
 		windowDimension.setBounds(Double.valueOf(props.getProperty("position.x")).intValue(),Double.valueOf(props.getProperty("position.y")).intValue(), Integer.parseInt(props.getProperty("size.x")), Integer.parseInt(props.getProperty("size.y")));
 		setBounds(windowDimension);
 	}
-	
+
 	public void close(){
 		setVisible(false);
 		dispose();
@@ -41,5 +41,4 @@ public class MainFrame extends JFrame {
 		props.setProperty("alwaysontop",String.valueOf(isAlwaysOnTop()));
 		new PropertyLoader().saveProperties(props, "config/config.ini");;
 	}
-
 }

@@ -17,15 +17,27 @@ public class PropertyLoader {
 	 * Lädt die Properties
 	 * @return geladene Properties
 	 */
-	public Properties loadProperties(String fileName){
+	public Properties loadProperties(String fileName/*, Properties defaultProperties*/){
 
 		Properties p = new Properties();
 		try {
 			p.load(new FileInputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (FileNotFoundException e) {
+			//p = defaultProperties;
+			try {
+				p.store(new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)), "");
+			}
+			catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -42,10 +54,12 @@ public class PropertyLoader {
 	public void saveProperties(Properties p, String fileName){
 		try {
 			p.store(new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)), "");
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

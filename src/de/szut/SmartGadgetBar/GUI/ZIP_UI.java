@@ -1,11 +1,13 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
+import java.awt.dnd.DropTarget;
 import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
+import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
 
 
@@ -61,15 +63,23 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		});
 		add(btnDecrypt);
 
-		
+		new DropTarget(this, new FileDropper(this));
 
 	}
 
 
 	@Override
 	public void pushFiles(File[] files) {
-		// TODO Auto-generated method stub
-		
+		boolean unZip = true; 
+		for (File file : files) {
+			if (!file.getAbsolutePath().endsWith(".zip")) {
+				unZip = false;
+			}
+		}
+		if (unZip) {
+			for (File file : files) {
+				widget.decomprimate(file.getAbsolutePath());
+			}
+		}
 	}
-
 }
