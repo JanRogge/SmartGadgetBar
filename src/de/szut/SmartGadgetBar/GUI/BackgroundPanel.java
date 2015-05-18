@@ -15,9 +15,6 @@ import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetLoader;
 import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
-import java.awt.Color;
-import java.util.Properties;
-
 public class BackgroundPanel extends JPanel {
 	
 	/**

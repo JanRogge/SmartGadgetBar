@@ -10,10 +10,10 @@ public interface WidgetInterface {
 	public Properties getProperties();
 	public String getWidgetName();
 
-	default void loadProperties(){
+	default void loadProperties() {
 		setProperties(new PropertyLoader().loadProperties("config/"+getWidgetName()+".ini"));
 	}
-	default void saveProperties(){
+	default void saveProperties() {
 		new PropertyLoader().saveProperties(getProperties(), "config/"+getWidgetName()+".ini");
 	}
 	
