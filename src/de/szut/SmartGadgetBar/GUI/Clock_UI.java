@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.File;
-import java.util.Calendar;
 import java.util.TimeZone;
 
 import javax.swing.DefaultComboBoxModel;
@@ -62,37 +61,37 @@ public class Clock_UI extends AbstractWidgetPanel {
 		add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new GridLayout(0, 3, 10, 0));
 		
-		TimeZone timeZone = Calendar.getInstance().getTimeZone(); 
 		JComboBox<Object> values = new JComboBox<>();
-		values.setModel(new DefaultComboBoxModel(timeZone.getAvailableIDs()));
+		values.setEditable(true);
+		values.setModel(new DefaultComboBoxModel<Object>(TimeZone.getAvailableIDs()));
 		
-		JLabel lblNewLabel = new JLabel();
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		panel_1.add(lblNewLabel);
+		JLabel altTime1 = new JLabel("");
+		altTime1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		panel_1.add(altTime1);
 
-		JLabel lblNewLabel_1 = new JLabel();
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		panel_1.add(lblNewLabel_1);
+		JLabel altTime2 = new JLabel("");
+		altTime2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		panel_1.add(altTime2);
 
-		JLabel lblNewLabel_2 = new JLabel();
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		panel_1.add(lblNewLabel_2);
+		JLabel altTime3 = new JLabel("");
+		altTime3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		panel_1.add(altTime3);
 
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(e -> {
-			widget.setOtherTimeLabels(lblNewLabel, values.getSelectedItem().toString());
+			widget.setOtherTimeLabels(altTime1, values.getSelectedItem().toString());
 		});
 		panel_1.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("New button");
 		btnNewButton_1.addActionListener(e -> {
-			widget.setOtherTimeLabels(lblNewLabel_1, values.getSelectedItem().toString());
+			widget.setOtherTimeLabels(altTime2, values.getSelectedItem().toString());
 		});
 		panel_1.add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("New button");
 		btnNewButton_2.addActionListener(e -> {
-			widget.setOtherTimeLabels(lblNewLabel_2, values.getSelectedItem().toString());
+			widget.setOtherTimeLabels(altTime3, values.getSelectedItem().toString());
 		});
 		panel_1.add(btnNewButton_2);
 

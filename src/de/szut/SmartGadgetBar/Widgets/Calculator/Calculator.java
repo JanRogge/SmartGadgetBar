@@ -2,7 +2,6 @@ package de.szut.SmartGadgetBar.Widgets.Calculator;
 
 import java.util.Properties;
 
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.JPanel;

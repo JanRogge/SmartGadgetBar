@@ -1,7 +1,5 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,8 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public class OptionPanelWidget {
@@ -22,7 +18,6 @@ public class OptionPanelWidget {
 	private WidgetInterface widget;
 	private JButton svbtn;
 	private ArrayList<OptionKeyPairPanel> options;
-	private JScrollPane scroll;
 	private JPanel topPanel;
 	
 	public OptionPanelWidget(WidgetInterface widin){

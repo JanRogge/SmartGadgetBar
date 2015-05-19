@@ -9,7 +9,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 public class FileVisitor extends SimpleFileVisitor<Path>{
 	private Search search;
 	private String name;
-	private SearchThread t;
 	public FileVisitor(Search search, String name){
 		this.search = search;
 		this.name = name;

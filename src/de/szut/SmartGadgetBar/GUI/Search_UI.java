@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -17,8 +18,12 @@ import de.szut.SmartGadgetBar.Widgets.Search.Search;
 
 public class Search_UI extends AbstractWidgetPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8036032464275587088L;
 	private Search search;
-	private JComboBox comboBox;
+	private JComboBox<Object> comboBox;
 	private String tmp;
 	public Search_UI(Search parent) {
 		super(parent);
@@ -33,12 +38,17 @@ public class Search_UI extends AbstractWidgetPanel{
 		setLayout(null);
 		setBackground(Color.YELLOW);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Object>();
 		comboBox.setEditable(true);
 		comboBox.setUI(new BasicComboBoxUI() {
 		    protected JButton createArrowButton() {
 		        return new JButton() {
-		            public int getWidth() {
+		            /**
+					 * 
+					 */
+					private static final long serialVersionUID = 2597150876771746912L;
+
+					public int getWidth() {
 		                return 0;
 		            }
 		        };
@@ -104,9 +114,7 @@ public class Search_UI extends AbstractWidgetPanel{
 		    };
 	public void updateComboBox(){
 		comboBox.removeAllItems();
-		//System.out.println(search.getFiles().size());
-		for(int i = 1 ; i <= search.getFiles().size(); i++)
-			comboBox.addItem(search.getFiles().get(i-1));
+		comboBox.setModel(new DefaultComboBoxModel<Object>(search.getFiles().toArray()));
 		comboBox.getEditor().setItem(tmp);
 		comboBox.showPopup();
 		comboBox.setMaximumRowCount(50);

@@ -1,7 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Component;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -9,11 +8,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
-
 import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetLoader;
-import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
 public class BackgroundPanel extends JPanel {
 	
@@ -22,7 +18,6 @@ public class BackgroundPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -2546051500075793695L;
     private int pX, pY;
-    private JTextField textField;
     private JMenu addWidgets;
     private WidgetLoader widgetLoader;
     public static final int GAP = 5;

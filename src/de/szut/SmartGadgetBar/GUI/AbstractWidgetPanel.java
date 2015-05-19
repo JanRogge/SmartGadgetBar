@@ -1,12 +1,9 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -22,7 +19,6 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	protected WidgetInterface widget;
 	private PopoutFrame pop;
 	private BackgroundPanel tmp;
-	private JFrame tmp2;
 	private int pX, pY;
 	
 	public AbstractWidgetPanel(WidgetInterface parent){

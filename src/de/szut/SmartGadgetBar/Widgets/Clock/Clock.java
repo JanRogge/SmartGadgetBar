@@ -1,5 +1,6 @@
 package de.szut.SmartGadgetBar.Widgets.Clock;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.TimeZone;
@@ -14,6 +15,7 @@ public class Clock  implements WidgetInterface{
 	private Clock_UI ui;
 	private TimeThread time;
 	private Properties props;
+	ArrayList<TimeThread> threads = new ArrayList<TimeThread>();
 	
 	public Clock(){
 		TimeZone timeZone = Calendar.getInstance().getTimeZone(); 
@@ -24,11 +26,23 @@ public class Clock  implements WidgetInterface{
 		loadProperties();
 	}
 	public void stopThread(){
-		time.setRunning(false);
+		for (TimeThread thread : threads) {
+			thread.setRunning(false);
+		}
 	}
 	public void setOtherTimeLabels(JLabel label, String timezone){
-		time = new TimeThread(label, timezone, false);
-		threads.add(time);
+		if(label.getText() != ""){
+			for (TimeThread thread : threads) {
+				if(label == thread.getLabel()){
+					thread.setRunning(false);
+					time = new TimeThread(label, timezone, false);
+				}		
+			}
+			threads.add(time);
+		} else{
+			time = new TimeThread(label, timezone, false);
+			threads.add(time);
+		}
 		time.start();
 	}
 	@Override
