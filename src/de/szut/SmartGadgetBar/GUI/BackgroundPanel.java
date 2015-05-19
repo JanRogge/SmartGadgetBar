@@ -66,13 +66,13 @@ public class BackgroundPanel extends JPanel {
 		});
 	}
 	
-	public void addtoMenu(String[] Widgets){
-		for(int i = 0; i < Widgets.length; i++){
-			JMenuItem widget= new JMenuItem(Widgets[i]);
+	public void addtoMenu(String[] widgets){
+		for(int i = 0; i < widgets.length; i++){
+			JMenuItem widget= new JMenuItem(widgets[i]);
 			addWidgets.add(widget);
 			int x = i;
 			widget.addActionListener(e -> {
-				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + Widgets[x] +"/" + Widgets[x] + ".class").getPanel();
+				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widgets[x] +"/" + widgets[x] + ".class").getPanel();
 				add(widgetPanel);
 				rebuild();
 			});	
