@@ -12,23 +12,26 @@ import javax.swing.JPanel;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPException;
 
+import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.PGP_UI;
 import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
- * @author Fabian
+ * 
  *Klasse, die die nötigen Funktionalität zum
  *Verschlüsseln, Entschlüsseln und Key Generieren 
  *bereitstellt
  */
 
-/**
- * @author Fabian
- *
- */
+
+
 public class PGP implements WidgetInterface {
 
+	public static final String PASS = "passwort";
+	public static final String EMAIL = "email";
+	public static final String KEYSIZE = "keysize";
+	
 	private PGP_UI ui;
 	private Properties props;
 	public final String widgetName = "PGP";
@@ -47,10 +50,11 @@ public class PGP implements WidgetInterface {
 		if (!new File("keys/private.skr").exists()
 				|| !new File("keys/public.asc").exists()) {
 			KeyGenerator kgen = new KeyGenerator();
+			kgen.setKeySize(props.getProperty(PGP.KEYSIZE));
 			kgen.setPrivateKeyFile("keys/private.skr");
 			kgen.setPublicKeyFile("keys/public.asc");
-			kgen.setPass("DiesIstEinePassPhrase".toCharArray());
-			kgen.setEmail("example@mail.com");
+			kgen.setPass(props.getProperty(PGP.PASS).toCharArray());
+			kgen.setEmail(props.getProperty(PGP.EMAIL));
 			try {
 				kgen.generateKeyPair();
 			} catch (Exception e) {
@@ -59,11 +63,16 @@ public class PGP implements WidgetInterface {
 		}
 
 	}
-
+	
+	/**
+	 * Verschluesselt eine gegebene Datei mit einem gegebenen Schluessel
+	 * @param fileName
+	 * @param keyFile
+	 */
 	public void encryptFile(String fileName, String keyFile) {
 		encryptFile(new File(fileName), keyFile);
 	}
-
+	
 	public void encryptFile(File f, String keyFile) {
 		try {
 			PGPEncrypter enc = new PGPEncrypter();
@@ -75,13 +84,17 @@ public class PGP implements WidgetInterface {
 		}
 	}
 
+	/**
+	 * @param encryptFileName
+	 * @param prikeyFile
+	 */
 	public void decryptFile(String encryptFileName, String prikeyFile) {
 		try {
 			FileInputStream inp = new FileInputStream(new File(encryptFileName));
 			PGPDecrypter.decrypt(inp,
 					new FileInputStream(new File(prikeyFile)),
 					encryptFileName.substring(0, encryptFileName.length() - 4),
-					"DiesIstEinePassPhrase".toCharArray());
+					props.getProperty(PGP.PASS).toCharArray());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -89,7 +102,7 @@ public class PGP implements WidgetInterface {
 	}
 
 	@Override
-	public JPanel getPanel() {
+	public AbstractWidgetPanel getPanel() {
 		// TODO Auto-generated method stub
 		return ui;
 	}

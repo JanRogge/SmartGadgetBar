@@ -4,8 +4,10 @@ import java.util.Properties;
 
 import javax.swing.JPanel;
 
+import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
+
 public interface WidgetInterface {
-	public JPanel getPanel();
+	public AbstractWidgetPanel getPanel();
 	public void setProperties(Properties properties);
 	public Properties getProperties();
 	public String getWidgetName();

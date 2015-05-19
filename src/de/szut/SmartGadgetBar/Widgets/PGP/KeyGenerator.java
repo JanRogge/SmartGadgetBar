@@ -30,13 +30,25 @@ import org.bouncycastle.openpgp.operator.bc.BcPGPContentSignerBuilder;
 import org.bouncycastle.openpgp.operator.bc.BcPGPDigestCalculatorProvider;
 import org.bouncycastle.openpgp.operator.bc.BcPGPKeyPair;
 
+/**
+ * Klasse zum generieren von Keys
+ *Sollte ueber die Klasse PGP benutzt werden
+ */
 public class KeyGenerator {
 
 	private String publicKeyFile;
 	private String privateKeyFile;
 	private char[] pass;
 	private String email;
+	private int keySize;
 
+	
+	
+	/**
+	 * Generiert die Keys und speicher sie im verzeichnis
+	 *\keys\
+	 * @throws Exception
+	 */
 	public void generateKeyPair() throws Exception {
 		FileWriter w = new FileWriter(new File(publicKeyFile));
 		w = new FileWriter(new File(privateKeyFile));
@@ -68,7 +80,7 @@ public class KeyGenerator {
 		RSAKeyPairGenerator kpg = new RSAKeyPairGenerator();
 
 		kpg.init(new RSAKeyGenerationParameters(BigInteger.valueOf(0x10001),
-				new SecureRandom(), 2048, 12));
+				new SecureRandom(), this.keySize, 12));
 
 		PGPKeyPair rsakp_sign = new BcPGPKeyPair(PGPPublicKey.RSA_SIGN,
 				kpg.generateKeyPair(), new Date());
@@ -147,5 +159,15 @@ public class KeyGenerator {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setKeySize(String keysize) {
+		try{
+			
+			this.keySize = Integer.parseInt(keysize);
+		}catch(Exception e){
+			this.keySize=2048;
+		}
+		
 	}
 }

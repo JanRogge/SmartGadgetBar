@@ -4,6 +4,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
+/**
+ * Klasse fuer die Darstellung eines key-value pairs.
+ * Statt dem Key wird ein bezeichnender String angezeigt
+ *
+ */
 public class OptionKeyPairPanel extends JPanel{
 
 	private String key;
@@ -12,11 +18,22 @@ public class OptionKeyPairPanel extends JPanel{
 	private JLabel keyLab;
 	private JTextField valueFld;
 	
-	public OptionKeyPairPanel(Object k, Object object){
+	/**
+	 * @param k der Key, mit dem auf die property zugegriffen werden kann
+	 * @param object die value des dazugehoerigen keys. wird als textfield angezeigt und kann 
+	 * bearbeitet werden
+	 * @param title der bezeichnende String, der neben dem textfeld mit der value gezeigt wird
+	 */
+	public OptionKeyPairPanel(Object k, Object object, String title){
 		this.key = k.toString();
-		this.value = object.toString();
+		if(object == null){
+			value ="";
+		}else{
+			
+			this.value = object.toString();
+		}
 		
-		keyLab = new JLabel(key);
+		keyLab = new JLabel(title);
 		valueFld = new JTextField(value);
 		
 		setLayout(null);
@@ -31,6 +48,6 @@ public class OptionKeyPairPanel extends JPanel{
 		return key;
 	}
 	public String getValue(){
-		return value;
+		return valueFld.getText();
 	}
 }

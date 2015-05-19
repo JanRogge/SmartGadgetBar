@@ -8,18 +8,28 @@ import javax.swing.JPopupMenu;
 
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
+/**
+ * Abstracte Klasse, die alle UI's  der widgets erben muessen
+ *
+ */
 public abstract class AbstractWidgetPanel extends JPanel {
 	
 	protected WidgetInterface widget;
 	
+	
+	/**
+	 * Konstruktor
+	 * Die UI kennt das Widget um mit ihm zu interagieren
+	 * Hat bereits die Menuepunkte Options und Delete
+	 * @param parent
+	 */
 	public AbstractWidgetPanel(WidgetInterface parent){
 		this.widget = parent;
 		JPopupMenu popup = new JPopupMenu();
 		add(popup);
 		JMenuItem subMenu = new JMenuItem("Options");
 		subMenu.addActionListener(e -> {
-			new OptionPanelWidget(widget);
-			System.out.println("Insert Options here");
+			widget.getPanel().optionClicked();
 		});
 		JMenuItem closeWidget = new JMenuItem("Delete");
 		closeWidget.addActionListener(e -> {
@@ -35,9 +45,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 		return widget;
 	}
 	
-	public void optionClicked(){
-		new OptionPanelWidget(widget);
-	}
+	public abstract void optionClicked();
 	
 	abstract void initializePanel();
 	

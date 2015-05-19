@@ -9,6 +9,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
+import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
+import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
 public class Notes_UI extends AbstractWidgetPanel {
 	
@@ -34,5 +36,14 @@ public class Notes_UI extends AbstractWidgetPanel {
 	
 	@Override
 	public void pushFiles(File[] files) {
+	}
+
+	@Override
+	public void optionClicked() {
+		// TODO Auto-generated method stub
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(Notes.DBPath, "Databasepath:");
+		opw.addProperty(Notes.TXTPATH, "Dafault .txt file path");
+		opw.finish();
 	}
 }

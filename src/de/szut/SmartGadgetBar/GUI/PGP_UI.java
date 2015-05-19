@@ -13,10 +13,12 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.dnd.DropTarget;
 
+/**
+ * Das Panel fuer das Widget PGP
+ *
+ */
 public class PGP_UI extends AbstractWidgetPanel {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3787640035406114125L;
 	private JFileChooser fileChooser;
 	private JFileChooser keyChooser;
@@ -84,5 +86,15 @@ public class PGP_UI extends AbstractWidgetPanel {
 	@Override
 	public void pushFiles(File[] files) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void optionClicked() {
+		// TODO Auto-generated method stub
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(PGP.EMAIL, "E-Mail:");
+		opw.addProperty(PGP.PASS, "Password(Keys are useless when changed)");
+		opw.addProperty(PGP.KEYSIZE, "Size of Keys");
+		opw.finish();
 	}
 }

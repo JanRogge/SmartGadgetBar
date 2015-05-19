@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import de.szut.SmartGadgetBar.Widgets.Clock.Clock;
 import de.szut.SmartGadgetBar.Widgets.Clock.TimeThread;
+import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
 public class Clock_UI extends AbstractWidgetPanel {
 	private Clock widget;
@@ -109,5 +110,12 @@ public class Clock_UI extends AbstractWidgetPanel {
 	public void pushFiles(File[] files) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void optionClicked() {
+		// TODO Auto-generated method stub
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(Clock.CITIES, "Cities:");
+		opw.finish();
 	}
 }

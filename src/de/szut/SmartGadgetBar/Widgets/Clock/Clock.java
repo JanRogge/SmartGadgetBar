@@ -4,10 +4,12 @@ import java.util.Properties;
 
 import javax.swing.JPanel;
 
+import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.Clock_UI;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public class Clock  implements WidgetInterface{
+	public static final String CITIES = "cities";
 	private Clock_UI ui;
 	private TimeThread time;
 	private boolean otherTimeZones = true;
@@ -37,7 +39,7 @@ public class Clock  implements WidgetInterface{
 		return false;
 	}
 	@Override
-	public JPanel getPanel() {
+	public AbstractWidgetPanel getPanel() {
 		// TODO Auto-generated method stub
 		return ui;
 	}

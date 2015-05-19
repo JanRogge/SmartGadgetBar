@@ -72,7 +72,7 @@ public class BackgroundPanel extends JPanel {
 			addWidgets.add(widget);
 			int x = i;
 			widget.addActionListener(e -> {
-				JPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + Widgets[x] +"/" + Widgets[x] + ".class").getPanel();
+				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + Widgets[x] +"/" + Widgets[x] + ".class").getPanel();
 				add(widgetPanel);
 				rebuild();
 			});	

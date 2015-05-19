@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.szut.SmartGadgetBar.Widgets.Calculator.Calculator;
+import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
 public class Calculator_UI extends AbstractWidgetPanel{
 
@@ -21,7 +22,9 @@ public class Calculator_UI extends AbstractWidgetPanel{
 	public Calculator_UI(Calculator parent) {
 		super(parent);
 		this.widget = parent;
+		
 		initializePanel();
+		
 	}
 
 	@Override
@@ -71,6 +74,14 @@ public class Calculator_UI extends AbstractWidgetPanel{
 	public void pushFiles(File[] files) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void optionClicked() {
+		// TODO Auto-generated method stub
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(Calculator.MSG, "What are you searching for? Calculator need no options!");
+		opw.finish();
 	}
 	
 	

@@ -3,12 +3,24 @@ package de.szut.SmartGadgetBar.Widgets.ZIP;
 import java.io.*;
 import java.util.zip.*;
 
+/**
+ *Klasse zum Komprimieren von Dateien als zip
+ *Sollte ueber die Klasse ZIP benutzt werden
+ */
 public class Comprimator {
 	
 	public void comprimate(String[] fileNames, String outName){
 		ZipOutputStream out = null;
 		try {
-			out = new ZipOutputStream(new FileOutputStream(new File(outName)));
+			File f = new File(outName);
+			f.getParentFile().mkdirs(); 
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			out = new ZipOutputStream(new FileOutputStream(f));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -25,7 +37,6 @@ public class Comprimator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("done");
 	}
 	
 	private  void comprimate(File[] files, String outName, ZipOutputStream zout, String src){
@@ -43,16 +54,25 @@ public class Comprimator {
 		}catch(Exception e){
 			
 		}
+		
 	}
 	
 	private void addToZip(File f, ZipOutputStream out, String src) throws IOException{
-		System.out.println(f.getAbsolutePath());
-		System.out.println(src);
-		System.out.println(f.getAbsolutePath().substring(src.length()+1, f.getAbsolutePath().length()));
 		out.putNextEntry(new ZipEntry(f.getAbsolutePath().substring(src.length()+1, f.getAbsolutePath().length())));
+		FileInputStream in = new FileInputStream(f);
+		 
+		int len;
+		byte[] buffer = new byte[2048];
+		while ((len = in.read(buffer )) > 0) {
+			out.write(buffer, 0, len);
+		}
+
+		in.close();
+		out.closeEntry();
+
 	}
 	private void addDirToZip(File dir, ZipOutputStream out, String src) throws IOException{
-		System.out.println(dir.getAbsolutePath().substring(src.length()+1, dir.getAbsolutePath().length()));
+		
 		out.putNextEntry(new ZipEntry(dir.getAbsolutePath().substring(src.length()+1, dir.getAbsolutePath().length())+"/"));
 	}
 	 

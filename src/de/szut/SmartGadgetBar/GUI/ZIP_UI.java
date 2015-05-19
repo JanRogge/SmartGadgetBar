@@ -11,7 +11,11 @@ import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
 
 
- 
+	
+/**
+ * Das Panel fuer das Widget ZIP
+ *
+ */
 public class ZIP_UI extends AbstractWidgetPanel{
 
 	private ZIP widget;
@@ -37,7 +41,7 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		btnZip.addActionListener(e -> {
 			File[] choosen = fileChoosertoZip.getSelectedFiles();
 			
-			widget.comprimate(choosen, "out.zip");
+			widget.comprimate(choosen);
 			
 			
 			
@@ -82,7 +86,16 @@ public class ZIP_UI extends AbstractWidgetPanel{
 			}
 		}
 		else {
-			widget.comprimate(files, outName);;
+			widget.comprimate(files);
 		}
+	}
+
+
+	@Override
+	public void optionClicked() {
+		// TODO Auto-generated method stub
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(ZIP.COMLOCATION, "Comprimate to:");
+		opw.finish();
 	}
 }
