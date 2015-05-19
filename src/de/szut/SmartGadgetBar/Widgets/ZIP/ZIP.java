@@ -66,6 +66,11 @@ public class ZIP  implements WidgetInterface {
 		// TODO Auto-generated method stub
 		return widgetName;
 	}
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

@@ -54,4 +54,9 @@ public class Clock  implements WidgetInterface{
 		// TODO Auto-generated method stub
 		return "Clock";
 	}
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		stopThread();
+	}
 }

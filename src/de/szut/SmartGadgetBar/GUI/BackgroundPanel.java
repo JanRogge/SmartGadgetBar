@@ -60,7 +60,7 @@ public class BackgroundPanel extends JPanel {
 		});
 		addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent me) {
-				mainf.setLocation(getParent().getParent().getParent().getLocation().x + me.getX() - pX, mainf.getLocation().y
+				mainf.setLocation(mainf.getLocation().x + me.getX() - pX, mainf.getLocation().y
 						+ me.getY() - pY);
 			}
 		});

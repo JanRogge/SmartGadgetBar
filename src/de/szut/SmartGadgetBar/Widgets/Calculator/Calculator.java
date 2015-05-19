@@ -58,5 +58,12 @@ public class Calculator implements WidgetInterface{
 	}
 
 
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 }

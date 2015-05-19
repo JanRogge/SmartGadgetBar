@@ -75,4 +75,9 @@ public class Search implements WidgetInterface{
 		return t.getRunning();
 		
 	}
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
 }

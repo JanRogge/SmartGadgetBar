@@ -11,6 +11,7 @@ public interface WidgetInterface {
 	public void setProperties(Properties properties);
 	public Properties getProperties();
 	public String getWidgetName();
+	public void close();
 
 	default void loadProperties() {
 		setProperties(new PropertyLoader().loadProperties("config/"+getWidgetName()+".ini"));

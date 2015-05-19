@@ -37,4 +37,10 @@ public class Notes implements WidgetInterface {
 		return "Notes";
 	}
 
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

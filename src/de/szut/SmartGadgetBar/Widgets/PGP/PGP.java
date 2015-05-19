@@ -111,4 +111,10 @@ public class PGP implements WidgetInterface {
 		return "PGP";
 	}
 
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

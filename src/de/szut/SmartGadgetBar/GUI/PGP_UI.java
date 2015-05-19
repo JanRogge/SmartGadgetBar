@@ -25,7 +25,8 @@ public class PGP_UI extends AbstractWidgetPanel {
 	public PGP_UI(PGP pgp) {
 		super(pgp);
 		this.widget = pgp;
-		setBounds(new Rectangle(0, 0, 280, 80));
+		//setBounds(new Rectangle(0, 0, 280, 80));
+		setSize(280,200);
 		initializePanel();
 		
 	}
