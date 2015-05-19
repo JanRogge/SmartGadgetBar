@@ -82,7 +82,7 @@ public class ZIP_UI extends AbstractWidgetPanel{
 			}
 		}
 		else {
-			widget.comprimate(files, outName);;
+			//widget.comprimate(files, outName);;
 		}
 	}
 }

@@ -12,39 +12,31 @@ import de.szut.SmartGadgetBar.GUI.Clock_UI;
 
 public class TimeThread extends Thread{
 	 protected boolean isRunning;
-
-     protected JLabel dateLabel;
      protected JLabel timeLabel;
-     private Clock_UI ui;
      private Date currentTime;
      private Calendar currentCalendar;
-     private static final String MAINTIMEZONE = "GMT+2";
+     private String timeZone;
+     private boolean maintime;
 
      protected SimpleDateFormat timeFormat =
-             new SimpleDateFormat("h:mm:ss");
+             new SimpleDateFormat("HH:mm:ss");
 
-     public TimeThread(JLabel timeLabel, Clock_UI ui) {
-         //this.dateLabel = dateLabel;
+     public TimeThread(JLabel timeLabel, String timeZone, boolean maintime) {
          this.timeLabel = timeLabel;
          this.isRunning = true;
-         this.ui = ui;
+         this.timeZone = timeZone;
+         this.maintime = maintime;
      }
      public void mainTimeZone(){
     	 currentCalendar = Calendar.getInstance();
     	 currentTime = currentCalendar.getTime();
-    	 timeFormat.setTimeZone(TimeZone.getTimeZone(MAINTIMEZONE));
-    	 timeLabel.setText(timeFormat.format(currentTime));
-     }
-     public void otherTimeZones(JLabel time, JLabel zone, String timezone){
-    	 currentCalendar = Calendar.getInstance();
-    	 currentTime = currentCalendar.getTime();
-    	 timeFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-    	 time.setText(timeFormat.format(currentTime));
-    	 zone.setText(timezone);
-     }
-     public void setTimeUI(){
-    	 mainTimeZone();
-    	 otherTimeZones(ui.getTimeLabel(), ui.getZoneName(), "GMT+3");
+    	 timeFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
+    	 if(maintime){
+    		 timeLabel.setText(timeFormat.format(currentTime));
+    	 }else{
+    		 timeLabel.setText("<html><body>" + timeZone + "<br>" + timeFormat.format(currentTime) + "</body></html>");
+    	 }
+    	 
      }
 
      @Override
@@ -53,7 +45,7 @@ public class TimeThread extends Thread{
              SwingUtilities.invokeLater(new Runnable() {
                  @Override
                  public void run() {
-                     setTimeUI();
+                	 mainTimeZone();
                  }
              });
 
@@ -63,8 +55,7 @@ public class TimeThread extends Thread{
              }
          }
      }
-
-     public void setRunning(boolean isRunning) {
-         this.isRunning = isRunning;
+     public void setRunning(boolean isRunning){
+    	 this.isRunning = isRunning;
      }
 }
