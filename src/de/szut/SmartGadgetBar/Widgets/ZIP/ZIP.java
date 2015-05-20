@@ -1,19 +1,14 @@
 package de.szut.SmartGadgetBar.Widgets.ZIP;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Properties;
-import java.util.zip.*;
-
 import javax.swing.JPanel;
 
 import de.szut.SmartGadgetBar.GUI.ZIP_UI;
-import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public class ZIP  implements WidgetInterface {
 
-	private Deflater deflet;
 	private ZIP_UI ui;
 	private Properties props;
 	public final String widgetName = "ZIP";

@@ -12,41 +12,48 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 public class Search implements WidgetInterface{
 
 	private Search_UI ui;
-	private ArrayList<Path> files;
+	private ArrayList<SearchThread> files;
 	private SearchThread t;
 	public Search() throws IOException{
 		ui = new Search_UI(this);
+		files = new ArrayList<SearchThread>();
 		//Files.walkFileTree(Paths.get(File.listRoots()[0].toString().replace('\\', '/')), new FileVisitor(this, "Windoof"));
 	}
 	public void foundFile(Path path){
 		//System.out.println(path);
-		files.add(path);
+		t.foundFile(path);
 	}
 	public void update(){
 		ui.updateComboBox();
 	}
 	public void search(String name){
+//		files.clear();
 		if (t == null){
 			t = new SearchThread(new FileVisitor(this, name), this);
-			t.start();
+			//t.start();
 		}else if(!t.isInterrupted()){
-			t.stop();
+			//t.stop();
 			//t.interrupt();
 			t.setRunning(false);
 			t = new SearchThread(new FileVisitor(this, name), this);
-			t.start();
+			//t.start();
 		}else{
 			t.setRunning(false);
 			t = new SearchThread(new FileVisitor(this, name), this);
-			t.start();
+			//t.start();
 		}
-		files = new ArrayList<Path>();
-		//threads.add(t);
+		t.start();
+		files.add(t);
 		
 		
 	}
 	public ArrayList<Path> getFiles(){
-		return files;
+		for(int i = 0; i < files.size(); i++){
+			if (i == files.size()-1){
+				return files.get(i).getFiles();
+			}
+		}
+		return null;
 	}
 	@Override
 	public JPanel getPanel() {

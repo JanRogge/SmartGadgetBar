@@ -23,7 +23,8 @@ public class FileVisitor extends SimpleFileVisitor<Path>{
 
 	@Override
 	public FileVisitResult visitFile(Path path,BasicFileAttributes attribs) {
-		String [] splitPath = path.toString().split("/");
+		System.out.println(path.toString());
+		String [] splitPath = path.toString().split("\\");
 		if(splitPath[splitPath.length-1].contains(name)){
 			search.foundFile(path);
 		}
