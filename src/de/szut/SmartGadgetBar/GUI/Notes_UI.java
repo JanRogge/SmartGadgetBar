@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
+
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
@@ -21,6 +22,7 @@ public class Notes_UI extends AbstractWidgetPanel {
 	
 	private Notes parent;
 	private JFileChooser fileChooser;
+	private JTextArea textfield;
 	
 	public Notes_UI(WidgetInterface parent) {
 		super(parent);
@@ -32,7 +34,7 @@ public class Notes_UI extends AbstractWidgetPanel {
 	@Override
 	void initializePanel() {
 		setLayout(null);
-		JTextArea textfield = new JTextArea();
+		textfield = new JTextArea();
 		textfield.setBounds(0, 7, 280, 66);
 		add(textfield);
 		
@@ -121,5 +123,9 @@ public class Notes_UI extends AbstractWidgetPanel {
 		opw.addProperty(Notes.DBPath, "Databasepath:");
 		opw.addProperty(Notes.TXTPATH, "Dafault .txt file path");
 		opw.finish();
+	}
+
+	public void setText(String text) {
+		textfield.setText(text);
 	}
 }

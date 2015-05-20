@@ -46,6 +46,7 @@ public class Notes implements WidgetInterface {
 		ui = new Notes_UI(this);
 		loadProperties();
 		loadDatabase();
+		ui.setText(getLastNote());
 	}
 	
 	public void saveNote(String note) {
@@ -86,6 +87,20 @@ public class Notes implements WidgetInterface {
 			return options;
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private String getLastNote() {
+		try {
+			ResultSet resultSet = statement.executeQuery("SELECT Text FROM notes;");
+			String text = "";
+			while(resultSet.next()) {
+				text = resultSet.getString(1);
+			}
+			return text;
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
