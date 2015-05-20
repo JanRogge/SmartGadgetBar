@@ -62,7 +62,10 @@ public class Calculator implements WidgetInterface{
 		return null;
 		
 	}
-
-
 	
+	private Properties getDefaultProperties() {
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("", "");
+		return defaultProps;
+	}
 }

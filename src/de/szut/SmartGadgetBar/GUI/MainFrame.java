@@ -41,4 +41,15 @@ public class MainFrame extends JFrame {
 		props.setProperty("alwaysontop",String.valueOf(isAlwaysOnTop()));
 		new PropertyLoader().saveProperties(props, "config/config.ini");;
 	}
+	
+	private Properties getDefaultProperties() {
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("size.y", "600");
+		defaultProps.setProperty("position.y", "75.0");
+		defaultProps.setProperty("size.x", "300");
+		defaultProps.setProperty("position.x", "383.0");
+		defaultProps.setProperty("availableWidgets", "Clock,Calc,PGP,ZIP,Calculator,Notes");
+		defaultProps.setProperty("alwaysontop", "false");
+		return defaultProps;
+	}
 }
