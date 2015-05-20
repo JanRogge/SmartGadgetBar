@@ -1,11 +1,14 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -60,13 +63,16 @@ public class Search_UI extends AbstractWidgetPanel{
 			public void keyPressed(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 				if (arg0.getKeyCode() == 10){
-					Desktop desktop = Desktop.getDesktop();
-					try {
-						desktop.open(new File(comboBox.getSelectedItem().toString()));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					search.search(comboBox.getEditor().getItem().toString());
+					tmp = comboBox.getEditor().getItem().toString();
+					System.out.println(arg0.getKeyCode());
+//					Desktop desktop = Desktop.getDesktop();
+//					try {
+//						desktop.open(new File(comboBox.getSelectedItem().toString()));
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				}
 				
 			}
@@ -75,8 +81,10 @@ public class Search_UI extends AbstractWidgetPanel{
 			public void keyReleased(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 				//System.out.println(comboBox.getEditor().getItem().toString());
-				search.search(comboBox.getEditor().getItem().toString());
-				tmp = comboBox.getEditor().getItem().toString();
+//				long time = System.currentTimeMillis();
+//				
+//				search.search(comboBox.getEditor().getItem().toString());
+//				tmp = comboBox.getEditor().getItem().toString();
 				//System.out.println(arg0.getKeyCode());
 				
 			}
@@ -97,6 +105,45 @@ public class Search_UI extends AbstractWidgetPanel{
 //			}
 //		});
 		comboBox.setBounds(10, 10, 260, 20);
+		comboBox.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				Desktop desktop = Desktop.getDesktop();
+				try {
+					desktop.open(new File(comboBox.getSelectedItem().toString()));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		add(comboBox);
 		// TODO Auto-generated method stub
 		
@@ -107,11 +154,13 @@ public class Search_UI extends AbstractWidgetPanel{
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	 public void paintComponent(final Graphics g) {
 		    g.setColor(this.getBackground());
 		    g.fillRoundRect(0,0,this.getBounds().width, this.getBounds().height,10, 10);
 		    };
+		    
 	public void updateComboBox(){
 		comboBox.removeAllItems();
 		comboBox.setModel(new DefaultComboBoxModel<Object>(search.getFiles().toArray()));
