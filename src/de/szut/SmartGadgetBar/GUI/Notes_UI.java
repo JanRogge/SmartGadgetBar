@@ -117,7 +117,9 @@ public class Notes_UI extends AbstractWidgetPanel {
 
 	@Override
 	public void optionClicked() {
-		// TODO Auto-generated method stub
-		
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(Notes.DBPath, "Databasepath:");
+		opw.addProperty(Notes.TXTPATH, "Dafault .txt file path");
+		opw.finish();
 	}
 }

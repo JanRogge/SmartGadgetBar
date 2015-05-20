@@ -11,13 +11,12 @@ import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
 
 
-	
 /**
  * Das Panel fuer das Widget ZIP
  *
  */
 public class ZIP_UI extends AbstractWidgetPanel{
-
+	
 	private ZIP widget;
 	private JFileChooser fileChoosertoZip;
 	private JFileChooser fileChoosertoFile;

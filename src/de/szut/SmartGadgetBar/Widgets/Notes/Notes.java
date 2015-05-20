@@ -11,14 +11,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.swing.JPanel;
-
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.Notes_UI;
 
 public class Notes implements WidgetInterface {
 	
+	public static final String DBPath = "databasepath";
+	public static final String TXTPATH = "textfilepath";
 	private Notes_UI ui;
 	private Properties properties;
 	private File database;
@@ -46,6 +46,7 @@ public class Notes implements WidgetInterface {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		loadProperties();
 		loadDatabase();
 	}
 	
@@ -159,17 +160,18 @@ public class Notes implements WidgetInterface {
 	}
 	
 	@Override
+	public String getWidgetName() {
+		return "Notes";
+	}
+
+	@Override
 	public void setProperties(Properties properties) {
 		this.properties = properties;
+		saveProperties();
 	}
-	
+
 	@Override
 	public Properties getProperties() {
 		return properties;
-	}
-	
-	@Override
-	public String getWidgetName() {
-		return "Notes";
 	}
 }
