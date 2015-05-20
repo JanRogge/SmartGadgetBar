@@ -21,7 +21,6 @@ public class Notes implements WidgetInterface {
 	public static final String TXTPATH = "textfilepath";
 	private Notes_UI ui;
 	private Properties properties;
-	private File database;
 	private Connection connection;
 	private Statement statement;
 	String[][] datesAndNames;
@@ -29,23 +28,23 @@ public class Notes implements WidgetInterface {
 	
 	public void loadDatabase() {
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:" + database.getPath());
+			connection = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
 			statement = connection.createStatement();
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS notes (Date DATE NOT NULL, Name TINYTEXT, Text TEXT NOT NULL)");
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			try {
+				connection = DriverManager.getConnection("jdbc:sqlite:" + new File(".").getAbsolutePath());
+				statement = connection.createStatement();
+				statement.executeUpdate("CREATE TABLE IF NOT EXISTS notes (Date DATE NOT NULL, Name TINYTEXT, Text TEXT NOT NULL)");
+			} catch (SQLException exception) {
+				exception.printStackTrace();
+			}
 		}
 	}
 	
 	public Notes() {
 		ui = new Notes_UI(this);
-		try {
-			database = new File(new File(".").getCanonicalPath() + "/notes.db3");
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
 		loadProperties();
 		loadDatabase();
 	}
@@ -122,7 +121,6 @@ public class Notes implements WidgetInterface {
 	
 	public String getNote(String date, String name) {
 		try {
-			System.out.println("SELECT Text FROM notes WHERE Date = '" + date + "' AND Name = '" +  name + "';");
 			ResultSet resultSet = statement.executeQuery("SELECT Text FROM notes WHERE Date = '" + date + "' AND Name = '" +  name + "';");
 			if (resultSet.next()) {
 				return resultSet.getString(1);
@@ -173,5 +171,13 @@ public class Notes implements WidgetInterface {
 	@Override
 	public Properties getProperties() {
 		return properties;
+	}
+
+	@Override
+	public Properties getDefaultProperties() {
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("databasepath", new File(".").getAbsolutePath());
+		defaultProps.setProperty("textfilepath", new File(".").getAbsolutePath());
+		return null;
 	}
 }

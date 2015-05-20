@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		props = new PropertyLoader().loadProperties("config/config.ini");
+		props = new PropertyLoader().loadProperties("config/config.ini", getDefaultProperties());
 		setAlwaysOnTop(Boolean.getBoolean(props.getProperty("alwaysontop")));
 		setUndecorated(true);
 		setType(javax.swing.JFrame.Type.UTILITY);

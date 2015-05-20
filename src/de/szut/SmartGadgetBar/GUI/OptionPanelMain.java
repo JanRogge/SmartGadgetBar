@@ -75,7 +75,7 @@ public class OptionPanelMain extends JDialog {
 		lblWidgets.setVerticalAlignment(SwingConstants.TOP);
 		lblWidgets.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWidgets.setBounds(5, 75, 330, 35);
-		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini").getProperty("availableWidgets").split(",");
+		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini", null).getProperty("availableWidgets").split(",");
 		for (int i = 0; i < availabelWidgets.length;i++){
 			if(i==0){
 				lblWidgets.setText(availabelWidgets[i]);

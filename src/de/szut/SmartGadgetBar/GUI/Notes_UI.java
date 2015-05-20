@@ -104,7 +104,7 @@ public class Notes_UI extends AbstractWidgetPanel {
 	
 	private void showFileChooser() {
 		if (fileChooser == null) {
-			fileChooser = new JFileChooser(new File("."));
+			fileChooser = new JFileChooser(parent.getProperties().getProperty("textfilepath"));
 			fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
 			fileChooser.setFileFilter(new FileNameExtensionFilter("Text Datei","txt"));
 		}

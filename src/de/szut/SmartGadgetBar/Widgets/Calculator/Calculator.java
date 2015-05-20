@@ -61,4 +61,9 @@ public class Calculator implements WidgetInterface{
 		return null;
 		
 	}
+
+	@Override
+	public Properties getDefaultProperties() {
+		return null;
+	}
 }

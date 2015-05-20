@@ -36,7 +36,7 @@ public class BackgroundPanel extends JPanel {
 		JMenuItem closeMenuItem = new JMenuItem("Close");
 		JMenuItem mainOptions= new JMenuItem("Options");
 		addWidgets= new JMenu("Add Widgets");
-		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini").getProperty("availableWidgets").split(",");
+		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini", null).getProperty("availableWidgets").split(",");
 		addtoMenu(availabelWidgets);
 		closeMenuItem.addActionListener(e -> {
 		mainf.close();

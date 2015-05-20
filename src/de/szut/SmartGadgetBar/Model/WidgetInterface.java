@@ -9,9 +9,10 @@ public interface WidgetInterface {
 	public void setProperties(Properties properties);
 	public Properties getProperties();
 	public String getWidgetName();
+	public Properties getDefaultProperties();
 
 	default void loadProperties() {
-		setProperties(new PropertyLoader().loadProperties("config/"+getWidgetName()+".ini"));
+		setProperties(new PropertyLoader().loadProperties("config/"+getWidgetName()+".ini", getDefaultProperties()));
 	}
 	default void saveProperties() {
 		new PropertyLoader().saveProperties(getProperties(), "config/"+getWidgetName()+".ini");

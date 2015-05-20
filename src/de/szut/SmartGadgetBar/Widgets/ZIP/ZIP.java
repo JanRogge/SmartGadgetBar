@@ -1,15 +1,11 @@
 package de.szut.SmartGadgetBar.Widgets.ZIP;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.zip.*;
 
-import javax.swing.JPanel;
-
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.ZIP_UI;
-import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
@@ -71,28 +67,29 @@ public class ZIP  implements WidgetInterface {
 
 	@Override
 	public AbstractWidgetPanel getPanel() {
-		// TODO Auto-generated method stub
 		return ui;
 	}
 
 	@Override
 	public void setProperties(Properties properties) {
-		// TODO Auto-generated method stub
 		props = properties;
 		saveProperties();
 	}
 
 	@Override
 	public Properties getProperties() {
-		// TODO Auto-generated method stub
 		return props;
 	}
 
 	@Override
 	public String getWidgetName() {
-		// TODO Auto-generated method stub
 		return widgetName;
 	}
-	
 
+	@Override
+	public Properties getDefaultProperties() {
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("comprimatelocation", new File(".").getAbsolutePath());
+		return defaultProps;
+	}
 }

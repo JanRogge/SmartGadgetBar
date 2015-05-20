@@ -17,14 +17,14 @@ public class PropertyLoader {
 	 * Lädt die Properties
 	 * @return geladene Properties
 	 */
-	public Properties loadProperties(String fileName/*, Properties defaultProperties*/){
+	public Properties loadProperties(String fileName, Properties defaultProperties){
 
 		Properties p = new Properties();
 		try {
 			p.load(new FileInputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)));
 		}
 		catch (FileNotFoundException e) {
-			//p = defaultProperties;
+			p = defaultProperties;
 			try {
 				p.store(new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)), "");
 			}

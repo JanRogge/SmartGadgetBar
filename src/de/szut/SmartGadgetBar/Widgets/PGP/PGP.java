@@ -27,7 +27,7 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 
 public class PGP implements WidgetInterface {
-
+	
 	public static final String PASS = "passwort";
 	public static final String EMAIL = "email";
 	public static final String KEYSIZE = "keysize";
@@ -35,14 +35,14 @@ public class PGP implements WidgetInterface {
 	private PGP_UI ui;
 	private Properties props;
 	public final String widgetName = "PGP";
-
+	
 	public PGP() {
 		Security.addProvider(new BouncyCastleProvider());
 		generateKeyPair();
 		ui = new PGP_UI(this);
 		loadProperties();
 	}
-
+	
 	/**
 	 * Generiert ein Schlüsselpaar und speichert dieses in zwei Dateien
 	 */
@@ -83,7 +83,7 @@ public class PGP implements WidgetInterface {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * @param encryptFileName
 	 * @param prikeyFile
@@ -100,28 +100,34 @@ public class PGP implements WidgetInterface {
 		}
 
 	}
-
+	
 	@Override
 	public AbstractWidgetPanel getPanel() {
-		// TODO Auto-generated method stub
 		return ui;
 	}
-
+	
 	@Override
 	public void setProperties(Properties properties) {
 		this.props = properties;
 		saveProperties();
 	}
-
+	
 	@Override
 	public Properties getProperties() {
 		return props;
 	}
-
+	
 	@Override
 	public String getWidgetName() {
-		// TODO Auto-generated method stub
 		return "PGP";
 	}
-
+	
+	@Override
+	public Properties getDefaultProperties() {
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("email", "max.musterman@muster.de");
+		defaultProps.setProperty("keysize", "2048");
+		defaultProps.setProperty("passwort", "passwort1234");
+		return defaultProps;
+	}
 }
