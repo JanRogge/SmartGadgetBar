@@ -27,7 +27,6 @@ public class Calculator implements WidgetInterface{
 	public Calculator(){
 		sem = new ScriptEngineManager();
 		ui = new Calculator_UI(this);
-		loadProperties();
 	}
 	
 	@Override
@@ -61,11 +60,5 @@ public class Calculator implements WidgetInterface{
 		}
 		return null;
 		
-	}
-	
-	private Properties getDefaultProperties() {
-		Properties defaultProps = new Properties();
-		defaultProps.setProperty("", "");
-		return defaultProps;
 	}
 }

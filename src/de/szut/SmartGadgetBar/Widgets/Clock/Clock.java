@@ -62,4 +62,8 @@ public class Clock  implements WidgetInterface{
 		return "Clock";
 	}
 	
+	private Properties getDefaultProperties() {
+		Properties defaultProperties = new Properties();
+		return defaultProperties;
+	}
 }

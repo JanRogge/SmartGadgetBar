@@ -16,7 +16,6 @@ import javax.swing.SwingConstants;
 
 import de.szut.SmartGadgetBar.Widgets.Clock.Clock;
 import de.szut.SmartGadgetBar.Widgets.Clock.TimeThread;
-import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
 public class Clock_UI extends AbstractWidgetPanel {
 	private Clock widget;
