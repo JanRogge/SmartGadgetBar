@@ -11,17 +11,18 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 public class Search implements WidgetInterface{
 
 	private Search_UI ui;
+	public static final String start = "startpath";
 	private ArrayList<SearchThread> threads;
+	private Properties props;
 	private SearchThread t;
 	
 	public Search() throws IOException{
 		ui = new Search_UI(this);
 		threads = new ArrayList<SearchThread>();
-		//Files.walkFileTree(Paths.get(File.listRoots()[0].toString().replace('\\', '/')), new FileVisitor(this, "Windoof"));
+		loadProperties();
 	}
 	
 	public void foundFile(Path path){
-		//System.out.println(path);
 		threads.get(threads.size()-1).foundFile(path);
 	}
 	
@@ -30,20 +31,14 @@ public class Search implements WidgetInterface{
 	}
 	
 	public void search(String name){
-//		files.clear();
 		if (t == null){
-			t = new SearchThread(new FileVisitor(this, name), this);
-			//t.start();
+			t = new SearchThread(new FileVisitor(this, name), this, props.getProperty(Search.start));
 		}else if(!t.isInterrupted()){
-			//t.stop();
-			//t.interrupt();
 			t.setRunning(false);
-			t = new SearchThread(new FileVisitor(this, name), this);
-			//t.start();
+			t = new SearchThread(new FileVisitor(this, name), this, props.getProperty(Search.start));
 		}else{
 			t.setRunning(false);
-			t = new SearchThread(new FileVisitor(this, name), this);
-			//t.start();
+			t = new SearchThread(new FileVisitor(this, name), this, props.getProperty(Search.start));
 		}
 		t.start();
 		threads.add(t);
@@ -57,25 +52,22 @@ public class Search implements WidgetInterface{
 	
 	@Override
 	public AbstractWidgetPanel getPanel() {
-		
-		// TODO Auto-generated method stub
 		return ui;
 	}
 	
 	@Override
 	public void setProperties(Properties properties) {
-		// TODO Auto-generated method stub
-		
+		this.props = properties;
+		saveProperties();
 	}
 	
 	@Override
 	public Properties getProperties() {
-		// TODO Auto-generated method stub
-		return null;
+		return props;
+		
 	}
 	@Override
 	public String getWidgetName() {
-		// TODO Auto-generated method stub
 		return "Search";
 	}
 	public boolean get(){
@@ -84,13 +76,13 @@ public class Search implements WidgetInterface{
 	}
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Properties getDefaultProperties() {
-		// TODO Auto-generated method stub
-		return null;
+		Properties defaultProps = new Properties();
+		defaultProps.setProperty("startpath", "c:/");
+		return defaultProps;
 	}
 }

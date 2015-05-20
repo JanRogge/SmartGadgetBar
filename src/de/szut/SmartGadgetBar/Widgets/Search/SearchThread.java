@@ -11,30 +11,37 @@ public class SearchThread extends Thread{
 	private boolean isRunning = true;
 	private FileVisitor file;
 	private Search search;
+	private String searchpath;
 	private ArrayList<Path> files;
-	public SearchThread(FileVisitor file, Search search){
+	public SearchThread(FileVisitor file, Search search, String searchpath){
 		this.file = file;
+		this.searchpath = searchpath;
 		this.search = search;
 		files = new ArrayList<Path>();
 	}
 	@Override
     public void run() {
     	try {
-    		long time = System.currentTimeMillis();
     		files.clear();
-    		//System.out.println(File.listRoots()[0].toString().replace('\\', '/'));
-    		Files.walkFileTree(Paths.get(File.listRoots()[0].toString().replace('\\', '/')), file);
-    		//System.out.println(System.currentTimeMillis() - time);
-    		//System.out.println(isRunning);
+    		System.out.println(searchpath);
+    		if (searchpath.contains("")){
+    			System.out.println("got it");
+    			File [] roots = File.listRoots();
+    			for(int i = 0; i < roots.length; i++){
+    				searchpath = File.listRoots()[i].toString().replace('\\', '/');
+    				Files.walkFileTree(Paths.get(searchpath), file);
+    			}
+    		} else{
+    			Files.walkFileTree(Paths.get(searchpath.toString().replace('\\', '/')), file);
+    		}
+    		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	System.out.println(isRunning);
     	try {
 			sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	if(isRunning == true){
@@ -54,19 +61,14 @@ public class SearchThread extends Thread{
 	
 	public void foundFile(Path path){
 		boolean tmp = true;
-		//System.out.println(path);
-		//System.out.println(files.size());
 		System.out.println(path);
 		for (int i = 0; i < files.size();i++){	
-			//System.out.println(files.get(i));
 			if (!files.get(i).toString().contains(path.toString())){
 				tmp = true;
 			} else{
 				tmp = false;
 			}
 		}
-		//System.out.println(tmp);
-		//
 		if(tmp){
 			files.add(path);
 		}

@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
 		defaultProps.setProperty("position.y", "75.0");
 		defaultProps.setProperty("size.x", "300");
 		defaultProps.setProperty("position.x", "383.0");
-		defaultProps.setProperty("availableWidgets", "Clock,Calc,PGP,ZIP,Calculator,Notes");
+		defaultProps.setProperty("availableWidgets", "Clock,Search,PGP,ZIP,Calculator,Notes");
 		defaultProps.setProperty("alwaysontop", "false");
 		return defaultProps;
 	}

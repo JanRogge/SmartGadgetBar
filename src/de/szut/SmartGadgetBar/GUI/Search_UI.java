@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
+import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 import de.szut.SmartGadgetBar.Widgets.Search.Search;
 
 public class Search_UI extends AbstractWidgetPanel{
@@ -176,6 +177,8 @@ public class Search_UI extends AbstractWidgetPanel{
 	@Override
 	public void optionClicked() {
 		// TODO Auto-generated method stub
-		
+		OptionPanelWidget opw= new OptionPanelWidget(widget);
+		opw.addProperty(Search.start, "Startpath:");
+		opw.finish();
 	}
 }

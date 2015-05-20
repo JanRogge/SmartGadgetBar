@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
@@ -17,9 +18,12 @@ import de.szut.SmartGadgetBar.Widgets.ZIP.ZIP;
  */
 public class ZIP_UI extends AbstractWidgetPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5921546125649895477L;
 	private ZIP widget;
 	private JFileChooser fileChoosertoZip;
-	private JFileChooser fileChoosertoFile;
 	public ZIP_UI(ZIP parent) {
 		super(parent);
 		widget = parent;
@@ -38,9 +42,18 @@ public class ZIP_UI extends AbstractWidgetPanel{
 		JButton btnZip = new JButton("Zip");
 		btnZip.setBounds(10, 45, 89, 23);
 		btnZip.addActionListener(e -> {
+			boolean unable = false;
 			File[] choosen = fileChoosertoZip.getSelectedFiles();
+			for(int i =0; i< choosen.length; i++){
+				if(choosen[i].toString().contains(".lnk")){
+					unable = true;
+					JOptionPane.showMessageDialog(null, "Unable to ZIP .lnk");;
+				}
+			}
+			if(!unable){
+				widget.comprimate(choosen);
+			}
 			
-			widget.comprimate(choosen);
 			
 			
 			
@@ -54,7 +67,7 @@ public class ZIP_UI extends AbstractWidgetPanel{
 			fileChoosertoZip.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			fileChoosertoZip.setMultiSelectionEnabled(true);
 			fileChoosertoZip.setDialogTitle("Please choose a file");
-			int option = fileChoosertoZip.showOpenDialog(null);
+			fileChoosertoZip.showOpenDialog(null);
 			
 		});
 		add(btnInFile);

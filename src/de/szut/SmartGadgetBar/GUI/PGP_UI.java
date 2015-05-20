@@ -11,6 +11,8 @@ import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
 import java.awt.Color;
 import java.awt.dnd.DropTarget;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Das Panel fuer das Widget PGP
@@ -26,7 +28,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 	public PGP_UI(PGP pgp) {
 		super(pgp);
 		this.widget = pgp;
-		setSize(280,200);
+		setSize(280,80);
 		initializePanel();
 		
 	}
@@ -94,6 +96,14 @@ public class PGP_UI extends AbstractWidgetPanel {
 		opw.addProperty(PGP.EMAIL, "E-Mail:");
 		opw.addProperty(PGP.PASS, "Password(Keys are useless when changed)");
 		opw.addProperty(PGP.KEYSIZE, "Size of Keys");
+		opw.addButton("Generate new Keys", new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				widget.generateKeyPair();
+			}
+			
+		});
 		opw.finish();
 	}
 }

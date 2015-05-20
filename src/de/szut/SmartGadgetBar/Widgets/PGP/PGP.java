@@ -7,6 +7,8 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPException;
 
@@ -35,7 +37,9 @@ public class PGP implements WidgetInterface {
 	
 	public PGP() {
 		Security.addProvider(new BouncyCastleProvider());
-		generateKeyPair();
+		if (!new File("keys/private.skr").exists()
+				|| !new File("keys/public.asc").exists())
+			generateKeyPair();
 		ui = new PGP_UI(this);
 		loadProperties();
 	}
@@ -44,8 +48,6 @@ public class PGP implements WidgetInterface {
 	 * Generiert ein Schlüsselpaar und speichert dieses in zwei Dateien
 	 */
 	public void generateKeyPair() {
-		if (!new File("keys/private.skr").exists()
-				|| !new File("keys/public.asc").exists()) {
 			KeyGenerator kgen = new KeyGenerator();
 			kgen.setKeySize(props.getProperty(PGP.KEYSIZE));
 			kgen.setPrivateKeyFile("keys/private.skr");
@@ -57,8 +59,7 @@ public class PGP implements WidgetInterface {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-
+			JOptionPane.showMessageDialog(null, "Key Generated");;
 	}
 	
 	/**

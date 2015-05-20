@@ -31,6 +31,13 @@ public class Clock  implements WidgetInterface{
 			thread.setRunning(false);
 		}
 	}
+	public void stoponeLabel(JLabel label){
+		for (TimeThread thread : threads) {
+			if(label == thread.getLabel()){
+				thread.setRunning(false);
+			}		
+		}
+	}
 	public void setOtherTimeLabels(JLabel label, String timezone){
 		if(label.getText() != ""){
 			for (TimeThread thread : threads) {

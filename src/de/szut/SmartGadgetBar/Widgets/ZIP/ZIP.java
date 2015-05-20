@@ -29,7 +29,8 @@ public class ZIP  implements WidgetInterface {
 	 * @param files
 	 */
 	public void comprimate(File[] files){
-
+		String[] tokens = files[0].toString().split("\\.(?=[^\\.]+$)");
+		String out = tokens[0] + ".zip";
 		String[] temp = new String[files.length];
 		for(int i =0; i< temp.length; i++){
 			temp[i] = files[i].getAbsolutePath();
@@ -39,17 +40,20 @@ public class ZIP  implements WidgetInterface {
 			new Comprimator().comprimate(temp, props.getProperty(ZIP.COMLOCATION));
 			
 		}else{
-			new Comprimator().comprimate(temp, ZIP.STANDLOCATION);
+			new Comprimator().comprimate(temp, out);
 		}
 		
 	}
 	
 	public void comprimate(String[] files) {
+		String[] tokens = files[0].toString().split("\\.(?=[^\\.]+$)");
+		String out = tokens[0] + ".zip";
 		if(new File(props.getProperty(ZIP.COMLOCATION)).isFile()){
 			new Comprimator().comprimate(files, props.getProperty(ZIP.COMLOCATION));
 			
 		}else{
-			new Comprimator().comprimate(files, ZIP.STANDLOCATION);
+			System.out.println(files[0]);
+			new Comprimator().comprimate(files, out);
 		}
 
 	}

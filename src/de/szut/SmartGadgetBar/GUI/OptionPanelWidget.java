@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 
@@ -27,6 +30,7 @@ public class OptionPanelWidget {
 	private ArrayList<OptionKeyPairPanel> options;
 	private JPanel topPanel;
 	private JButton canc;
+	private JComboBox<Object> ocb;
 
 	
 	/**
@@ -82,6 +86,19 @@ public class OptionPanelWidget {
 		OptionKeyPairPanel op = new OptionKeyPairPanel(key, props.get(key),	title);
 		options.add(op);
 		topPanel.add(op);
+	}
+	public void addButton(String text, ActionListener l){
+		OptionButtons ob = new OptionButtons(text, l);
+		topPanel.add(ob);
+	}
+	public void addcomboBox(DefaultComboBoxModel<Object> model){
+		ocb = new JComboBox<Object>();
+		ocb.setEditable(true);
+		ocb.setModel(model);
+		topPanel.add(ocb);
+	}
+	public JComboBox<Object> getComboBox(){
+		return ocb;
 	}
 	
 	/**

@@ -19,6 +19,10 @@ import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
 public class Notes_UI extends AbstractWidgetPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -212490706203365585L;
 	private Notes parent;
 	private JFileChooser fileChooser;
 	

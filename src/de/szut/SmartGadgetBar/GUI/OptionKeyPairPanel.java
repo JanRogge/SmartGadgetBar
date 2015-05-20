@@ -12,6 +12,10 @@ import javax.swing.JTextField;
  */
 public class OptionKeyPairPanel extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 863181219795666823L;
 	private String key;
 	private String value;
 	
