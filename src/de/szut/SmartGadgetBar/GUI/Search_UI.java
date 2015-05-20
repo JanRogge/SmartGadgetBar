@@ -15,6 +15,7 @@ import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import de.szut.SmartGadgetBar.Widgets.Search.Search;
@@ -165,6 +166,8 @@ public class Search_UI extends AbstractWidgetPanel{
 		comboBox.removeAllItems();
 		comboBox.setModel(new DefaultComboBoxModel<Object>(search.getFiles().toArray()));
 		comboBox.getEditor().setItem(tmp);
+		JTextField tf = (JTextField) comboBox.getEditor().getEditorComponent();
+		tf.setCaretPosition(tmp.length());
 		comboBox.showPopup();
 		comboBox.setMaximumRowCount(50);
 		repaint();
