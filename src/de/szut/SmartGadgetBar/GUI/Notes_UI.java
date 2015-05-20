@@ -4,14 +4,6 @@ import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-
-
-import java.util.stream.Stream;
-
-import javafx.stage.FileChooser;
-
-
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -62,41 +54,16 @@ public class Notes_UI extends AbstractWidgetPanel {
 		saveTxt.addActionListener(e -> {
 			showFileChooser();
 			if (fileChooser.getSelectedFile() != null && fileChooser.getSelectedFile().getName().endsWith(".txt")) {
-				File file = fileChooser.getSelectedFile();
-				try {
-					FileWriter writer = new FileWriter(file, false);
-					writer.write(textfield.getText());
-					writer.flush();
-					writer.close();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				parent.saveTxt(fileChooser.getSelectedFile(), textfield.getText());
 			}
 		});
 		
 		JMenuItem loadDatabase= new JMenuItem("Aus Datenbank laden");
 		loadDatabase.addActionListener(e -> {
-			String[][] datesAndNames = parent.getDatesAndNames();
-			String[] options = new String[datesAndNames.length];
-			for (int i = 0; i < datesAndNames.length; i++) {
-				options[i] = datesAndNames[i][0] + "   ";
-				if (datesAndNames[i][1] != null) {
-					options[i] += datesAndNames[i][1];
-				}
-			}
+			String[] options = parent.getDatesAndNames();
 			String s = (String) JOptionPane.showInputDialog(null,"Wählen Sie eine Notiz",
 					"Wähle eine Notiz", JOptionPane.PLAIN_MESSAGE, null, options, null);
-			for (int i = 0; i < options.length; i++) {
-				if (s == options[i]) {
-					if (datesAndNames[i][1] == null) {
-						textfield.setText(parent.getNote(datesAndNames[i][0]));
-					}
-					else {
-						textfield.setText(parent.getNote(datesAndNames[i][0], datesAndNames[i][1]));
-					}
-					i = options.length;
-				}
-			}
+			textfield.setText(parent.getNoteFromOption(s));
 		});
 		
 		JMenuItem loadTxt = new JMenuItem("Aus .txt laden");

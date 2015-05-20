@@ -1,15 +1,14 @@
 package de.szut.SmartGadgetBar.Widgets.Notes;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Properties;
 
 import javax.swing.JPanel;
@@ -24,6 +23,8 @@ public class Notes implements WidgetInterface {
 	private File database;
 	private Connection connection;
 	private Statement statement;
+	String[][] datesAndNames;
+	String[] options;
 	
 	public void loadDatabase() {
 		try {
@@ -65,7 +66,7 @@ public class Notes implements WidgetInterface {
 		}
 	}
 	
-	public String[][] getDatesAndNames() {
+	public String[] getDatesAndNames() {
 		ArrayList<String[]> dates = new ArrayList<String[]>();
 		try {
 			ResultSet resultSet = statement.executeQuery("SELECT Date, Name FROM notes;");
@@ -74,10 +75,32 @@ public class Notes implements WidgetInterface {
 				dates.get(dates.size()-1)[0] = resultSet.getString(1);
 				dates.get(dates.size()-1)[1] = resultSet.getString(2);
 			}
-			return dates.toArray(new String[dates.size()][]);
+			datesAndNames = dates.toArray(new String[dates.size()][]);
+			options = new String[datesAndNames.length];
+			for (int i = 0; i < datesAndNames.length; i++) {
+				options[i] = datesAndNames[i][0] + "   ";
+				if (datesAndNames[i][1] != null) {
+					options[i] += datesAndNames[i][1];
+				}
+			}
+			return options;
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String getNoteFromOption(String option) {
+		for (int i = 0; i < options.length; i++) {
+			if (option == options[i]) {
+				if (datesAndNames[i][1] == null) {
+					return getNote(datesAndNames[i][0]);
+				}
+				else {
+					return getNote(datesAndNames[i][0], datesAndNames[i][1]);
+				}
+			}
 		}
 		return null;
 	}
@@ -118,6 +141,17 @@ public class Notes implements WidgetInterface {
 		}
 	}
 	
+	public void saveTxt(File file, String text) {
+		try {
+			FileWriter writer = new FileWriter(file, false);
+			writer.write(text);
+			writer.flush();
+			writer.close();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
 	@Override
 	public JPanel getPanel() {
 		return ui;
@@ -137,5 +171,4 @@ public class Notes implements WidgetInterface {
 	public String getWidgetName() {
 		return "Notes";
 	}
-	
 }
