@@ -2,8 +2,6 @@ package de.szut.SmartGadgetBar.Model;
 
 import java.util.Properties;
 
-import javax.swing.JPanel;
-
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 
 public interface WidgetInterface {
