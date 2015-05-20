@@ -88,7 +88,9 @@ public class OptionPanelWidget {
 		topPanel.add(op);
 	}
 	public void addButton(String text, ActionListener l){
-		OptionButtons ob = new OptionButtons(text, l);
+		JButton ob = new JButton(text);
+		ob.setBounds(175, 0, 150, 20);
+		ob.addActionListener(l);
 		topPanel.add(ob);
 	}
 	public void addcomboBox(DefaultComboBoxModel<Object> model){
