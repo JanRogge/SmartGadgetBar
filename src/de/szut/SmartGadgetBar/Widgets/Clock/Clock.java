@@ -1,8 +1,11 @@
 package de.szut.SmartGadgetBar.Widgets.Clock;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Properties;
+import java.util.TimeZone;
 
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.Clock_UI;
@@ -12,31 +15,36 @@ public class Clock  implements WidgetInterface{
 	public static final String CITIES = "cities";
 	private Clock_UI ui;
 	private TimeThread time;
-	private boolean otherTimeZones = true;
 	private Properties props;
+	ArrayList<TimeThread> threads = new ArrayList<TimeThread>();
 	
 	public Clock(){
-		System.out.println("Clock");
+		TimeZone timeZone = Calendar.getInstance().getTimeZone(); 
 		ui = new Clock_UI(this);
-		time = new TimeThread(ui.getMainTime(), ui);
+		time = new TimeThread(ui.getMainTime(), timeZone.getID(), true);
+		threads.add(time);
 		time.start();
 		loadProperties();
 	}
 	public void stopThread(){
-		time.setRunning(false);
-	}
-//	public static void main(String[] args) throws IOException {
-//		Calendar c = new GregorianCalendar();
-//		Date date1 = new Date();
-//		SimpleDateFormat df = new SimpleDateFormat();
-//		df.setTimeZone(TimeZone.getTimeZone("GMT+2"));
-//		//System.out.println(df.format(date1));
-//    }
-	public boolean otherTimeZonesSelectet(){
-		if(otherTimeZones){
-			return true;
+		for (TimeThread thread : threads) {
+			thread.setRunning(false);
 		}
-		return false;
+	}
+	public void setOtherTimeLabels(JLabel label, String timezone){
+		if(label.getText() != ""){
+			for (TimeThread thread : threads) {
+				if(label == thread.getLabel()){
+					thread.setRunning(false);
+					time = new TimeThread(label, timezone, false);
+				}		
+			}
+			threads.add(time);
+		} else{
+			time = new TimeThread(label, timezone, false);
+			threads.add(time);
+		}
+		time.start();
 	}
 	@Override
 	public AbstractWidgetPanel getPanel() {
@@ -66,5 +74,10 @@ public class Clock  implements WidgetInterface{
 	public Properties getDefaultProperties() {
 		Properties defaultProperties = new Properties();
 		return defaultProperties;
+	}
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		stopThread();
 	}
 }

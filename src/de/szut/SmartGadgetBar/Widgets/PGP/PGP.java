@@ -7,14 +7,11 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.util.Properties;
 
-import javax.swing.JPanel;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPException;
 
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.PGP_UI;
-import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
@@ -129,5 +126,11 @@ public class PGP implements WidgetInterface {
 		defaultProps.setProperty("keysize", "2048");
 		defaultProps.setProperty("passwort", "passwort1234");
 		return defaultProps;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 }

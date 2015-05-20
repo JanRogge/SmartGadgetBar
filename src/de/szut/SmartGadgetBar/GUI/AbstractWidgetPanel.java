@@ -1,5 +1,7 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.JMenuItem;
@@ -14,8 +16,11 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
  */
 public abstract class AbstractWidgetPanel extends JPanel {
 	
+	private static final long serialVersionUID = -4757612542318751284L;
 	protected WidgetInterface widget;
-	
+	private PopoutFrame pop;
+	private BackgroundPanel tmp;
+	private int pX, pY;
 	
 	/**
 	 * Konstruktor
@@ -25,8 +30,16 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	 */
 	public AbstractWidgetPanel(WidgetInterface parent){
 		this.widget = parent;
+		MouseAdapter l= new MouseAdapter() {
+			public void mouseDragged(MouseEvent me) {
+							pop.setLocation(pop.getLocation().x + me.getX() - pX, pop.getLocation().y+ me.getY() - pY);
+						}
+						public void mousePressed(MouseEvent me) {
+									pX = me.getX();
+									pY = me.getY();
+								}
+					};
 		JPopupMenu popup = new JPopupMenu();
-		add(popup);
 		JMenuItem subMenu = new JMenuItem("Options");
 		subMenu.addActionListener(e -> {
 			widget.getPanel().optionClicked();
@@ -34,9 +47,35 @@ public abstract class AbstractWidgetPanel extends JPanel {
 		JMenuItem closeWidget = new JMenuItem("Delete");
 		closeWidget.addActionListener(e -> {
 			this.getParent().remove(this);
+						widget.close();
+						if (pop != null)
+							pop.dispose();
+					});
+					JMenuItem popoutWidget = new JMenuItem("Popout");
+					popoutWidget.addActionListener(e -> {
+						if(pop == null){
+							popoutWidget.setText("Back to Bar");
+							tmp = (BackgroundPanel) this.getParent();
+							this.getParent().remove(this);
+							System.out.println(tmp);
+							pop = new PopoutFrame(this);
+							addMouseListener(l);
+							addMouseMotionListener(l);
+						} else{
+							popoutWidget.setText("Popout");
+							pop.dispose();
+							pop.remove(this);
+							tmp.add(this);
+							tmp.rebuild();
+							pop = null;
+							removeMouseListener(l);
+							removeMouseMotionListener(l);
+						}
+						System.out.println("Popout");
 		});
 		popup.add(closeWidget);
 		popup.add(subMenu);
+		popup.add(popoutWidget);
 		setComponentPopupMenu(popup);
 		setVisible(true);
 	}

@@ -10,7 +10,6 @@ import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.dnd.DropTarget;
 
 /**
@@ -27,7 +26,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 	public PGP_UI(PGP pgp) {
 		super(pgp);
 		this.widget = pgp;
-		setBounds(new Rectangle(0, 0, 280, 80));
+		setSize(280,200);
 		initializePanel();
 		
 	}
@@ -51,7 +50,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 			fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Please choose a file");
 			// fileChooser.setCurrentDirectory(new File("db"));
-			int option = fileChooser.showOpenDialog(null);
+			fileChooser.showOpenDialog(null);
 			
 		});
 		add(btnFile);

@@ -2,28 +2,25 @@ package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.io.File;
+import java.util.TimeZone;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import de.szut.SmartGadgetBar.Widgets.Clock.Clock;
-import de.szut.SmartGadgetBar.Widgets.Clock.TimeThread;
 
 public class Clock_UI extends AbstractWidgetPanel {
+	private static final long serialVersionUID = 3815141531387992662L;
 	private Clock widget;
-	private TimeThread time;
 	private JLabel mainTime;
-	private JLabel lblName;
-	private JLabel lblTime;
-	private JTextField textField;
 
 	/**
 	 * Create the panel.
@@ -36,74 +33,65 @@ public class Clock_UI extends AbstractWidgetPanel {
 	public JLabel getMainTime(){
 		return mainTime;
 	}
-	public JLabel getZoneName(){
-		return lblName;
-	}
-	public JLabel getTimeLabel(){
-		return lblTime;
-	}
 
 	@Override
 	void initializePanel() {
 		// TODO Auto-generated method stub
-		setSize(280,221);
+		setSize(280,200);
 		setBackground(Color.YELLOW);
 		setLayout(new BorderLayout(0, 0));
-		
-		if(widget.otherTimeZonesSelectet()){
-			lblName = new JLabel("Name");
-			lblName.setSize(46, 14);
-			lblTime = new JLabel("Time");
-			lblTime.setSize(46, 14);
-			if(this.getComponentCount() == 1){
-				lblName.setLocation(5, 102);
-				lblTime.setLocation(70, 102);
-			}
-			System.out.println(this.getComponentCount());
-			//add(lblName);
-			//add(lblTime);
-		}
 
 		
 		
 		JPanel panel = new JPanel();
+		panel.setMinimumSize(new Dimension(200, 200));
 		add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		mainTime= new JLabel();
-		mainTime.setText("Test");
-		panel.add(mainTime);
+		mainTime = new JLabel();
+		panel.add(mainTime, BorderLayout.CENTER);
 		mainTime.setFont(new Font("Tahoma", Font.PLAIN, 47));
 		mainTime.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
 		add(panel_1, BorderLayout.SOUTH);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		panel_1.setLayout(new GridLayout(0, 3, 10, 0));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		panel_1.add(lblNewLabel, gbc_lblNewLabel);
+		JComboBox<Object> values = new JComboBox<>();
+		values.setEditable(true);
+		values.setModel(new DefaultComboBoxModel<Object>(TimeZone.getAvailableIDs()));
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_1.gridx = 1;
-		gbc_lblNewLabel_1.gridy = 0;
-		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		JLabel altTime1 = new JLabel("");
+		altTime1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		panel_1.add(altTime1);
 		
-//		textField = new JTextField();
-//		textField.setBounds(38, 124, 195, 20);
-//		add(textField);
-//		textField.setColumns(10);
-//		setVisible(true);
+		JLabel altTime2 = new JLabel("");
+				altTime2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panel_1.add(altTime2);
+		
+				JLabel altTime3 = new JLabel("");
+				altTime3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panel_1.add(altTime3);
+		
+				JButton btnNewButton = new JButton("New button");
+				btnNewButton.addActionListener(e -> {
+					widget.setOtherTimeLabels(altTime1, values.getSelectedItem().toString());
+				});
+				panel_1.add(btnNewButton);
+		
+				JButton btnNewButton_1 = new JButton("New button");
+				btnNewButton_1.addActionListener(e -> {
+					widget.setOtherTimeLabels(altTime2, values.getSelectedItem().toString());
+				});
+				panel_1.add(btnNewButton_1);
+		
+				JButton btnNewButton_2 = new JButton("New button");
+				btnNewButton_2.addActionListener(e -> {
+					widget.setOtherTimeLabels(altTime3, values.getSelectedItem().toString());
+				});
+				panel_1.add(btnNewButton_2);
+		
+				panel_1.add(values);
 	}
 	@Override
 	public void pushFiles(File[] files) {

@@ -2,8 +2,6 @@ package de.szut.SmartGadgetBar.Widgets.ZIP;
 
 import java.io.File;
 import java.util.Properties;
-import java.util.zip.*;
-
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.ZIP_UI;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
@@ -16,7 +14,6 @@ public class ZIP  implements WidgetInterface {
 
 	public static final String COMLOCATION = "comprimatelocation";
 	public static final String STANDLOCATION = "zips/output.zip";
-	private Deflater deflet;
 	private ZIP_UI ui;
 	private Properties props;
 	public final String widgetName = "ZIP";
@@ -91,5 +88,11 @@ public class ZIP  implements WidgetInterface {
 		Properties defaultProps = new Properties();
 		defaultProps.setProperty("comprimatelocation", new File(".").getAbsolutePath());
 		return defaultProps;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 }

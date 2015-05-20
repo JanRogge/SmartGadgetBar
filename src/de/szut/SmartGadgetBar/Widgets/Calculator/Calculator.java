@@ -2,11 +2,8 @@ package de.szut.SmartGadgetBar.Widgets.Calculator;
 
 import java.util.Properties;
 
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.swing.JPanel;
-
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.Calculator_UI;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
@@ -65,5 +62,11 @@ public class Calculator implements WidgetInterface{
 	@Override
 	public Properties getDefaultProperties() {
 		return null;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -10,8 +10,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 
@@ -27,7 +25,6 @@ public class OptionPanelWidget {
 	private WidgetInterface widget;
 	private JButton svbtn;
 	private ArrayList<OptionKeyPairPanel> options;
-	private JScrollPane scroll;
 	private JPanel topPanel;
 	private JButton canc;
 

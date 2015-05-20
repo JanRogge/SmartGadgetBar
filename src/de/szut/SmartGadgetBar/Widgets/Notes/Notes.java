@@ -2,7 +2,6 @@ package de.szut.SmartGadgetBar.Widgets.Notes;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -179,5 +178,11 @@ public class Notes implements WidgetInterface {
 		defaultProps.setProperty("databasepath", new File(".").getAbsolutePath());
 		defaultProps.setProperty("textfilepath", new File(".").getAbsolutePath());
 		return null;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 }
