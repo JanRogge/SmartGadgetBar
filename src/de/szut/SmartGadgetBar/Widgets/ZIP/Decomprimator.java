@@ -25,7 +25,6 @@ public class Decomprimator {
 			ZipEntry entry;
 			while ((entry = zis.getNextEntry()) != null) {
 				File f = new File(entry.getName());
-				System.out.println(f.getAbsolutePath());
 				if(entry.isDirectory()){
 					f.mkdirs();
 				}else{

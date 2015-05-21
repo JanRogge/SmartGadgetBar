@@ -51,7 +51,6 @@ public class Calculator_UI extends AbstractWidgetPanel{
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_ENTER){
-					System.out.println("enter");
 					erge.setText(widget.calculate(field.getText()));
 
 					

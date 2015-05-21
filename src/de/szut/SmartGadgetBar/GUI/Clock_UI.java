@@ -46,7 +46,7 @@ public class Clock_UI extends AbstractWidgetPanel {
 	@Override
 	void initializePanel() {
 		// TODO Auto-generated method stub
-		setSize(280,221);
+		setSize(280, 100);
 		setBackground(Color.YELLOW);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -59,7 +59,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 				lblName.setLocation(5, 102);
 				lblTime.setLocation(70, 102);
 			}
-			System.out.println(this.getComponentCount());
 			//add(lblName);
 			//add(lblTime);
 		}

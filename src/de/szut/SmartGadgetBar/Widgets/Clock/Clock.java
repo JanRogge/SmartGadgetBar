@@ -16,7 +16,6 @@ public class Clock  implements WidgetInterface{
 	private Properties props;
 	
 	public Clock(){
-		System.out.println("Clock");
 		ui = new Clock_UI(this);
 		time = new TimeThread(ui.getMainTime(), ui);
 		time.start();
@@ -30,7 +29,6 @@ public class Clock  implements WidgetInterface{
 //		Date date1 = new Date();
 //		SimpleDateFormat df = new SimpleDateFormat();
 //		df.setTimeZone(TimeZone.getTimeZone("GMT+2"));
-//		//System.out.println(df.format(date1));
 //    }
 	public boolean otherTimeZonesSelectet(){
 		if(otherTimeZones){

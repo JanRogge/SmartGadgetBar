@@ -99,13 +99,15 @@ public class BackgroundPanel extends JPanel {
 		if (layout != null) {
 			String[] widgets = layout.getWidgets();
 			while (actualWidgets.size() > 0) {
-				actualHeight -= actualWidgets.get(0).getPanel().getHeight();
+				actualHeight -= actualWidgets.get(0).getPanel().getHeight() + 5;
+				System.out.println(actualHeight);
 				actualWidgets.get(0).close();
 			}
 			for (String widget : widgets) {
 				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widget +"/" + widget + ".class").getPanel();
 				actualWidgets.add(widgetPanel.getWidget());
-				actualHeight += widgetPanel.getHeight();
+				actualHeight += widgetPanel.getHeight() + 5;
+				System.out.println(actualHeight);
 				add(widgetPanel);
 				rebuild();
 			}
@@ -129,7 +131,8 @@ public class BackgroundPanel extends JPanel {
 				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widgets[x] +"/" + widgets[x] + ".class").getPanel();
 				if (actualHeight  + widgetPanel.getHeight() <= getHeight()) {
 					actualWidgets.add(widgetPanel.getWidget());
-					actualHeight += widgetPanel.getHeight();
+					actualHeight += widgetPanel.getHeight() + 5;
+					System.out.println(actualHeight);
 					add(widgetPanel);
 					rebuild();
 				}
@@ -147,7 +150,8 @@ public class BackgroundPanel extends JPanel {
 		if (comp instanceof AbstractWidgetPanel) {
 			actualWidgets.remove(((AbstractWidgetPanel) comp).getWidget());
 		}
-		actualHeight -= comp.getHeight();
+		actualHeight -= comp.getHeight() + 5;
+		System.out.println(actualHeight);
 		super.remove(comp);
 		this.rebuild();
 	}
