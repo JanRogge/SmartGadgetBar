@@ -10,9 +10,8 @@ import javax.swing.JTextField;
 
 import de.szut.SmartGadgetBar.Widgets.Calculator.Calculator;
 
-public class Calculator_UI extends AbstractWidgetPanel{
+public class Calculator_UI extends AbstractWidgetPanel {
 
-	
 	/**
 	 * 
 	 */
@@ -20,23 +19,22 @@ public class Calculator_UI extends AbstractWidgetPanel{
 	private Calculator widget;
 	private JTextField field;
 	private JLabel erge;
-	
-	
+
 	public Calculator_UI(Calculator parent) {
 		super(parent);
 		this.widget = parent;
-		
+
 		initializePanel();
-		
+
 	}
 
 	@Override
 	void initializePanel() {
-		
-		setSize(280,80);
+
+		setSize(280, 80);
 		setLayout(null);
-		setBackground(Color.LIGHT_GRAY);
-		
+		setColor(Color.LIGHT_GRAY);
+
 		field = new JTextField();
 		field.setBounds(10, 10, 250, 27);
 		field.addKeyListener(new KeyListener() {
@@ -44,49 +42,48 @@ public class Calculator_UI extends AbstractWidgetPanel{
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getKeyCode() == KeyEvent.VK_ENTER){
-					System.out.println("enter");
-					erge.setText(widget.calculate(field.getText()));
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (widget.calculate(field.getText()) == null) {
+						erge.setText("= ERROR");
+					} else {
+						erge.setText("= " + widget.calculate(field.getText()));
+					}
 
-					
 				}
 			}
-			
-			
+
 		});
-		
-		erge = new JLabel("=");
-		erge.setBounds(30,40,5000,50);
+
+		erge = new JLabel("= ");
+		erge.setBounds(30, 40, 5000, 50);
 		add(field);
 		add(erge);
-		
-		
+
 		setVisible(true);
 	}
 
 	@Override
 	public void pushFiles(File[] files) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void optionClicked() {
 		// TODO Auto-generated method stub
-		OptionPanelWidget opw= new OptionPanelWidget(widget);
-		opw.addProperty(Calculator.MSG, "What are you searching for? Calculator need no options!");
+		OptionPanelWidget opw = new OptionPanelWidget(widget);
+		opw.addProperty(Calculator.MSG,
+				"What are you searching for? Calculator need no options!");
 		opw.finish();
 	}
-	
-	
 
 }

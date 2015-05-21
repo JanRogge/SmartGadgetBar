@@ -2,6 +2,7 @@ package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JFrame;
 
@@ -13,14 +14,11 @@ public class PopoutFrame extends JFrame {
 	private static final long serialVersionUID = 3257957647667454108L;
 	private int pX, pY;
 	public PopoutFrame(AbstractWidgetPanel abstractWidgetPanel) {
-		// TODO Auto-generated constructor stub
-		System.out.println("test");
 		setContentPane(abstractWidgetPanel);
 		setBounds(10,10,100,100);
-		System.out.println(abstractWidgetPanel.getSize().getWidth());
-		System.out.println(abstractWidgetPanel.getSize().getHeight());
 		setSize((int)abstractWidgetPanel.getSize().getWidth(), (int)abstractWidgetPanel.getSize().getHeight());
 		setUndecorated(true);
+		setShape(new RoundRectangle2D.Double(0, 0, (int)abstractWidgetPanel.getSize().getWidth(), (int)abstractWidgetPanel.getSize().getHeight(), 30, 30));
 		setVisible(true);
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {

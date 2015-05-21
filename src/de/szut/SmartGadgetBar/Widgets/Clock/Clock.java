@@ -12,7 +12,6 @@ import de.szut.SmartGadgetBar.GUI.Clock_UI;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 public class Clock  implements WidgetInterface{
-	public static final String CITIES = "cities";
 	private Clock_UI ui;
 	private TimeThread time;
 	private Properties props;
@@ -32,11 +31,16 @@ public class Clock  implements WidgetInterface{
 		}
 	}
 	public void stoponeLabel(JLabel label){
-		for (TimeThread thread : threads) {
-			if(label == thread.getLabel()){
-				thread.setRunning(false);
-			}		
+		System.out.println(threads.size());
+		if(!threads.isEmpty()){
+			for(int i = 0; i < threads.size(); i++ ){
+			//for (TimeThread thread : threads) {
+				if(label == threads.get(i).getLabel()){
+					threads.get(i).setRunning(false);
+				}		
+			}	
 		}
+		
 	}
 	public void setOtherTimeLabels(JLabel label, String timezone){
 		if(label.getText() != ""){
@@ -44,14 +48,15 @@ public class Clock  implements WidgetInterface{
 				if(label == thread.getLabel()){
 					thread.setRunning(false);
 					time = new TimeThread(label, timezone, false);
+					time.start();
 				}		
 			}
 			threads.add(time);
 		} else{
 			time = new TimeThread(label, timezone, false);
+			time.start();
 			threads.add(time);
 		}
-		time.start();
 	}
 	@Override
 	public AbstractWidgetPanel getPanel() {

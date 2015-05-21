@@ -40,7 +40,6 @@ public class FileDropper implements DropTargetListener{
 			try {
 				List<?> fileList = (List<?>) transfer.getTransferData(DataFlavor.javaFileListFlavor);
 				panel.pushFiles(fileList.toArray(new File[fileList.size()]));
-				System.out.println(fileList.size());
 			}
 			catch (UnsupportedFlavorException e) {
 				e.printStackTrace();

@@ -4,12 +4,12 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.szut.SmartGadgetBar.Model.FileDropper;
 import de.szut.SmartGadgetBar.Widgets.PGP.PGP;
 
-import java.awt.Color;
 import java.awt.dnd.DropTarget;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +24,8 @@ public class PGP_UI extends AbstractWidgetPanel {
 	private JFileChooser fileChooser;
 	private JFileChooser keyChooser;
 	private PGP widget;
+	private File keyfile;
+	private boolean key = false;
 
 	public PGP_UI(PGP pgp) {
 		super(pgp);
@@ -36,13 +38,19 @@ public class PGP_UI extends AbstractWidgetPanel {
 	@Override
 	void initializePanel() {
 		setLayout(null);
-		setBackground(Color.BLUE);
 
 		JButton btnEncrypt = new JButton("Encrypt");
 		btnEncrypt.setBounds(10, 45, 89, 23);
 		btnEncrypt.addActionListener(e -> {
-			widget.encryptFile(fileChooser.getSelectedFile().getAbsolutePath(),
-					keyChooser.getSelectedFile().getAbsolutePath());
+			try{
+				if(fileChooser.getSelectedFile().exists() && keyChooser.getSelectedFile().exists()){
+					widget.encryptFile(fileChooser.getSelectedFile().getAbsolutePath(),keyChooser.getSelectedFile().getAbsolutePath());
+				}
+			} catch(NullPointerException k){
+				JOptionPane.showMessageDialog(null, "No File to Encrypt or No Key was selected");
+			}
+			
+			
 		});
 		add(btnEncrypt);
 
@@ -51,7 +59,6 @@ public class PGP_UI extends AbstractWidgetPanel {
 		btnFile.addActionListener(e -> {
 			fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle("Please choose a file");
-			// fileChooser.setCurrentDirectory(new File("db"));
 			fileChooser.showOpenDialog(null);
 			
 		});
@@ -60,8 +67,13 @@ public class PGP_UI extends AbstractWidgetPanel {
 		JButton btnDecrypt = new JButton("Decrypt");
 		btnDecrypt.setBounds(181, 45, 89, 23);
 		btnDecrypt.addActionListener(e -> {
-			widget.decryptFile(fileChooser.getSelectedFile().getAbsolutePath(),
-					"keys/private.skr");
+			try{
+				if(fileChooser.getSelectedFile().exists() && fileChooser.getSelectedFile().getAbsolutePath().endsWith(".pgp")){
+					widget.decryptFile(fileChooser.getSelectedFile().getAbsolutePath(),"keys/private.skr");
+				}
+			}catch(NullPointerException k){
+				JOptionPane.showMessageDialog(null, "No File to Encrypt");
+			}
 		});
 		add(btnDecrypt);
 		
@@ -79,14 +91,38 @@ public class PGP_UI extends AbstractWidgetPanel {
 		});
 		add(btnPublicKey);
 		
-		new DropTarget(this, new FileDropper(this));
+		new DropTarget(btnPublicKey, new FileDropper(this));
+		new DropTarget(btnFile, new FileDropper(this));
 		
 		setVisible(true);
 	}
 
 	@Override
 	public void pushFiles(File[] files) {
-		// TODO Auto-generated method stub
+		boolean decrypt = true; 
+		for (File file : files) {
+			if (!file.getAbsolutePath().endsWith(".pgp")) {
+				decrypt = false;
+			}
+			if(file.getAbsolutePath().endsWith(".asc")){
+
+				key = true;
+				keyfile = file;
+			}
+		}
+		if (decrypt) {
+			for (File file : files) {
+				widget.decryptFile(file.getAbsolutePath(),"keys/private.skr");
+			}
+		}
+		else {	
+				for (File file : files) {
+					if(key && !file.getAbsolutePath().endsWith(".asc")){
+						widget.encryptFile(file.getAbsolutePath(),keyfile.getAbsolutePath());
+					}
+				}
+			
+		}
 	}
 
 	@Override

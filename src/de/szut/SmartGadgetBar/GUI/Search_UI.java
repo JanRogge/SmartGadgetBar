@@ -1,15 +1,11 @@
 package de.szut.SmartGadgetBar.GUI;
 
-import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,9 +33,9 @@ public class Search_UI extends AbstractWidgetPanel {
 
 	@Override
 	void initializePanel() {
-		setBounds(new Rectangle(0, 0, 280, 40));
+		setSize(280,40);
 		setLayout(null);
-		setBackground(Color.YELLOW);
+		setImage("graphics/search.png");
 		
 		comboBox = new JComboBox<Object>();
 		comboBox.setEditable(true);
@@ -106,13 +102,6 @@ public class Search_UI extends AbstractWidgetPanel {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void paintComponent(final Graphics g) {
-		g.setColor(this.getBackground());
-		g.fillRoundRect(0, 0, this.getBounds().width, this.getBounds().height,
-				10, 10);
-	};
 
 	public void updateComboBox() {
 		comboBox.removeAllItems();

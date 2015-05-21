@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,20 +11,12 @@ import java.io.ObjectOutputStream;
 public class LayoutManager {
 
 	public void write(Layout layout, String filePath) {
-		if (!new File(filePath).exists()) {
-			try {
-				FileWriter writer = new FileWriter(new File(filePath), false);
-				writer.flush();
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		filePath = new File(filePath).getAbsolutePath();
 		if (!filePath.endsWith(".bin")) {
 			filePath += ".bin";
 		}
 		try {
-			FileOutputStream fos = new FileOutputStream(filePath);
+			FileOutputStream fos = new FileOutputStream(new File(filePath));
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(layout);
 			oos.close();
@@ -35,6 +26,9 @@ public class LayoutManager {
 	}
 
 	public Layout read(File file) {
+		if (!file.getAbsolutePath().endsWith(".bin")) {
+			file = new File(file.getAbsolutePath() + ".bin");
+		}
 		Layout layout = null;
 		ObjectInputStream in;
 		if (file.exists()) {

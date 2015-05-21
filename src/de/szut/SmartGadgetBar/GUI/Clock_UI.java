@@ -1,7 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -38,16 +37,15 @@ public class Clock_UI extends AbstractWidgetPanel {
 	public JLabel getMainTime() {
 		return mainTime;
 	}
-
 	@Override
 	void initializePanel() {
 		// TODO Auto-generated method stub
-		setSize(280, 200);
-		setBackground(Color.YELLOW);
+		setSize(280, 100);
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
 		panel.setMinimumSize(new Dimension(200, 200));
+		panel.setOpaque(true);
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
@@ -73,6 +71,8 @@ public class Clock_UI extends AbstractWidgetPanel {
 		altTime3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_1.add(altTime3);
 
+		repaint();
+		revalidate();
 	}
 
 	@Override
@@ -80,12 +80,11 @@ public class Clock_UI extends AbstractWidgetPanel {
 		// TODO Auto-generated method stub
 
 	}
-
+	
 	@Override
 	public void optionClicked() {
 		// TODO Auto-generated method stub
 		OptionPanelWidget opw = new OptionPanelWidget(widget);
-		opw.addProperty(Clock.CITIES, "Cities:");
 		opw.addButton("Set TimeZone to Label1", new ActionListener() {
 
 			@Override
@@ -115,7 +114,7 @@ public class Clock_UI extends AbstractWidgetPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				altTime1.setText(null);
+				altTime1.setText("");
 				widget.stoponeLabel(altTime1);
 			}
 
@@ -124,7 +123,7 @@ public class Clock_UI extends AbstractWidgetPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				altTime2.setText(null);
+				altTime2.setText("");
 				widget.stoponeLabel(altTime2);
 			}
 
@@ -133,7 +132,7 @@ public class Clock_UI extends AbstractWidgetPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				altTime3.setText(null);
+				altTime3.setText("");
 				widget.stoponeLabel(altTime3);
 			}
 

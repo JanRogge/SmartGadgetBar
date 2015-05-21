@@ -4,6 +4,8 @@ import java.util.Properties;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.swing.JOptionPane;
+
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 import de.szut.SmartGadgetBar.GUI.Calculator_UI;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
@@ -53,7 +55,7 @@ public class Calculator implements WidgetInterface{
 			return sem.getEngineFactories().get(0).getScriptEngine().eval(queue).toString();
 		} catch (ScriptException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,"Die Rechnung konnte nicht durchgeführt werden du solltest deine Eingabe überprüfen","Calculation Error",JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 		

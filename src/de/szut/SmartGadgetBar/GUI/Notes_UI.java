@@ -1,5 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,9 +35,8 @@ public class Notes_UI extends AbstractWidgetPanel {
 
 	@Override
 	void initializePanel() {
-		setLayout(null);
+		setLayout(new GridLayout());
 		textfield = new JTextArea();
-		textfield.setBounds(0, 7, 280, 66);
 		add(textfield);
 
 		JPopupMenu popupMenu = getComponentPopupMenu();

@@ -1,5 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -28,12 +30,13 @@ public class BackgroundPanel extends JPanel {
 	private JMenu addWidgets;
 	private WidgetLoader widgetLoader;
 	public static final int GAP = 5;
+	private int actualHeight = 0;
 	private ArrayList<WidgetInterface> actualWidgets = new ArrayList<WidgetInterface>();
 
 	/**
 	 * Create the panel.
 	 */
-	public BackgroundPanel(MainFrame mainf) {
+	public BackgroundPanel(MainFrame mainf, Layout layout) {
 		widgetLoader = new WidgetLoader();
 		JPopupMenu menuPopup = new JPopupMenu();
 		JMenuItem closeMenuItem = new JMenuItem("Close");
@@ -46,7 +49,7 @@ public class BackgroundPanel extends JPanel {
 				.getProperty("availableWidgets").split(",");
 		addtoMenu(availabelWidgets);
 		closeMenuItem.addActionListener(e -> {
-			mainf.close();
+			mainf.close(new Layout(getWidgets()));
 		});
 		mainOptions.addActionListener(e -> {
 			new OptionPanelMain(mainf);
@@ -58,8 +61,10 @@ public class BackgroundPanel extends JPanel {
 			fileChooser.setFileFilter(new FileNameExtensionFilter(
 					"Binär Datei", "bin"));
 			fileChooser.showOpenDialog(null);
-			new LayoutManager().write(new Layout(getWidgets()), fileChooser
-					.getSelectedFile().getAbsolutePath());
+			if (fileChooser.getSelectedFile() != null) {
+				new LayoutManager().write(new Layout(getWidgets()), fileChooser
+						.getSelectedFile().getAbsolutePath());
+			}
 		});
 		loadLayout.addActionListener(e -> {
 			JFileChooser fileChooser = new JFileChooser();
@@ -68,18 +73,10 @@ public class BackgroundPanel extends JPanel {
 			fileChooser.setFileFilter(new FileNameExtensionFilter(
 					"Binär Datei", "bin"));
 			fileChooser.showOpenDialog(null);
-			String[] widgets = new LayoutManager().read(
-					fileChooser.getSelectedFile()).getWidgets();
-			while (actualWidgets.size() > 0) {
-				actualWidgets.get(0).close();
-			}
-			for (String widget : widgets) {
-				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget(
-						"bin/de/szut/SmartGadgetBar/Widgets/" + widget + "/"
-								+ widget + ".class").getPanel();
-				actualWidgets.add(widgetPanel.getWidget());
-				add(widgetPanel);
-				rebuild();
+			if (fileChooser.getSelectedFile() != null) {
+				Layout loadedLayout = new LayoutManager().read(fileChooser
+						.getSelectedFile());
+				setWidgetLayout(loadedLayout);
 			}
 		});
 		menuPopup.add(addWidgets);
@@ -90,7 +87,7 @@ public class BackgroundPanel extends JPanel {
 
 		setComponentPopupMenu(menuPopup);
 		setLayout(null);
-		setBounds(5, 5, 300, 200);
+		setBackground(Color.cyan);
 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
@@ -104,6 +101,26 @@ public class BackgroundPanel extends JPanel {
 						mainf.getLocation().y + me.getY() - pY);
 			}
 		});
+		setWidgetLayout(layout);
+	}
+
+	private void setWidgetLayout(Layout layout) {
+		if (layout != null) {
+			String[] widgets = layout.getWidgets();
+			while (actualWidgets.size() > 0) {
+				actualHeight -= actualWidgets.get(0).getPanel().getHeight() + 5;
+				actualWidgets.get(0).close();
+			}
+			for (String widget : widgets) {
+				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget(
+						"bin/de/szut/SmartGadgetBar/Widgets/" + widget + "/"
+								+ widget + ".class").getPanel();
+				actualWidgets.add(widgetPanel.getWidget());
+				actualHeight += widgetPanel.getHeight() + 5;
+				add(widgetPanel);
+				rebuild();
+			}
+		}
 	}
 
 	private String[] getWidgets() {
@@ -120,10 +137,22 @@ public class BackgroundPanel extends JPanel {
 			addWidgets.add(widget);
 			int x = i;
 			widget.addActionListener(e -> {
-				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widgets[x]+ "/" + widgets[x] + ".class").getPanel();
-				actualWidgets.add(widgetPanel.getWidget());
-				add(widgetPanel);
-				rebuild();
+				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget(
+						"bin/de/szut/SmartGadgetBar/Widgets/" + widgets[x]
+								+ "/" + widgets[x] + ".class").getPanel();
+				if (actualHeight + widgetPanel.getHeight() <= getHeight()) {
+					actualWidgets.add(widgetPanel.getWidget());
+					actualHeight += widgetPanel.getHeight() + 5;
+					add(widgetPanel);
+					rebuild();
+				} else {
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"Die WidgetBar kann dieses Widget nicht mehr aufnehmen",
+									"Die WidgetBar ist voll",
+									JOptionPane.WARNING_MESSAGE);
+				}
 			});
 		}
 
@@ -134,6 +163,7 @@ public class BackgroundPanel extends JPanel {
 		if (comp instanceof AbstractWidgetPanel) {
 			actualWidgets.remove(((AbstractWidgetPanel) comp).getWidget());
 		}
+		actualHeight -= comp.getHeight() + 5;
 		super.remove(comp);
 		this.rebuild();
 	}

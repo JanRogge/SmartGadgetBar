@@ -1,11 +1,22 @@
 package de.szut.SmartGadgetBar.GUI;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,6 +36,8 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	private BackgroundPanel tmp;
 	private int pX, pY;
 	private String manualText;
+	private BufferedImage image;
+	private Color c;
 
 	/**
 	 * Konstruktor Die UI kennt das Widget um mit ihm zu interagieren Hat
@@ -93,7 +106,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 				pop = null;
 				removeMouseListener(l);
 				removeMouseMotionListener(l);
-				popup.remove(3);
+				popup.remove(popup.getComponentCount()-1);
 			}
 		});
 		JMenuItem manualItem = new JMenuItem("Manual");
@@ -106,10 +119,48 @@ public abstract class AbstractWidgetPanel extends JPanel {
 		popup.add(manualItem);
 		setComponentPopupMenu(popup);
 		setVisible(true);
+		setBackground(Color.cyan);
 	}
+	
+	@Override
+	public void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+        Graphics2D graphics = (Graphics2D) g;
+
+
+        RoundRectangle2D.Float rr = new RoundRectangle2D.Float(0, 0, (getWidth()), (getHeight()), 10, 10);
+
+        Shape clipShape = graphics.getClip();
+
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        if(image == null)
+        {
+            graphics.setColor(c);
+            graphics.fill(rr);
+        }
+        else
+        {
+            RoundRectangle2D.Float rr2 =  new RoundRectangle2D.Float(0, 0, (getWidth()), (getHeight()), 10, 10);
+
+            graphics.setClip(rr2);
+            graphics.drawImage(image, 0, 0, null);
+            graphics.setClip(clipShape);
+        }
+
+	};
 
 	public WidgetInterface getWidget() {
 		return widget;
+	}
+	public void setColor(Color c){
+		this.c = c;
+	}
+	public void setImage(String imgpath){
+		try {
+			image = ImageIO.read(new File(imgpath));
+		} catch (IOException ex) {
+    	JOptionPane.showMessageDialog(null, "Hintergrund nicht gefunden", "Fehler", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public abstract void optionClicked();
