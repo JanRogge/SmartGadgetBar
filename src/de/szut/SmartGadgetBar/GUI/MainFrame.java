@@ -21,7 +21,13 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		props = new PropertyLoader().loadProperties("config/config.ini", getDefaultProperties());
-		setAlwaysOnTop(Boolean.getBoolean(props.getProperty("alwaysontop")));
+		boolean onTop = false;
+		if(props.getProperty("alwaysontop").equals("true")){
+			onTop = true;
+		} else{
+			onTop = false;
+		}
+		setAlwaysOnTop(onTop);
 		setUndecorated(true);
 		setType(javax.swing.JFrame.Type.UTILITY);
 		setContentPane(new BackgroundPanel(this));
@@ -38,7 +44,7 @@ public class MainFrame extends JFrame {
 		props.setProperty("position.y",String.valueOf(windowDimension.getY()));
 		props.setProperty("size.x", String.valueOf(windowDimension.width));
 		props.setProperty("size.y", String.valueOf(windowDimension.height));
-		props.setProperty("alwaysontop",String.valueOf(isAlwaysOnTop()));
+		props.setProperty("alwaysontop", String.valueOf(this.isAlwaysOnTop()));
 		new PropertyLoader().saveProperties(props, "config/config.ini");
 		System.exit(0);
 	}

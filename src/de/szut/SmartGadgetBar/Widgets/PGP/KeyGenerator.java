@@ -50,8 +50,6 @@ public class KeyGenerator {
 	 * @throws Exception
 	 */
 	public void generateKeyPair() throws Exception {
-		FileWriter w = new FileWriter(new File(publicKeyFile));
-		w = new FileWriter(new File(privateKeyFile));
 		PGPKeyRingGenerator krgen = generateKeyRingGenerator(email, pass);
 
 		// Generate public key ring, dump to file.

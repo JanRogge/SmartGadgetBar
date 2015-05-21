@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -23,6 +24,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	private PopoutFrame pop;
 	private BackgroundPanel tmp;
 	private int pX, pY;
+	private String manualText;
 
 	/**
 	 * Konstruktor Die UI kennt das Widget um mit ihm zu interagieren Hat
@@ -94,9 +96,14 @@ public abstract class AbstractWidgetPanel extends JPanel {
 				popup.remove(3);
 			}
 		});
+		JMenuItem manualItem = new JMenuItem("Manual");
+		manualItem.addActionListener(e -> {
+			JOptionPane.showMessageDialog(null, manualText);
+		});
 		popup.add(closeWidget);
 		popup.add(subMenu);
 		popup.add(popoutWidget);
+		popup.add(manualItem);
 		setComponentPopupMenu(popup);
 		setVisible(true);
 	}

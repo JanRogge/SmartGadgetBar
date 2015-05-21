@@ -37,11 +37,10 @@ public class PGP implements WidgetInterface {
 	
 	public PGP() {
 		Security.addProvider(new BouncyCastleProvider());
-		if (!new File("keys/private.skr").exists()
-				|| !new File("keys/public.asc").exists())
-			generateKeyPair();
 		ui = new PGP_UI(this);
 		loadProperties();
+		if (!new File("keys/private.skr").exists() || !new File("keys/public.asc").exists())
+			generateKeyPair();
 	}
 	
 	/**

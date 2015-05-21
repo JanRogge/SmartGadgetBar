@@ -76,7 +76,7 @@ public class Search implements WidgetInterface{
 	}
 	@Override
 	public void close() {
-		
+		threads.get(threads.size()-1).setRunning(false);
 	}
 
 	@Override

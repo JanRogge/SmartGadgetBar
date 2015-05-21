@@ -9,11 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import de.szut.SmartGadgetBar.Widgets.Calculator.Calculator;
-import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
 public class Calculator_UI extends AbstractWidgetPanel{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4216742631090750686L;
 	private Calculator widget;
 	private JTextField field;
 	private JLabel erge;
