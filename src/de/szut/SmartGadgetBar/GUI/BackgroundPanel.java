@@ -99,11 +99,13 @@ public class BackgroundPanel extends JPanel {
 		if (layout != null) {
 			String[] widgets = layout.getWidgets();
 			while (actualWidgets.size() > 0) {
+				actualHeight -= actualWidgets.get(0).getPanel().getHeight();
 				actualWidgets.get(0).close();
 			}
 			for (String widget : widgets) {
 				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widget +"/" + widget + ".class").getPanel();
 				actualWidgets.add(widgetPanel.getWidget());
+				actualHeight += widgetPanel.getHeight();
 				add(widgetPanel);
 				rebuild();
 			}
