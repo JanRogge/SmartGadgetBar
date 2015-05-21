@@ -15,7 +15,6 @@ public class LayoutManager {
 		if (!filePath.endsWith(".bin")) {
 			filePath += ".bin";
 		}
-		System.out.println(new File(filePath).getAbsolutePath());
 		try {
 			FileOutputStream fos = new FileOutputStream(new File(filePath));
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -30,7 +29,6 @@ public class LayoutManager {
 		if (!file.getAbsolutePath().endsWith(".bin")) {
 			file = new File(file.getAbsolutePath() + ".bin");
 		}
-		System.out.println(file.getAbsolutePath());
 		Layout layout = null;
 		ObjectInputStream in;
 		if (file.exists()) {
