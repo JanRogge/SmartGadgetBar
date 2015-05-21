@@ -36,7 +36,7 @@ public class BackgroundPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public BackgroundPanel(MainFrame mainf) {
+	public BackgroundPanel(MainFrame mainf, Layout layout) {
 		widgetLoader = new WidgetLoader();
 		JPopupMenu menuPopup = new JPopupMenu();
 		JMenuItem closeMenuItem = new JMenuItem("Close");
@@ -47,7 +47,7 @@ public class BackgroundPanel extends JPanel {
 		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini", null).getProperty("availableWidgets").split(",");
 		addtoMenu(availabelWidgets);
 		closeMenuItem.addActionListener(e -> {
-		mainf.close();
+			mainf.close(new Layout(getWidgets()));
 		});
 		mainOptions.addActionListener(e -> {
 			new OptionPanelMain(mainf);
@@ -57,22 +57,18 @@ public class BackgroundPanel extends JPanel {
 			fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
 			fileChooser.setFileFilter(new FileNameExtensionFilter("Binär Datei","bin"));
 			fileChooser.showOpenDialog(null);
-			new LayoutManager().write(new Layout(getWidgets()), fileChooser.getSelectedFile().getAbsolutePath());
+			if (fileChooser.getSelectedFile() != null) {
+				new LayoutManager().write(new Layout(getWidgets()), fileChooser.getSelectedFile().getAbsolutePath());
+			}
 		});
 		loadLayout.addActionListener(e -> {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.removeChoosableFileFilter(fileChooser.getChoosableFileFilters()[0]);
 			fileChooser.setFileFilter(new FileNameExtensionFilter("Binär Datei","bin"));
 			fileChooser.showOpenDialog(null);
-			String[] widgets = new LayoutManager().read(fileChooser.getSelectedFile()).getWidgets();
-			while (actualWidgets.size() > 0) {
-				actualWidgets.get(0).close();
-			}
-			for (String widget : widgets) {
-				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widget +"/" + widget + ".class").getPanel();
-				actualWidgets.add(widgetPanel.getWidget());
-				add(widgetPanel);
-				rebuild();
+			if (fileChooser.getSelectedFile() != null) {
+				Layout loadedLayout = new LayoutManager().read(fileChooser.getSelectedFile());
+				setWidgetLayout(loadedLayout);
 			}
 		});
 		menuPopup.add(addWidgets);
@@ -97,8 +93,22 @@ public class BackgroundPanel extends JPanel {
 						+ me.getY() - pY);
 			}
 		});
+		setWidgetLayout(layout);
 	}
 	
+	private void setWidgetLayout(Layout layout) {
+		String[] widgets = layout.getWidgets();
+		while (actualWidgets.size() > 0) {
+			actualWidgets.get(0).close();
+		}
+		for (String widget : widgets) {
+			AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widget +"/" + widget + ".class").getPanel();
+			actualWidgets.add(widgetPanel.getWidget());
+			add(widgetPanel);
+			rebuild();
+		}
+	}
+
 	private String[] getWidgets() {
 		String[] array = new String[actualWidgets.size()];
 		for (int i = 0; i < actualWidgets.size(); i++) {
