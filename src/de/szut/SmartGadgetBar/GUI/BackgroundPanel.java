@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,6 +30,7 @@ public class BackgroundPanel extends JPanel {
     private WidgetLoader widgetLoader;
     public static final int GAP = 5;
 	private ArrayList<WidgetInterface> actualWidgets = new ArrayList<WidgetInterface>();
+	private int actualHeight = 0;
 
 	/**
 	 * Create the panel.
@@ -123,18 +125,27 @@ public class BackgroundPanel extends JPanel {
 			int x = i;
 			widget.addActionListener(e -> {
 				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widgets[x] +"/" + widgets[x] + ".class").getPanel();
-				actualWidgets.add(widgetPanel.getWidget());
-				add(widgetPanel);
-				rebuild();
+				if (actualHeight  + widgetPanel.getHeight() <= getHeight()) {
+					actualWidgets.add(widgetPanel.getWidget());
+					actualHeight += widgetPanel.getHeight();
+					add(widgetPanel);
+					rebuild();
+				}
+				else {
+	                JOptionPane.showMessageDialog(null,
+                            "Die WidgetBar kann dieses Widget nicht mehr aufnehmen",
+                            "Die WidgetBar ist voll",					      
+                            JOptionPane.WARNING_MESSAGE);
+				}
 			});	
 		}
-		
 	}
 	@Override
 	public void remove(Component comp) {
 		if (comp instanceof AbstractWidgetPanel) {
 			actualWidgets.remove(((AbstractWidgetPanel) comp).getWidget());
 		}
+		actualHeight -= comp.getHeight();
 		super.remove(comp);
 		this.rebuild();
 	}
