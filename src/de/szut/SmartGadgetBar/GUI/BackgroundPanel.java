@@ -3,10 +3,7 @@ package de.szut.SmartGadgetBar.GUI;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
-
-import javafx.stage.FileChooser;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -97,15 +94,17 @@ public class BackgroundPanel extends JPanel {
 	}
 	
 	private void setWidgetLayout(Layout layout) {
-		String[] widgets = layout.getWidgets();
-		while (actualWidgets.size() > 0) {
-			actualWidgets.get(0).close();
-		}
-		for (String widget : widgets) {
-			AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widget +"/" + widget + ".class").getPanel();
-			actualWidgets.add(widgetPanel.getWidget());
-			add(widgetPanel);
-			rebuild();
+		if (layout != null) {
+			String[] widgets = layout.getWidgets();
+			while (actualWidgets.size() > 0) {
+				actualWidgets.get(0).close();
+			}
+			for (String widget : widgets) {
+				AbstractWidgetPanel widgetPanel = widgetLoader.loadWidget("bin/de/szut/SmartGadgetBar/Widgets/" + widget +"/" + widget + ".class").getPanel();
+				actualWidgets.add(widgetPanel.getWidget());
+				add(widgetPanel);
+				rebuild();
+			}
 		}
 	}
 

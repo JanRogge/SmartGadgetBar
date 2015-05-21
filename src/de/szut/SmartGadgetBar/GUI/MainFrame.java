@@ -48,7 +48,7 @@ public class MainFrame extends JFrame {
 	
 	private Properties getDefaultProperties() {
 		Properties defaultProps = new Properties();
-		defaultProps.setProperty("defaultLayoutPath", "");
+		defaultProps.setProperty("defaultLayoutPath", "defaultLayout");
 		defaultProps.setProperty("size.y", "600");
 		defaultProps.setProperty("position.y", "75.0");
 		defaultProps.setProperty("size.x", "300");
