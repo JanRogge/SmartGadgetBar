@@ -46,6 +46,7 @@ public class MainFrame extends JFrame {
 	public void close(Layout layout){
 		setVisible(false);
 		dispose();
+		((BackgroundPanel) this.getContentPane()).closeAll();
 		new LayoutManager().write(layout, props.getProperty("defaultLayoutPath"));
 		windowDimension = getBounds();
 		props.setProperty("position.x",String.valueOf(windowDimension.getX()));

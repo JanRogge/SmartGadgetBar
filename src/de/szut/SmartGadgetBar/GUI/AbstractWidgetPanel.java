@@ -75,7 +75,6 @@ public abstract class AbstractWidgetPanel extends JPanel {
 				popoutWidget.setText("Back to Bar");
 				tmp = (BackgroundPanel) this.getParent();
 				this.getParent().remove(this);
-				System.out.println(tmp);
 				pop = new PopoutFrame(this);
 				popup.add(widgetOnTop);
 				widgetOnTop.addActionListener(new ActionListener(){
@@ -117,6 +116,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 		popup.add(manualItem);
 		setComponentPopupMenu(popup);
 		setVisible(true);
+		setOpaque(false);
 		setBackground(Color.cyan);
 	}
 	

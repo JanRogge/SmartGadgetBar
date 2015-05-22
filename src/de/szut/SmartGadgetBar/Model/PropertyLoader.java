@@ -18,7 +18,10 @@ public class PropertyLoader {
 	 * @return geladene Properties
 	 */
 	public Properties loadProperties(String fileName, Properties defaultProperties){
-
+		File k = new File("config/");
+		if(!k.exists()){
+			k.mkdir();
+		}
 		Properties p = new Properties();
 		try (FileInputStream f = new FileInputStream(new File(new File(".").getCanonicalPath() + "/" + fileName))){
 			p.load(f);

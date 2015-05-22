@@ -2,10 +2,17 @@ package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -31,6 +38,7 @@ public class BackgroundPanel extends JPanel {
 	private WidgetLoader widgetLoader;
 	public static final int GAP = 5;
 	private int actualHeight = 0;
+	private String path;
 	private ArrayList<WidgetInterface> actualWidgets = new ArrayList<WidgetInterface>();
 
 	/**
@@ -84,10 +92,9 @@ public class BackgroundPanel extends JPanel {
 		menuPopup.add(closeMenuItem);
 		menuPopup.add(saveLayout);
 		menuPopup.add(loadLayout);
-
 		setComponentPopupMenu(menuPopup);
 		setLayout(null);
-		setBackground(Color.cyan);
+		setImage("graphics/05.jpg");
 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
@@ -167,6 +174,30 @@ public class BackgroundPanel extends JPanel {
 		super.remove(comp);
 		this.rebuild();
 	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		BufferedImage image = null;
+		super.paintComponent(g);
+        Graphics2D graphics = (Graphics2D) g;
+
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        try {
+        	image = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if(image == null)
+        {
+            graphics.setColor(Color.cyan);
+        }
+        else
+        {
+            graphics.drawImage(image, 0, 0, null);
+        }
+
+	};
 
 	public void rebuild() {
 
@@ -177,5 +208,13 @@ public class BackgroundPanel extends JPanel {
 		}
 		repaint();
 		revalidate();
+	}
+	public void setImage(String path){
+		this.path = path;
+	}
+	public void closeAll(){
+		for(WidgetInterface widget :actualWidgets){
+			widget.close();
+		}
 	}
 }

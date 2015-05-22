@@ -1,6 +1,7 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -34,6 +35,7 @@ public class Calculator_UI extends AbstractWidgetPanel {
 		setSize(280, 80);
 		setLayout(null);
 		setColor(Color.LIGHT_GRAY);
+		setImage("graphics/calculator.png");
 
 		field = new JTextField();
 		field.setBounds(10, 10, 250, 27);
@@ -65,6 +67,8 @@ public class Calculator_UI extends AbstractWidgetPanel {
 
 		erge = new JLabel("= ");
 		erge.setBounds(30, 40, 5000, 50);
+		erge.setForeground(Color.white);
+		erge.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		add(field);
 		add(erge);
 

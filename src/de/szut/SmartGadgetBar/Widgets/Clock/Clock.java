@@ -31,7 +31,6 @@ public class Clock  implements WidgetInterface{
 		}
 	}
 	public void stoponeLabel(JLabel label){
-		System.out.println(threads.size());
 		if(!threads.isEmpty()){
 			for(int i = 0; i < threads.size(); i++ ){
 			//for (TimeThread thread : threads) {

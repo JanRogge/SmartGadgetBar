@@ -52,7 +52,6 @@ public class SearchThread extends Thread{
 	
 	public void foundFile(Path path){
 		boolean tmp = true;
-		System.out.println(path);
 		for (int i = 0; i < files.size();i++){	
 			if (!files.get(i).toString().contains(path.toString())){
 				tmp = true;

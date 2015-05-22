@@ -52,7 +52,6 @@ public class ZIP  implements WidgetInterface {
 			new Comprimator().comprimate(files, props.getProperty(ZIP.COMLOCATION));
 			
 		}else{
-			System.out.println(files[0]);
 			new Comprimator().comprimate(files, out);
 		}
 
