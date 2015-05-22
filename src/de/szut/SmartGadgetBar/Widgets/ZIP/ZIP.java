@@ -89,7 +89,7 @@ public class ZIP  implements WidgetInterface {
 	@Override
 	public Properties getDefaultProperties() {
 		Properties defaultProps = new Properties();
-		defaultProps.setProperty("comprimatelocation", new File(".").getAbsolutePath());
+		defaultProps.setProperty("comprimatelocation", new File("").getAbsolutePath());
 		return defaultProps;
 	}
 
