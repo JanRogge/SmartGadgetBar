@@ -17,7 +17,6 @@ import de.szut.SmartGadgetBar.GUI.Notes_UI;
 public class Notes implements WidgetInterface {
 
 	public static final String DBPath = "databasepath";
-	public static final String TXTPATH = "textfilepath";
 	private Notes_UI ui;
 	private Properties properties;
 	private Connection connection;
@@ -27,17 +26,15 @@ public class Notes implements WidgetInterface {
 
 	public void loadDatabase() {
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
+			connection = DriverManager.getConnection("jdbc:sqlite:" + properties.getProperty(DBPath));
 			statement = connection.createStatement();
 			statement
 					.executeUpdate("CREATE TABLE IF NOT EXISTS notes (Date DATE NOT NULL, Name TINYTEXT, Text TEXT NOT NULL)");
 		} catch (SQLException e) {
 			try {
-				connection = DriverManager.getConnection("jdbc:sqlite:"
-						+ new File(".").getAbsolutePath());
+				connection = DriverManager.getConnection("jdbc:sqlite:" + new File("defaultnotes.db3").getAbsolutePath());
 				statement = connection.createStatement();
-				statement
-						.executeUpdate("CREATE TABLE IF NOT EXISTS notes (Date DATE NOT NULL, Name TINYTEXT, Text TEXT NOT NULL)");
+				statement.executeUpdate("CREATE TABLE IF NOT EXISTS notes (Date DATE NOT NULL, Name TINYTEXT, Text TEXT NOT NULL)");
 			} catch (SQLException exception) {
 				exception.printStackTrace();
 			}
@@ -195,15 +192,14 @@ public class Notes implements WidgetInterface {
 	public Properties getDefaultProperties() {
 		Properties defaultProps = new Properties();
 		defaultProps.setProperty("databasepath",
-				new File(".").getAbsolutePath());
-		defaultProps.setProperty("textfilepath",
-				new File(".").getAbsolutePath());
-		return null;
+				new File("defaultnotes.db3").getAbsolutePath());
+		return defaultProps;
 	}
 
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-
+		saveNote(ui.getText());
+		closeConnection();
 	}
 }

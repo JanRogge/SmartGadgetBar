@@ -1,7 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -109,7 +107,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 				popup.remove(popup.getComponentCount()-1);
 			}
 		});
-		JMenuItem manualItem = new JMenuItem("Manual");
+		JMenuItem manualItem = new JMenuItem("Usermanual");
 		manualItem.addActionListener(e -> {
 			JOptionPane.showMessageDialog(null, manualText);
 		});
@@ -123,7 +121,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	}
 	
 	@Override
-	public void paintComponent(final Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
         Graphics2D graphics = (Graphics2D) g;
 

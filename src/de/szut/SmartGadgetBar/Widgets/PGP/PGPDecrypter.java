@@ -1,6 +1,5 @@
 package de.szut.SmartGadgetBar.Widgets.PGP;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,7 +49,7 @@ public class PGPDecrypter {
 				enc = (PGPEncryptedDataList) pgpF.nextObject();
 			}
 
-			Iterator it = enc.getEncryptedDataObjects();
+			Iterator<?> it = enc.getEncryptedDataObjects();
 			PGPPrivateKey sKey = null;
 			PGPPublicKeyEncryptedData pbe = null;
 			
@@ -86,19 +85,23 @@ public class PGPDecrypter {
 				}
 
 			} else if (message instanceof PGPOnePassSignatureList) {
+				baos.close();
 				throw new PGPException(
 						"encrypted message contains a signed message - not literal data.");
 			} else {
+				baos.close();
 				throw new PGPException(
 						"message is not a simple encrypted file - type unknown.");
 			}
 			if (pbe.isIntegrityProtected()) {
 				if (!pbe.verify()) {
+					baos.close();
 					throw new PGPException("message failed integrity check");
 				} else {
 				}
 			} else {
 			}
+			baos.close();
 			return baos.toString();
 		} catch (PGPException e) {
 			if (e.getUnderlyingException() != null) {

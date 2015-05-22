@@ -1,9 +1,7 @@
 package de.szut.SmartGadgetBar.Widgets.PGP;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;

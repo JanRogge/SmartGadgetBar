@@ -1,7 +1,6 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -29,13 +28,13 @@ public class Notes_UI extends AbstractWidgetPanel {
 	public Notes_UI(WidgetInterface parent) {
 		super(parent);
 		this.parent = (Notes) parent;
-		setBounds(new Rectangle(0, 0, 280, 80));
+		setSize(280, 80);
 		initializePanel();
 	}
 
 	@Override
 	void initializePanel() {
-		setLayout(new GridLayout());
+		setLayout(new GridLayout(1, 1, 10, 10));
 		textfield = new JTextArea();
 		add(textfield);
 
@@ -56,10 +55,12 @@ public class Notes_UI extends AbstractWidgetPanel {
 		JMenuItem saveTxt = new JMenuItem("Speichern als .txt");
 		saveTxt.addActionListener(e -> {
 			showFileChooser();
-			if (fileChooser.getSelectedFile() != null
-					&& fileChooser.getSelectedFile().getName().endsWith(".txt")) {
-				parent.saveTxt(fileChooser.getSelectedFile(),
-						textfield.getText());
+			if (fileChooser.getSelectedFile() != null) {
+				String path = fileChooser.getSelectedFile().getAbsolutePath();
+				if(!path.endsWith(".txt")){
+					path += ".txt";
+				}
+				parent.saveTxt(new File(path),textfield.getText());
 			}
 		});
 
@@ -105,7 +106,6 @@ public class Notes_UI extends AbstractWidgetPanel {
 		popupMenu.add(saveDatabase);
 
 		textfield.setComponentPopupMenu(popupMenu);
-		;
 
 		setVisible(true);
 	}
@@ -130,11 +130,13 @@ public class Notes_UI extends AbstractWidgetPanel {
 	public void optionClicked() {
 		OptionPanelWidget opw = new OptionPanelWidget(widget);
 		opw.addProperty(Notes.DBPath, "Databasepath:");
-		opw.addProperty(Notes.TXTPATH, "Dafault .txt file path");
 		opw.finish();
 	}
 
 	public void setText(String text) {
 		textfield.setText(text);
+	}
+	public String getText(){
+		return textfield.getText();
 	}
 }

@@ -60,7 +60,6 @@ public class MainFrame extends JFrame {
 	private Properties getDefaultProperties() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = (int) (screenSize.getHeight() -50);
-		System.out.println(String.valueOf(height));
 		Properties defaultProps = new Properties();
 		defaultProps.setProperty("defaultLayoutPath", "layouts/defaultLayout");
 		defaultProps.setProperty("size.y", String.valueOf(height));
