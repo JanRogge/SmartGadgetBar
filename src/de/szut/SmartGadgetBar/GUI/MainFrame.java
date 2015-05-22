@@ -38,9 +38,32 @@ public class MainFrame extends JFrame {
 		setType(javax.swing.JFrame.Type.UTILITY);
 		setContentPane(new BackgroundPanel(this, new LayoutManager().read(new File(props.getProperty("defaultLayoutPath")))));
 		windowDimension = new Rectangle();
-		windowDimension.setBounds(Double.valueOf(props.getProperty("position.x")).intValue(),Double.valueOf(props.getProperty("position.y")).intValue(), Integer.parseInt(props.getProperty("size.x")), Integer.parseInt(props.getProperty("size.y")));	
+		try {
+			windowDimension.x = Double.valueOf(props.getProperty("position.x")).intValue();
+		} catch(NumberFormatException e) {
+			windowDimension.x = 383;
+			props.setProperty("position.x", "383.0");
+		}
+		try {
+			windowDimension.y = Double.valueOf(props.getProperty("position.y")).intValue();
+		} catch(NumberFormatException e) {
+			windowDimension.y = 75;
+			props.setProperty("position.y", "75.0");
+		}
+		try {
+			windowDimension.width = Double.valueOf(props.getProperty("size.x")).intValue();
+		} catch(NumberFormatException e) {
+			windowDimension.width = 300;
+			props.setProperty("size.x", "300.0");
+		}
+		try {
+			windowDimension.height = Double.valueOf(props.getProperty("size.y")).intValue();
+		} catch(NumberFormatException e) {
+			windowDimension.height = 300;
+			props.setProperty("size.y", String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().getHeight() -50));
+		}
 		setBounds(windowDimension);
-		setShape(new RoundRectangle2D.Double(0, 0, Integer.parseInt(props.getProperty("size.x")), Integer.parseInt(props.getProperty("size.y")), 30, 30));
+		setShape(new RoundRectangle2D.Double(0, 0, Double.valueOf(props.getProperty("size.x")), Double.valueOf(props.getProperty("size.y")), 30, 30));
 	}
 
 	public void close(Layout layout){
@@ -60,7 +83,7 @@ public class MainFrame extends JFrame {
 	
 	private Properties getDefaultProperties() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int height = (int) (screenSize.getHeight() -50);
+		double height = screenSize.getHeight() -50;
 		Properties defaultProps = new Properties();
 		defaultProps.setProperty("defaultLayoutPath", "layouts/defaultLayout");
 		defaultProps.setProperty("size.y", String.valueOf(height));
