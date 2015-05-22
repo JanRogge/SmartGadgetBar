@@ -20,13 +20,13 @@ public class PropertyLoader {
 	public Properties loadProperties(String fileName, Properties defaultProperties){
 
 		Properties p = new Properties();
-		try {
-			p.load(new FileInputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)));
+		try (FileInputStream f = new FileInputStream(new File(new File(".").getCanonicalPath() + "/" + fileName))){
+			p.load(f);
 		}
 		catch (FileNotFoundException e) {
 			p = defaultProperties;
-			try {
-				p.store(new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)), "");
+			try (FileOutputStream f = new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName))){
+				p.store(f, "");
 			}
 			catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -52,8 +52,8 @@ public class PropertyLoader {
 	 * @param treeWidth breite des treePanels
 	 */
 	public void saveProperties(Properties p, String fileName){
-		try {
-			p.store(new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName)), "");
+		try (FileOutputStream f = new FileOutputStream(new File(new File(".").getCanonicalPath() + "/" + fileName))){
+			p.store(f, "");
 		}
 		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

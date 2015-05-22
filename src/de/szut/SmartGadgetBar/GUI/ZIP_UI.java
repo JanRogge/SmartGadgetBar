@@ -32,9 +32,9 @@ public class ZIP_UI extends AbstractWidgetPanel {
 
 	@Override
 	void initializePanel() {
-
 		setSize(280, 80);
 		setLayout(null);
+		setImage("graphics/zip.png");
 
 		JButton btnZip = new JButton("Zip");
 		btnZip.setBounds(10, 45, 89, 23);

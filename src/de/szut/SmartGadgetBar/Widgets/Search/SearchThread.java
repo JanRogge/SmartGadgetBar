@@ -23,9 +23,7 @@ public class SearchThread extends Thread{
     public void run() {
     	try {
     		files.clear();
-    		System.out.println(searchpath);
-    		if (searchpath.contains("")){
-    			System.out.println("got it");
+    		if (searchpath.equals("")){
     			File [] roots = File.listRoots();
     			for(int i = 0; i < roots.length; i++){
     				searchpath = File.listRoots()[i].toString().replace('\\', '/');
@@ -38,15 +36,8 @@ public class SearchThread extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	System.out.println(isRunning);
-    	try {
-			sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
     	if(isRunning == true){
     		search.update();
-    		System.out.println("bin drinne" + this.getId());
     	}
     		
     }

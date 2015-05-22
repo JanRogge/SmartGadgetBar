@@ -1,6 +1,7 @@
 package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -42,32 +43,45 @@ public class Clock_UI extends AbstractWidgetPanel {
 		// TODO Auto-generated method stub
 		setSize(280, 100);
 		setLayout(new BorderLayout(0, 0));
+		setImage("graphics/Clock1.png");
+		setColor(Color.green);
 
 		JPanel panel = new JPanel();
-		panel.setMinimumSize(new Dimension(200, 200));
-		panel.setOpaque(true);
+		panel.setOpaque(false);
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		mainTime = new JLabel();
 		panel.add(mainTime, BorderLayout.CENTER);
+		mainTime.setOpaque(false);
 		mainTime.setFont(new Font("Tahoma", Font.PLAIN, 47));
 		mainTime.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setPreferredSize(new Dimension(280, 30));
+		panel_1.setOpaque(false);
 		add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new GridLayout(0, 3, 10, 0));
+		panel_1.setLayout(new GridLayout(0, 3, 10, 5));
 
 
 		altTime1 = new JLabel("");
 		altTime1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		altTime1.setOpaque(false);
+		altTime1.setVerticalAlignment(SwingConstants.CENTER);
+		altTime1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(altTime1);
 
 		altTime2 = new JLabel("");
+		altTime2.setOpaque(false);
+		altTime2.setHorizontalAlignment(SwingConstants.CENTER);
+		altTime2.setVerticalAlignment(SwingConstants.CENTER);
 		altTime2.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_1.add(altTime2);
 
 		altTime3 = new JLabel("");
+		altTime3.setOpaque(false);
+		altTime3.setHorizontalAlignment(SwingConstants.CENTER);
+		altTime3.setVerticalAlignment(SwingConstants.CENTER);
 		altTime3.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_1.add(altTime3);
 

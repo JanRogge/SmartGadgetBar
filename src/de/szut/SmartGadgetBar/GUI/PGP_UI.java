@@ -38,6 +38,7 @@ public class PGP_UI extends AbstractWidgetPanel {
 	@Override
 	void initializePanel() {
 		setLayout(null);
+		setImage("graphics/zip.png");
 
 		JButton btnEncrypt = new JButton("Encrypt");
 		btnEncrypt.setBounds(10, 45, 89, 23);

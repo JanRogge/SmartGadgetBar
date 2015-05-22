@@ -110,10 +110,10 @@ public class Search_UI extends AbstractWidgetPanel {
 		comboBox.getEditor().setItem(tmp);
 		JTextField tf = (JTextField) comboBox.getEditor().getEditorComponent();
 		tf.setCaretPosition(tmp.length());
+		System.out.println(search.getFiles().size());
 		if(search.getFiles().size() != 0){
 			comboBox.showPopup();
 		}
-		//comboBox.setMaximumRowCount(50);
 		repaint();
 	}
 
