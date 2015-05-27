@@ -11,6 +11,10 @@ import java.io.ObjectOutputStream;
 public class LayoutManager {
 
 	public void write(Layout layout, String filePath) {
+		if(!new File(filePath).exists()){
+			new File("layouts").mkdir();	
+		}
+		
 		filePath = new File(filePath).getAbsolutePath();
 		if (!filePath.endsWith(".bin")) {
 			filePath += ".bin";

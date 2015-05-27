@@ -53,6 +53,9 @@ public class PGP implements WidgetInterface {
 			kgen.setPublicKeyFile("keys/public.asc");
 			kgen.setPass(props.getProperty(PGP.PASS).toCharArray());
 			kgen.setEmail(props.getProperty(PGP.EMAIL));
+			if(!new File("keys").exists()){
+				new File("keys").mkdir();	
+			}
 			try {
 				kgen.generateKeyPair();
 			} catch (Exception e) {
