@@ -150,9 +150,11 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	public WidgetInterface getWidget() {
 		return widget;
 	}
+	
 	public void setColor(Color c){
 		this.c = c;
 	}
+	
 	public void setImage(String imgpath){
 		try {
 			image = ImageIO.read(new File(imgpath));

@@ -44,46 +44,46 @@ public class Calculator_UI extends AbstractWidgetPanel {
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
 			}
-
+			
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 			}
-
+			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (widget.calculate(field.getText()) == null) {
-						erge.setText("= ERROR");
-					} else {
-						erge.setText("= " + widget.calculate(field.getText()));
+					if (field.getText() != null && !field.getText().equals("")) {
+						if (widget.calculate(field.getText()) == null) {
+							erge.setText("= ERROR");
+						} else {
+							erge.setText("= " + widget.calculate(field.getText()));
+						}
 					}
-
+					else {
+						erge.setText("= ERROR");
+					}
 				}
 			}
-
 		});
-
+		
 		erge = new JLabel("= ");
 		erge.setBounds(30, 40, 5000, 50);
 		erge.setForeground(Color.white);
 		erge.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		add(field);
 		add(erge);
-
+		
 		setVisible(true);
 	}
 
 	@Override
 	public void pushFiles(File[] files) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void optionClicked() {
-		// TODO Auto-generated method stub
 		OptionPanelWidget opw = new OptionPanelWidget(widget);
 		opw.addProperty(Calculator.MSG,
 				"What are you searching for? Calculator need no options!");
