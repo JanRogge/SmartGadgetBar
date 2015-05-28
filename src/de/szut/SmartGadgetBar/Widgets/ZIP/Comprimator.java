@@ -12,6 +12,11 @@ import java.util.zip.*;
  */
 public class Comprimator {
 
+	/**
+	 * Geht durch alle Files die ausgewählt wurden
+	 * @param fileNames zu komprimierende File
+	 * @param outName Enddateiname
+	 */
 	public void comprimate(String[] fileNames, String outName) {
 		ZipOutputStream out = null;
 		try {
@@ -42,6 +47,13 @@ public class Comprimator {
 		}
 	}
 
+	/**
+	 * Checkt ob die File eine File ist oder ein Directory
+	 * @param files
+	 * @param outName
+	 * @param zout
+	 * @param src
+	 */
 	private void comprimate(File[] files, String outName, ZipOutputStream zout,
 			String src) {
 		try {
@@ -61,6 +73,13 @@ public class Comprimator {
 
 	}
 
+	/**
+	 * Fügt eine Datei dem Archiv hinzu
+	 * @param f File
+	 * @param out Name der Zip
+	 * @param src Grundname
+	 * @throws IOException
+	 */
 	private void addToZip(File f, ZipOutputStream out, String src)
 			throws IOException {
 		out.putNextEntry(new ZipEntry(f.getAbsolutePath().substring(
@@ -78,6 +97,13 @@ public class Comprimator {
 
 	}
 
+	/**
+	 * Fügt einen Ordner dem Archiv hinzu
+	 * @param dir Directory
+	 * @param out Name der ZIP
+	 * @param src Grundname
+	 * @throws IOException
+	 */
 	private void addDirToZip(File dir, ZipOutputStream out, String src)
 			throws IOException {
 

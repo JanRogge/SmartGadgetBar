@@ -1,7 +1,6 @@
 package de.szut.SmartGadgetBar.Widgets.PGP;
 
 import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -49,15 +48,11 @@ public class KeyGenerator {
 	 */
 	public void generateKeyPair() throws Exception {
 		PGPKeyRingGenerator krgen = generateKeyRingGenerator(email, pass);
-
-		// Generate public key ring, dump to file.
 		PGPPublicKeyRing pkr = krgen.generatePublicKeyRing();
 		ArmoredOutputStream pubout = new ArmoredOutputStream(
 				new BufferedOutputStream(new FileOutputStream(publicKeyFile)));
 		pkr.encode(pubout);
 		pubout.close();
-
-		// Generate private key, dump to file.
 		PGPSecretKeyRing skr = krgen.generateSecretKeyRing();
 		BufferedOutputStream secout = new BufferedOutputStream(
 				new FileOutputStream(privateKeyFile));
@@ -72,7 +67,6 @@ public class KeyGenerator {
 
 	private PGPKeyRingGenerator generateKeyRingGenerator(String id,
 			char[] pass, int s2kcount) throws Exception {
-		// This object generates individual key-pairs.
 		RSAKeyPairGenerator kpg = new RSAKeyPairGenerator();
 
 		kpg.init(new RSAKeyGenerationParameters(BigInteger.valueOf(0x10001),
@@ -101,26 +95,21 @@ public class KeyGenerator {
 		enchashgen.setKeyFlags(false, KeyFlags.ENCRYPT_COMMS
 				| KeyFlags.ENCRYPT_STORAGE);
 
-		// Objects used to encrypt the secret key.
 		PGPDigestCalculator sha1Calc = new BcPGPDigestCalculatorProvider()
 				.get(HashAlgorithmTags.SHA1);
 		PGPDigestCalculator sha256Calc = new BcPGPDigestCalculatorProvider()
 				.get(HashAlgorithmTags.SHA256);
 
-		// bcpg 1.48 exposes this API that includes s2kcount. Earlier versions
-		// use a default of 0x60.
 		PBESecretKeyEncryptor pske = (new BcPBESecretKeyEncryptorBuilder(
 				PGPEncryptedData.AES_256, sha256Calc, s2kcount)).build(pass);
 
-		// Finally, create the keyring itself. The constructor takes parameters
-		// that allow it to generate the self signature.
+
 		PGPKeyRingGenerator keyRingGen = new PGPKeyRingGenerator(
 				PGPSignature.POSITIVE_CERTIFICATION, rsakp_sign, id, sha1Calc,
 				signhashgen.generate(), null, new BcPGPContentSignerBuilder(
 						rsakp_sign.getPublicKey().getAlgorithm(),
 						HashAlgorithmTags.SHA1), pske);
 
-		// Add our encryption subkey, together with its signature.
 		keyRingGen.addSubKey(rsakp_enc, enchashgen.generate(), null);
 		return keyRingGen;
 	}

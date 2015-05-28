@@ -18,6 +18,10 @@ import java.util.zip.ZipInputStream;
 public class Decomprimator {
 	final static int BUFFER = 2048;
 
+	/**
+	 * Decomprimieren von Zip Dateien
+	 * @param zipFile
+	 */
 	public static void decomprimate(String zipFile) {
 		try {
 			BufferedOutputStream dest = null;

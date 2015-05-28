@@ -49,6 +49,11 @@ public class ZIP implements WidgetInterface {
 
 	}
 
+	/**
+	 * Komprimiert die gegebenen Verzeichnisse String Array aus Files
+	 * 
+	 * @param files
+	 */
 	public void comprimate(String[] files) {
 		String[] tokens = files[0].toString().split("\\.(?=[^\\.]+$)");
 		String out = tokens[0] + ".zip";

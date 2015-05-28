@@ -22,20 +22,34 @@ public class Search implements WidgetInterface {
 	private Properties props;
 	private SearchThread t;
 
+	/*
+	 * Startet die UI, den Thread und lädt die einstellungen
+	 */
 	public Search() throws IOException {
 		ui = new Search_UI(this);
 		threads = new ArrayList<SearchThread>();
 		loadProperties();
 	}
 
+	/*
+	 * Gibt dem Thread den Path der gefunden File für die ArrayList
+	 */
 	public void foundFile(Path path) {
 		threads.get(threads.size() - 1).foundFile(path);
 	}
 
+	/*
+	 * Updated die ComboBox der UI
+	 */
 	public void update() {
 		ui.updateComboBox();
 	}
 
+	/**
+	 * Sucht die gesuchte Datei
+	 * 
+	 * @param name Name der gesuchten Datei
+	 */
 	public void search(String name) {
 		if (t == null) {
 			t = new SearchThread(new FileVisitor(this, name), this,
@@ -54,6 +68,10 @@ public class Search implements WidgetInterface {
 
 	}
 
+	/**
+	 * Gibt die ArrayList mit Pfaden zurück
+	 * @return ArrayList aus einem thread
+	 */
 	public ArrayList<Path> getFiles() {
 		return threads.get(threads.size() - 1).getFiles();
 	}

@@ -102,7 +102,7 @@ public class BackgroundPanel extends JPanel {
 		menuPopup.add(loadLayout);
 		setComponentPopupMenu(menuPopup);
 		setLayout(null);
-		setImage("graphics/05.jpg");
+		setImage("graphics/04.jpg");
 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
