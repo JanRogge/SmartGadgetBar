@@ -9,9 +9,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
+ * Klasse zum dekomprimieren von *.zip Dateien Sollte ueber die Klasse ZIP
+ * benutzt werden
  * 
- * Klasse zum dekomprimieren von *.zip Dateien
- * Sollte ueber die Klasse ZIP benutzt werden
+ * @author Fabian Brinkmann
+ * 
  */
 public class Decomprimator {
 	final static int BUFFER = 2048;
@@ -25,15 +27,15 @@ public class Decomprimator {
 			ZipEntry entry;
 			while ((entry = zis.getNextEntry()) != null) {
 				File f = new File(entry.getName());
-				if(entry.isDirectory()){
+				if (entry.isDirectory()) {
 					f.mkdirs();
-				}else{
+				} else {
 					f.createNewFile();
 				}
-				
+
 				int count;
 				byte data[] = new byte[BUFFER];
-				if(f.isFile()){
+				if (f.isFile()) {
 					FileOutputStream fos = new FileOutputStream(entry.getName());
 					dest = new BufferedOutputStream(fos, BUFFER);
 					while ((count = zis.read(data, 0, BUFFER)) != -1) {
@@ -41,7 +43,7 @@ public class Decomprimator {
 					}
 					dest.flush();
 					dest.close();
-					
+
 				}
 			}
 			zis.close();

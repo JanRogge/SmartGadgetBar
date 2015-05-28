@@ -11,16 +11,25 @@ import javax.swing.JTextField;
 
 import de.szut.SmartGadgetBar.Widgets.Calculator.Calculator;
 
+/**
+ * Die grafische Oberfläche des Calculator Widgets
+ * 
+ * @author Fabian Brinkmann
+ *
+ */
 public class Calculator_UI extends AbstractWidgetPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4216742631090750686L;
 	private Calculator widget;
 	private JTextField field;
 	private JLabel erge;
 
+	/**
+	 * Erzeugt ein neues Objekt der Calculator_UI mit einem zugehörigen Widget
+	 * 
+	 * @param parent
+	 *            Das Widget welches zu diesem Panel gehören soll
+	 */
 	public Calculator_UI(Calculator parent) {
 		super(parent);
 		this.widget = parent;
@@ -31,7 +40,6 @@ public class Calculator_UI extends AbstractWidgetPanel {
 
 	@Override
 	void initializePanel() {
-
 		setSize(280, 80);
 		setLayout(null);
 		setColor(Color.LIGHT_GRAY);
@@ -42,14 +50,12 @@ public class Calculator_UI extends AbstractWidgetPanel {
 		field.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -57,31 +63,36 @@ public class Calculator_UI extends AbstractWidgetPanel {
 						if (widget.calculate(field.getText()) == null) {
 							erge.setText("= ERROR");
 						} else {
-							erge.setText("= " + widget.calculate(field.getText()));
+							erge.setText("= "
+									+ widget.calculate(field.getText()));
 						}
-					}
-					else {
+					} else {
 						erge.setText("= ERROR");
 					}
 				}
 			}
 		});
-		
+
 		erge = new JLabel("= ");
 		erge.setBounds(30, 40, 5000, 50);
 		erge.setForeground(Color.white);
 		erge.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		add(field);
 		add(erge);
-		
+
 		setVisible(true);
 	}
 
+	/**
+	 * Nicht in Gebrauch. Tut nichts
+	 */
 	@Override
 	public void pushFiles(File[] files) {
-		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Öffnet ein leeres Optionsfeld
+	 */
 	@Override
 	public void optionClicked() {
 		OptionPanelWidget opw = new OptionPanelWidget(widget);
@@ -89,5 +100,4 @@ public class Calculator_UI extends AbstractWidgetPanel {
 				"What are you searching for? Calculator need no options!");
 		opw.finish();
 	}
-
 }

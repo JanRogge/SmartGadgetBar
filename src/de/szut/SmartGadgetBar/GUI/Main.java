@@ -2,6 +2,12 @@ package de.szut.SmartGadgetBar.GUI;
 
 import java.awt.EventQueue;
 
+/**
+ * Die Main des Programms
+ * 
+ * @author Jan-Philipp Rogge
+ *
+ */
 public class Main {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

@@ -16,17 +16,23 @@ import javax.swing.SwingConstants;
 
 import de.szut.SmartGadgetBar.Model.PropertyLoader;
 
+/**
+ * Das Optionsfenster des Hauptfensters
+ * 
+ * @author Jan-Philipp Rogge
+ *
+ */
 public class OptionPanelMain extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6631129137304118779L;
 	private JPanel contentPane;
 	private boolean top;
 
 	/**
-	 * Create the frame.
+	 * Erzeugt ein neues Objekt des OptionMainPanels.
+	 * 
+	 * @param mainf
+	 *            Das Hauptfenster zu dem diese Optionen gehören
 	 */
 	public OptionPanelMain(MainFrame mainf) {
 		top = mainf.isAlwaysOnTop();
@@ -39,52 +45,58 @@ public class OptionPanelMain extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblWindowSize = new JLabel("Window Size");
 		lblWindowSize.setBounds(5, 11, 92, 14);
 		contentPane.add(lblWindowSize);
-		
-		JSpinner spinner = new JSpinner();		
-		spinner.setModel(new SpinnerNumberModel(new Integer((int) mainf.getSize().getHeight()), new Integer(0), null, new Integer(1)));
+
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer((int) mainf
+				.getSize().getHeight()), new Integer(0), null, new Integer(1)));
 		spinner.setBounds(294, 8, 60, 20);
 		contentPane.add(spinner);
-		
-		JSpinner spinner_1 = new JSpinner(new SpinnerNumberModel(new Integer((int) mainf.getSize().getWidth()), new Integer(0), null, new Integer(1)));
+
+		JSpinner spinner_1 = new JSpinner(new SpinnerNumberModel(new Integer(
+				(int) mainf.getSize().getWidth()), new Integer(0), null,
+				new Integer(1)));
 		spinner_1.setBounds(364, 8, 60, 20);
 		contentPane.add(spinner_1);
-		
+
 		JButton apply = new JButton("Apply");
-		apply.addActionListener(e->{
-			mainf.setSize((int) spinner_1.getValue(),(int) spinner.getValue());
+		apply.addActionListener(e -> {
+			mainf.setSize((int) spinner_1.getValue(), (int) spinner.getValue());
 		});
 		apply.setBounds(345, 87, 89, 23);
 		contentPane.add(apply);
-		
+
 		JCheckBox boxalwaysontop = new JCheckBox("Always on Top");
-		if(mainf.isAlwaysOnTop()){
+		if (mainf.isAlwaysOnTop()) {
 			boxalwaysontop.setSelected(true);
 		}
 		boxalwaysontop.setBounds(5, 32, 128, 23);
 		contentPane.add(boxalwaysontop);
-		
+
 		JLabel lblAvailableWidgets = new JLabel("Available Widgets:");
 		lblAvailableWidgets.setBounds(5, 61, 154, 14);
 		contentPane.add(lblAvailableWidgets);
-		
+
 		JLabel lblWidgets = new JLabel();
 		lblWidgets.setVerticalAlignment(SwingConstants.TOP);
 		lblWidgets.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWidgets.setBounds(5, 75, 330, 35);
-		String [] availabelWidgets = new PropertyLoader().loadProperties("config/config.ini", null).getProperty("availableWidgets").split(",");
-		for (int i = 0; i < availabelWidgets.length;i++){
-			if(i==0){
+		String[] availabelWidgets = new PropertyLoader()
+				.loadProperties("config/config.ini", null)
+				.getProperty("availableWidgets").split(",");
+		for (int i = 0; i < availabelWidgets.length; i++) {
+			if (i == 0) {
 				lblWidgets.setText(availabelWidgets[i]);
-			} else{
-				lblWidgets.setText(lblWidgets.getText() + ", " + availabelWidgets[i]);
+			} else {
+				lblWidgets.setText(lblWidgets.getText() + ", "
+						+ availabelWidgets[i]);
 			}
 		}
 		contentPane.add(lblWidgets);
-		boxalwaysontop.addActionListener(e->{
+		boxalwaysontop.addActionListener(e -> {
 			if (boxalwaysontop.isSelected()) {
 				top = true;
 			} else {
@@ -97,6 +109,6 @@ public class OptionPanelMain extends JDialog {
 				mainf.setAlwaysOnTop(top);
 			}
 		});
-		
+
 	}
 }

@@ -24,6 +24,8 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
  * Abstracte Klasse, die alle UI's der widgets erben muessen
+ * 
+ * @author Fabian Brinkmann, Simeon Kublenz
  *
  */
 public abstract class AbstractWidgetPanel extends JPanel {
@@ -42,15 +44,18 @@ public abstract class AbstractWidgetPanel extends JPanel {
 	 * bereits die Menuepunkte Options und Delete
 	 * 
 	 * @param parent
+	 *            Das Widget zu dem dieses Panel gehört
 	 */
 	public AbstractWidgetPanel(WidgetInterface parent) {
 		this.widget = parent;
 		MouseAdapter l = new MouseAdapter() {
+			@Override
 			public void mouseDragged(MouseEvent me) {
 				pop.setLocation(pop.getLocation().x + me.getX() - pX,
 						pop.getLocation().y + me.getY() - pY);
 			}
 
+			@Override
 			public void mousePressed(MouseEvent me) {
 				pX = me.getX();
 				pY = me.getY();
@@ -77,19 +82,16 @@ public abstract class AbstractWidgetPanel extends JPanel {
 				this.getParent().remove(this);
 				pop = new PopoutFrame(this);
 				popup.add(widgetOnTop);
-				widgetOnTop.addActionListener(new ActionListener(){
+				widgetOnTop.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						if(pop.isAlwaysOnTop()){
+						if (pop.isAlwaysOnTop()) {
 							pop.setAlwaysOnTop(false);
 							widgetOnTop.setText("Set On Top");
-						}else{
+						} else {
 							pop.setAlwaysOnTop(true);
 							widgetOnTop.setText("Disable On Top");
 						}
-						
-						
 					}
 				});
 				addMouseListener(l);
@@ -103,7 +105,7 @@ public abstract class AbstractWidgetPanel extends JPanel {
 				pop = null;
 				removeMouseListener(l);
 				removeMouseMotionListener(l);
-				popup.remove(popup.getComponentCount()-1);
+				popup.remove(popup.getComponentCount() - 1);
 			}
 		});
 		JMenuItem manualItem = new JMenuItem("Usermanual");
@@ -119,53 +121,79 @@ public abstract class AbstractWidgetPanel extends JPanel {
 		setOpaque(false);
 		setBackground(Color.cyan);
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        Graphics2D graphics = (Graphics2D) g;
+		Graphics2D graphics = (Graphics2D) g;
 
+		RoundRectangle2D.Float rr = new RoundRectangle2D.Float(0, 0,
+				(getWidth()), (getHeight()), 10, 10);
 
-        RoundRectangle2D.Float rr = new RoundRectangle2D.Float(0, 0, (getWidth()), (getHeight()), 10, 10);
+		Shape clipShape = graphics.getClip();
 
-        Shape clipShape = graphics.getClip();
-
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        if(image == null)
-        {
-            graphics.setColor(c);
-            graphics.fill(rr);
-        }
-        else
-        {
-            RoundRectangle2D.Float rr2 =  new RoundRectangle2D.Float(0, 0, (getWidth()), (getHeight()), 10, 10);
-
-            graphics.setClip(rr2);
-            graphics.drawImage(image, 0, 0, null);
-            graphics.setClip(clipShape);
-        }
-
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		if (image == null) {
+			graphics.setColor(c);
+			graphics.fill(rr);
+		} else {
+			RoundRectangle2D.Float rr2 = new RoundRectangle2D.Float(0, 0,
+					(getWidth()), (getHeight()), 10, 10);
+			graphics.setClip(rr2);
+			graphics.drawImage(image, 0, 0, null);
+			graphics.setClip(clipShape);
+		}
+		new File("").getAbsolutePath();
 	};
 
+	/**
+	 * Gibt das Widget zu dem dieses Panel gehört zurück
+	 * 
+	 * @return Das Widget zu dem dieses Panel gehört
+	 */
 	public WidgetInterface getWidget() {
 		return widget;
 	}
-	
-	public void setColor(Color c){
+
+	/**
+	 * Setzt die Hintergrundfarbe dieses Panels
+	 * 
+	 * @param c
+	 *            Die Hintergrundfarbe
+	 */
+	public void setColor(Color c) {
 		this.c = c;
 	}
-	
-	public void setImage(String imgpath){
+
+	/**
+	 * Setzt den Pfad des Hintergrundbildes für dieses Panels
+	 * 
+	 * @param imgpath
+	 *            Der Hintergrundbildpfad
+	 */
+	public void setImage(String imgpath) {
 		try {
 			image = ImageIO.read(new File(imgpath));
 		} catch (IOException ex) {
-    	JOptionPane.showMessageDialog(null, "Hintergrund nicht gefunden", "Fehler", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Hintergrund nicht gefunden",
+					"Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
+	/**
+	 * Öffnet die Optionen
+	 */
 	public abstract void optionClicked();
 
+	/**
+	 * Initialisiert das Panel
+	 */
 	abstract void initializePanel();
 
+	/**
+	 * Bearbeitet Dateien für das Widget
+	 * @param files
+	 */
 	public abstract void pushFiles(File[] files);
 }

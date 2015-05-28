@@ -7,64 +7,75 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class SearchThread extends Thread{
+/**
+ * 
+ * @author Jan-Philipp Rogge
+ *
+ */
+public class SearchThread extends Thread {
 	private boolean isRunning = true;
 	private FileVisitor file;
 	private Search search;
 	private String searchpath;
 	private ArrayList<Path> files;
-	public SearchThread(FileVisitor file, Search search, String searchpath){
+
+	public SearchThread(FileVisitor file, Search search, String searchpath) {
 		this.file = file;
 		this.searchpath = searchpath;
 		this.search = search;
 		files = new ArrayList<Path>();
 	}
+
 	@Override
-    public void run() {
-    	try {
-    		files.clear();
-    		if (searchpath.equals("")){
-    			File [] roots = File.listRoots();
-    			for(int i = 0; i < roots.length; i++){
-    				searchpath = File.listRoots()[i].toString().replace('\\', '/');
-    				Files.walkFileTree(Paths.get(searchpath), file);
-    			}
-    		} else{
-    			Files.walkFileTree(Paths.get(searchpath.toString().replace('\\', '/')), file);
-    		}
-    		
+	public void run() {
+		try {
+			files.clear();
+			if (searchpath.equals("")) {
+				File[] roots = File.listRoots();
+				for (int i = 0; i < roots.length; i++) {
+					searchpath = File.listRoots()[i].toString().replace('\\',
+							'/');
+					Files.walkFileTree(Paths.get(searchpath), file);
+				}
+			} else {
+				Files.walkFileTree(
+						Paths.get(searchpath.toString().replace('\\', '/')),
+						file);
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	if(isRunning == true){
-    		search.update();
-    	}
-    		
-    }
-	
-	public synchronized void setRunning(boolean isRunning){
-   	 this.isRunning = isRunning;
-    }
-	
-	public boolean getRunning(){
+		if (isRunning == true) {
+			search.update();
+		}
+
+	}
+
+	public synchronized void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+
+	public boolean getRunning() {
 		return isRunning;
 	}
-	
-	public void foundFile(Path path){
+
+	public void foundFile(Path path) {
 		boolean tmp = true;
-		for (int i = 0; i < files.size();i++){	
-			if (!files.get(i).toString().contains(path.toString())){
+		for (int i = 0; i < files.size(); i++) {
+			if (!files.get(i).toString().contains(path.toString())) {
 				tmp = true;
-			} else{
+			} else {
 				tmp = false;
 			}
 		}
-		if(tmp){
+		if (tmp) {
 			files.add(path);
 		}
-		
+
 	}
-	public ArrayList<Path> getFiles(){
+
+	public ArrayList<Path> getFiles() {
 		return files;
 	}
 }

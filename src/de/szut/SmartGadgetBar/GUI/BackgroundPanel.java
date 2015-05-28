@@ -27,11 +27,14 @@ import de.szut.SmartGadgetBar.Model.PropertyLoader;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 import de.szut.SmartGadgetBar.Model.WidgetLoader;
 
+/**
+ * Das Hintergrundpanel für die GUI auf dem die Widgets liegen
+ * 
+ * @author Jan-Philipp Rogge, Simeon Kublenz
+ *
+ */
 public class BackgroundPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2546051500075793695L;
 	private int pX, pY;
 	private JMenu addWidgets;
@@ -42,7 +45,12 @@ public class BackgroundPanel extends JPanel {
 	private ArrayList<WidgetInterface> actualWidgets = new ArrayList<WidgetInterface>();
 
 	/**
-	 * Create the panel.
+	 * Creates the panel.
+	 * 
+	 * @param mainf
+	 *            Das Mainframe auf dem dieses Panel liegt
+	 * @param layout
+	 *            Das Layout dass als Startlayout geladen wird
 	 */
 	public BackgroundPanel(MainFrame mainf, Layout layout) {
 		widgetLoader = new WidgetLoader();
@@ -55,7 +63,7 @@ public class BackgroundPanel extends JPanel {
 		String[] availabelWidgets = new PropertyLoader()
 				.loadProperties("config/config.ini", null)
 				.getProperty("availableWidgets").split(",");
-		addtoMenu(availabelWidgets);
+		addToMenu(availabelWidgets);
 		closeMenuItem.addActionListener(e -> {
 			mainf.close(new Layout(getWidgets()));
 		});
@@ -111,6 +119,12 @@ public class BackgroundPanel extends JPanel {
 		setWidgetLayout(layout);
 	}
 
+	/**
+	 * Setzt das aktuelle Layout
+	 * 
+	 * @param layout
+	 *            Das Layout welches geladen werden soll
+	 */
 	private void setWidgetLayout(Layout layout) {
 		if (layout != null) {
 			String[] widgets = layout.getWidgets();
@@ -130,6 +144,11 @@ public class BackgroundPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Gibt die Namen der aktuell enthaltenen Widgets zurück
+	 * 
+	 * @return Die Liste der aktuellen Widgets
+	 */
 	private String[] getWidgets() {
 		String[] array = new String[actualWidgets.size()];
 		for (int i = 0; i < actualWidgets.size(); i++) {
@@ -138,7 +157,13 @@ public class BackgroundPanel extends JPanel {
 		return array;
 	}
 
-	public void addtoMenu(String[] widgets) {
+	/**
+	 * Fügt die Liste von Widgetnamen dem "Add Widgets" Menü im PopupMenu hinzu
+	 * 
+	 * @param widgets
+	 *            Die Liste der hinzuzufügenden Widgets
+	 */
+	private void addToMenu(String[] widgets) {
 		for (int i = 0; i < widgets.length; i++) {
 			JMenuItem widget = new JMenuItem(widgets[i]);
 			addWidgets.add(widget);
@@ -162,7 +187,6 @@ public class BackgroundPanel extends JPanel {
 				}
 			});
 		}
-
 	}
 
 	@Override
@@ -174,33 +198,31 @@ public class BackgroundPanel extends JPanel {
 		super.remove(comp);
 		this.rebuild();
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		BufferedImage image = null;
 		super.paintComponent(g);
-        Graphics2D graphics = (Graphics2D) g;
+		Graphics2D graphics = (Graphics2D) g;
 
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        try {
-        	image = ImageIO.read(new File(path));
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		try {
+			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        if(image == null)
-        {
-            graphics.setColor(Color.cyan);
-        }
-        else
-        {
-            graphics.drawImage(image, 0, 0, null);
-        }
-
+		if (image == null) {
+			graphics.setColor(Color.cyan);
+		} else {
+			graphics.drawImage(image, 0, 0, null);
+		}
 	};
 
+	/**
+	 * Richtet die Components in diesem Panel neu an
+	 */
 	public void rebuild() {
-
 		int curpos = BackgroundPanel.GAP;
 		for (Component c : getComponents()) {
 			c.setLocation(10, curpos);
@@ -209,11 +231,22 @@ public class BackgroundPanel extends JPanel {
 		repaint();
 		revalidate();
 	}
-	public void setImage(String path){
+
+	/**
+	 * Setzt das Hintergrundbild dieses Components
+	 * 
+	 * @param path
+	 *            Der Pfad des neuen Hintergrundbildes
+	 */
+	public void setImage(String path) {
 		this.path = path;
 	}
-	public void closeAll(){
-		for(WidgetInterface widget :actualWidgets){
+
+	/**
+	 * Entfernt alle Widgets von diesem Panel
+	 */
+	public void closeAll() {
+		for (WidgetInterface widget : actualWidgets) {
 			widget.close();
 		}
 	}

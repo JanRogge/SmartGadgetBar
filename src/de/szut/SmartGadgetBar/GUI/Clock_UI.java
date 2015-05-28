@@ -20,6 +20,12 @@ import javax.swing.SwingConstants;
 
 import de.szut.SmartGadgetBar.Widgets.Clock.Clock;
 
+/**
+ * Die grafische Oberfläche der Uhr
+ * 
+ * @author Jan-Philipp Rogge
+ *
+ */
 public class Clock_UI extends AbstractWidgetPanel {
 	private static final long serialVersionUID = 3815141531387992662L;
 	private Clock widget;
@@ -29,22 +35,28 @@ public class Clock_UI extends AbstractWidgetPanel {
 	private JLabel altTime3;
 
 	/**
-	 * Create the panel.
+	 * Erzeugt ein neues Objekt der Clock_UI mit einem zugehörigen Widget
+	 * 
+	 * @param parent
+	 *            Das Widget welches zu diesem Panel gehören soll
 	 */
 	public Clock_UI(Clock parent) {
 		super(parent);
 		widget = parent;
 		initializePanel();
-
 	}
 
+	/**
+	 * Gibt das Label zurück auf dem Hauptzeit angezeigt wird
+	 * 
+	 * @return Das Label auf dem die Hauptzeit angezeigt wird
+	 */
 	public JLabel getMainTime() {
 		return mainTime;
 	}
 
 	@Override
 	void initializePanel() {
-		// TODO Auto-generated method stub
 		setSize(280, 100);
 		setLayout(new BorderLayout(0, 0));
 		setImage("graphics/Clock.png");
@@ -56,9 +68,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		mainTime = new JLabel() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 3993233484297951109L;
 
 			public void paintComponent(Graphics g) {
@@ -67,7 +76,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 							ImageIO.read(new File("graphics/MainClock.png")),
 							44, 13, null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				super.paintComponent(g);
@@ -85,9 +93,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 		panel_1.setLayout(new GridLayout(0, 3, 10, 5));
 
 		altTime1 = new JLabel("") {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 3993233484297951109L;
 
 			public void paintComponent(Graphics g) {
@@ -95,7 +100,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 					g.drawImage(ImageIO.read(new File("graphics/AltTime.png")),
 							2, 0, null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				super.paintComponent(g);
@@ -109,9 +113,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 		panel_1.add(altTime1);
 
 		altTime2 = new JLabel("") {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 3993233484297951109L;
 
 			public void paintComponent(Graphics g) {
@@ -119,7 +120,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 					g.drawImage(ImageIO.read(new File("graphics/AltTime.png")),
 							2, 0, null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				super.paintComponent(g);
@@ -133,9 +133,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 		panel_1.add(altTime2);
 
 		altTime3 = new JLabel("") {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 3993233484297951109L;
 
 			public void paintComponent(Graphics g) {
@@ -143,7 +140,6 @@ public class Clock_UI extends AbstractWidgetPanel {
 					g.drawImage(ImageIO.read(new File("graphics/AltTime.png")),
 							2, 0, null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				super.paintComponent(g);
@@ -160,15 +156,15 @@ public class Clock_UI extends AbstractWidgetPanel {
 		revalidate();
 	}
 
+	/**
+	 * Nicht in Gebrauch. Tut nichts
+	 */
 	@Override
 	public void pushFiles(File[] files) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void optionClicked() {
-		// TODO Auto-generated method stub
 		OptionPanelWidget opw = new OptionPanelWidget(widget);
 		opw.addButton("Set TimeZone to Label1", new ActionListener() {
 

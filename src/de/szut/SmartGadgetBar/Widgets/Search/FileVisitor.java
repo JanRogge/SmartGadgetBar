@@ -6,15 +6,22 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class FileVisitor extends SimpleFileVisitor<Path>{
+/**
+ * 
+ * @author Jan-Philipp Rogge
+ *
+ */
+public class FileVisitor extends SimpleFileVisitor<Path> {
 	private Search search;
 	private String name;
-	public FileVisitor(Search search, String name){
+
+	public FileVisitor(Search search, String name) {
 		this.search = search;
 		this.name = name;
 	}
+
 	@Override
-	public FileVisitResult visitFileFailed(Path file,IOException exc) {
+	public FileVisitResult visitFileFailed(Path file, IOException exc) {
 		if (search.get() == true)
 			return FileVisitResult.CONTINUE;
 		else
@@ -22,8 +29,8 @@ public class FileVisitor extends SimpleFileVisitor<Path>{
 	}
 
 	@Override
-	public FileVisitResult visitFile(Path path,BasicFileAttributes attribs) {
-		if(path.getFileName().toString().contains(name)){
+	public FileVisitResult visitFile(Path path, BasicFileAttributes attribs) {
+		if (path.getFileName().toString().contains(name)) {
 			search.foundFile(path);
 		}
 		if (search.get() == true)

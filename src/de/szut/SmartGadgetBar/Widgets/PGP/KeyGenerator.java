@@ -1,6 +1,7 @@
 package de.szut.SmartGadgetBar.Widgets.PGP;
 
 import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -29,8 +30,10 @@ import org.bouncycastle.openpgp.operator.bc.BcPGPDigestCalculatorProvider;
 import org.bouncycastle.openpgp.operator.bc.BcPGPKeyPair;
 
 /**
- * Klasse zum generieren von Keys
- *Sollte ueber die Klasse PGP benutzt werden
+ * Klasse zum generieren von Keys Sollte ueber die Klasse PGP benutzt werden
+ * 
+ * @author Fabian Brinkmann
+ * 
  */
 public class KeyGenerator {
 
@@ -40,11 +43,8 @@ public class KeyGenerator {
 	private String email;
 	private int keySize;
 
-	
-	
 	/**
-	 * Generiert die Keys und speicher sie im verzeichnis
-	 *\keys\
+	 * Generiert die Keys und speicher sie im Verzeichnis \keys\
 	 * @throws Exception
 	 */
 	public void generateKeyPair() throws Exception {
@@ -158,12 +158,12 @@ public class KeyGenerator {
 	}
 
 	public void setKeySize(String keysize) {
-		try{
-			
+		try {
+
 			this.keySize = Integer.parseInt(keysize);
-		}catch(Exception e){
-			this.keySize=2048;
+		} catch (Exception e) {
+			this.keySize = 2048;
 		}
-		
+
 	}
 }

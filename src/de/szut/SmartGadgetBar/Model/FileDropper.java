@@ -14,40 +14,55 @@ import java.util.List;
 
 import de.szut.SmartGadgetBar.GUI.AbstractWidgetPanel;
 
-public class FileDropper implements DropTargetListener{
+/**
+ * Ein DropTargetListener welcher der GUI die erhaltenen Dateien übergibt
+ * 
+ * @author Simeon Kublenz
+ *
+ */
+public class FileDropper implements DropTargetListener {
 	AbstractWidgetPanel panel;
+
+	/**
+	 * Erzeugt ein neues Objekt des FileDropper
+	 * 
+	 * @param panel
+	 */
 	public FileDropper(AbstractWidgetPanel panel) {
 		this.panel = panel;
 	}
 
 	@Override
-	public void dragEnter(DropTargetDragEvent event) {}
-	
+	public void dragEnter(DropTargetDragEvent event) {
+	}
+
 	@Override
-	public void dragOver(DropTargetDragEvent event) {}
-	
+	public void dragOver(DropTargetDragEvent event) {
+	}
+
 	@Override
-	public void dropActionChanged(DropTargetDragEvent event) {}
-	
+	public void dropActionChanged(DropTargetDragEvent event) {
+	}
+
 	@Override
-	public void dragExit(DropTargetEvent event) {}
-	
+	public void dragExit(DropTargetEvent event) {
+	}
+
 	@Override
 	public void drop(DropTargetDropEvent event) {
 		Transferable transfer = event.getTransferable();
 		if (transfer.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
 			event.acceptDrop(DnDConstants.ACTION_COPY);
 			try {
-				List<?> fileList = (List<?>) transfer.getTransferData(DataFlavor.javaFileListFlavor);
+				List<?> fileList = (List<?>) transfer
+						.getTransferData(DataFlavor.javaFileListFlavor);
 				panel.pushFiles(fileList.toArray(new File[fileList.size()]));
-			}
-			catch (UnsupportedFlavorException e) {
+			} catch (UnsupportedFlavorException e) {
 				e.printStackTrace();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 }

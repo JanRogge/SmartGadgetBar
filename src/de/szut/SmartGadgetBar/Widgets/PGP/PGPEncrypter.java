@@ -28,22 +28,25 @@ import org.bouncycastle.openpgp.operator.bc.BcPGPDataEncryptorBuilder;
 import org.bouncycastle.openpgp.operator.bc.BcPublicKeyKeyEncryptionMethodGenerator;
 
 /**
- *Klasse, die die Funktionalitaet zum verschluesseln bereit stellt
- *Sollte ueber die Klasse PGP benutzt werden
+ * Klasse, die die Funktionalitaet zum verschluesseln bereit stellt Sollte ueber
+ * die Klasse PGP benutzt werden
+ * 
+ * @author Fabian Brinkmann
  */
 public class PGPEncrypter {
 
 	private PGPPublicKey pukey;
 	private String pukeyfile;
 
- 	/**
- 	 * Methode zum Verschluesseln von Dateien
- 	 * @param fileName
- 	 * @throws IOException
- 	 * @throws NoSuchProviderException
- 	 * @throws PGPException
- 	 */
- 	public void encrypt(String fileName) throws IOException,
+	/**
+	 * Methode zum Verschluesseln von Dateien
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 * @throws NoSuchProviderException
+	 * @throws PGPException
+	 */
+	public void encrypt(String fileName) throws IOException,
 			NoSuchProviderException, PGPException {
 
 		Security.addProvider(new BouncyCastleProvider());

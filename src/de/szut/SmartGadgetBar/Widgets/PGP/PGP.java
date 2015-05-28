@@ -18,61 +18,63 @@ import de.szut.SmartGadgetBar.Model.WidgetInterface;
 
 /**
  * 
- *Klasse, die die nötigen Funktionalität zum
- *Verschlüsseln, Entschlüsseln und Key Generieren 
- *bereitstellt
+ * Klasse, die die nötigen Funktionalität zum Verschlüsseln, Entschlüsseln und
+ * Key Generieren bereitstellt
+ * 
+ * @author Fabian Brinkmann
+ * 
  */
-
-
-
 public class PGP implements WidgetInterface {
-	
+
 	public static final String PASS = "passwort";
 	public static final String EMAIL = "email";
 	public static final String KEYSIZE = "keysize";
-	
+
 	private PGP_UI ui;
 	private Properties props;
 	public final String widgetName = "PGP";
-	
+
 	public PGP() {
 		Security.addProvider(new BouncyCastleProvider());
 		ui = new PGP_UI(this);
 		loadProperties();
-		if (!new File("keys/private.skr").exists() || !new File("keys/public.asc").exists())
+		if (!new File("keys/private.skr").exists()
+				|| !new File("keys/public.asc").exists())
 			generateKeyPair();
 	}
-	
+
 	/**
 	 * Generiert ein Schlüsselpaar und speichert dieses in zwei Dateien
 	 */
 	public void generateKeyPair() {
-			KeyGenerator kgen = new KeyGenerator();
-			kgen.setKeySize(props.getProperty(PGP.KEYSIZE));
-			kgen.setPrivateKeyFile("keys/private.skr");
-			kgen.setPublicKeyFile("keys/public.asc");
-			kgen.setPass(props.getProperty(PGP.PASS).toCharArray());
-			kgen.setEmail(props.getProperty(PGP.EMAIL));
-			if(!new File("keys").exists()){
-				new File("keys").mkdir();	
-			}
-			try {
-				kgen.generateKeyPair();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(null, "Key Generated");;
+		KeyGenerator kgen = new KeyGenerator();
+		kgen.setKeySize(props.getProperty(PGP.KEYSIZE));
+		kgen.setPrivateKeyFile("keys/private.skr");
+		kgen.setPublicKeyFile("keys/public.asc");
+		kgen.setPass(props.getProperty(PGP.PASS).toCharArray());
+		kgen.setEmail(props.getProperty(PGP.EMAIL));
+		if (!new File("keys").exists()) {
+			new File("keys").mkdir();
+		}
+		try {
+			kgen.generateKeyPair();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JOptionPane.showMessageDialog(null, "Key Generated");
+		;
 	}
-	
+
 	/**
 	 * Verschluesselt eine gegebene Datei mit einem gegebenen Schluessel
+	 * 
 	 * @param fileName
 	 * @param keyFile
 	 */
 	public void encryptFile(String fileName, String keyFile) {
 		encryptFile(new File(fileName), keyFile);
 	}
-	
+
 	public void encryptFile(File f, String keyFile) {
 		try {
 			PGPEncrypter enc = new PGPEncrypter();
@@ -83,7 +85,7 @@ public class PGP implements WidgetInterface {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @param encryptFileName
 	 * @param prikeyFile
@@ -100,28 +102,28 @@ public class PGP implements WidgetInterface {
 		}
 
 	}
-	
+
 	@Override
 	public AbstractWidgetPanel getPanel() {
 		return ui;
 	}
-	
+
 	@Override
 	public void setProperties(Properties properties) {
 		this.props = properties;
 		saveProperties();
 	}
-	
+
 	@Override
 	public Properties getProperties() {
 		return props;
 	}
-	
+
 	@Override
 	public String getWidgetName() {
 		return "PGP";
 	}
-	
+
 	@Override
 	public Properties getDefaultProperties() {
 		Properties defaultProps = new Properties();
@@ -134,6 +136,6 @@ public class PGP implements WidgetInterface {
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

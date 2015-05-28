@@ -15,16 +15,25 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.szut.SmartGadgetBar.Model.WidgetInterface;
 import de.szut.SmartGadgetBar.Widgets.Notes.Notes;
 
+/**
+ * Die grafische Oberfläche des Notizfeldes
+ * 
+ * @author Simeon Kublenz
+ *
+ */
 public class Notes_UI extends AbstractWidgetPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -212490706203365585L;
 	private Notes parent;
 	private JFileChooser fileChooser;
 	private JTextArea textfield;
 
+	/**
+	 * Erzeugt ein neues Objekt der Notes_UI mit einem zugehörigen Widget
+	 * 
+	 * @param parent
+	 *            Das Widget welches zu diesem Panel gehören soll
+	 */
 	public Notes_UI(WidgetInterface parent) {
 		super(parent);
 		this.parent = (Notes) parent;
@@ -57,10 +66,10 @@ public class Notes_UI extends AbstractWidgetPanel {
 			showFileChooser();
 			if (fileChooser.getSelectedFile() != null) {
 				String path = fileChooser.getSelectedFile().getAbsolutePath();
-				if(!path.endsWith(".txt")){
+				if (!path.endsWith(".txt")) {
 					path += ".txt";
 				}
-				parent.saveTxt(new File(path),textfield.getText());
+				parent.saveTxt(new File(path), textfield.getText());
 			}
 		});
 
@@ -110,6 +119,9 @@ public class Notes_UI extends AbstractWidgetPanel {
 		setVisible(true);
 	}
 
+	/**
+	 * Öffnet ein Dateiauswahlfenster
+	 */
 	private void showFileChooser() {
 		if (fileChooser == null) {
 			fileChooser = new JFileChooser(parent.getProperties().getProperty(
@@ -122,6 +134,9 @@ public class Notes_UI extends AbstractWidgetPanel {
 		fileChooser.showOpenDialog(null);
 	}
 
+	/**
+	 * Nicht in Gebrauch. Tut nichts
+	 */
 	@Override
 	public void pushFiles(File[] files) {
 	}
@@ -133,10 +148,22 @@ public class Notes_UI extends AbstractWidgetPanel {
 		opw.finish();
 	}
 
+	/**
+	 * Gibt dem Notizfeld einen neuen Text
+	 * 
+	 * @param text
+	 *            Der neue Text
+	 */
 	public void setText(String text) {
 		textfield.setText(text);
 	}
-	public String getText(){
+
+	/**
+	 * Gibt den aktuellen Text des Notizfeldes zurück
+	 * 
+	 * @return Der Text des Notizfeldes
+	 */
+	public String getText() {
 		return textfield.getText();
 	}
 }
